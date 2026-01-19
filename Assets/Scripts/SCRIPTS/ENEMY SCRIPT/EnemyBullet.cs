@@ -1,0 +1,43 @@
+using UnityEngine;
+
+public class EnemyBullet : MonoBehaviour
+{
+    private GameObject Player;
+    private Rigidbody2D rb;
+    [SerializeField] public float bulletForce;
+    public int damage = 1;
+    private float timer;
+
+    [SerializeField] private LayerMask groundLayer;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        Player = GameObject.FindGameObjectWithTag("Player");
+        
+        Vector3 direction = Player.transform.position - transform.position;
+        rb.linearVelocity = new Vector2(direction.x, direction.y).normalized * bulletForce;
+    }
+
+    void Update()
+    {
+        timer += Time.deltaTime;
+        if (timer >= 10)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collide)
+    {
+        if (collide.gameObject.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+        }
+        
+        if (collide.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            Destroy(gameObject);
+        }
+    }
+}
