@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.Mathematics.Geometry;
 
 public class Player : MonoBehaviour
 {
@@ -11,21 +12,23 @@ public class Player : MonoBehaviour
     public LayerMask groundLayer;
 
     private Rigidbody2D rb;
-    //private Animator animator;
+    private Animator animator;
 
     [Header("Skill States")]
     public bool isGrounded;
     public bool isMidAir;
-    public bool isSkillActive; // toggled by EmotionSkill
+    
+    // toggled by EmotionSkill
+    public bool isSkillActive; 
     public bool isSkillUsed;
 
-    //private EmotionSkill emotionSkill;
+    
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-       //animator = GetComponent<Animator>();
-        //emotionSkill = GetComponent<EmotionSkill>();
+       animator = GetComponent<Animator>();
+       
     }
 
     private void Update()
@@ -41,12 +44,12 @@ public class Player : MonoBehaviour
             {
                 Jump();
             }
-            /*else if (isMidAir && isSkillActive && !isSkillUsed)
+            else if (isMidAir && isSkillActive && !isSkillUsed)
             {
                 Jump();
                 isSkillUsed = true;
                 Debug.Log("Double Jump Activated!");
-            }*/
+            }
         }
 
         // Flip sprite
@@ -62,9 +65,9 @@ public class Player : MonoBehaviour
             rb.gravityScale = 1f;
 
         // Animation parameters
-        /*animator.SetBool("isRunning", moveInput != 0);
+        animator.SetBool("isRunning", Mathf.Abs(moveInput) > 0.1f);
         animator.SetBool("isJumping", !isGrounded);
-        animator.SetBool("isJoyActive", isSkillActive);*/
+        animator.SetBool("isJoyActive", isSkillActive);
     }
 
     private void FixedUpdate()
@@ -72,14 +75,15 @@ public class Player : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
         isMidAir = !isGrounded;
 
-        /*if (isGrounded)
+        if (isGrounded)
         {
             isSkillUsed = false; // reset double jump on landing
-        }*/
+        }
     }
 
     private void Jump()
     {
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);  
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
     }
 }

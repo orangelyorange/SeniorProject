@@ -6,14 +6,16 @@ TagManager:
   tags:
   - Ground
   - Enemy
+  - NPC
+  - JournalItem
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - Enemy
   - Water
   - UI
-  - 
+  - Ground
   - 
   - 
   - 

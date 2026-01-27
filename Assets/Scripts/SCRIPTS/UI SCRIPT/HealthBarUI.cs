@@ -32,7 +32,7 @@ public class HealthBarUI : MonoBehaviour
         // Get current health
         int currentHealth = playerHealth.PlayerHealth;
         
-        // We clamp the index between 0 and the last slot in the array.
+        //clamp the index between 0 and the last slot in the array.
         int spriteIndex = Mathf.Clamp(currentHealth, 0, healthSprites.Length - 1);
 
         // Change the sprite on the single image
