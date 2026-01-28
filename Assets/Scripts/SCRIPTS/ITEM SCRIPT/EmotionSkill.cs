@@ -4,44 +4,45 @@ using System.Collections;
 public class EmotionSkill : MonoBehaviour
 {
     private Player player;
+    private Animator animator;
 
-    
-    public int extraJumpValue = 1; 
+    // For Double Jump
+    public int extraJumpValue = 1;
     public int extraJump = 0;
 
     private void Start()
     {
-        
         player = GetComponent<Player>();
+        animator = GetComponent<Animator>();
 
-        if (player == null)
-        {
-            Debug.LogError("Player script not found! Make sure both scripts are on the same object.");
-        }
-
-        // Initialize state
         extraJump = 0;
-        player.isSkillActive = false; // Start with skills disabled
+        player.isSkillActive = false; // ensure off at start
+
+        if (animator != null)
+            animator.SetBool("isJoyActive", false);
     }
 
     private void Update()
     {
-        // Toggle Joy skill with "Z" key
-        if (Input.GetKeyDown(KeyCode.Z)) 
+        if (Input.GetKeyDown(KeyCode.Z)) // Toggle Joy skill
         {
-            
             player.isSkillActive = !player.isSkillActive;
 
             if (player.isSkillActive)
             {
-                // Enable skill ability
-                player.isSkillUsed = false; // Reset usage so they can jump immediately
+                player.isSkillUsed = false;
                 Debug.Log("Joy Activated - Double Jump Enabled");
+
+                if (animator != null)
+                    animator.SetBool("isJoyActive", true);
             }
             else
             {
-                // Disable ability
+                player.isSkillUsed = true;
                 Debug.Log("Joy Deactivated - Double Jump Disabled");
+
+                if (animator != null)
+                    animator.SetBool("isJoyActive", false);
             }
         }
     }

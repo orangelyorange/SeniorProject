@@ -2,19 +2,21 @@ using UnityEngine;
 using System.Collections;
 public class EnemyHealthSystem : MonoBehaviour
 {
-    public int EnemyHealth = 3;
+    public int enemyHealth = 3;
+    private int currentHealth;
     private SpriteRenderer spriteRenderer;
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        currentHealth = enemyHealth;
     }
 
     public void TakeDamage(int damage)
     {
-        EnemyHealth -= damage;
+        enemyHealth -= damage;
         StartCoroutine(BlinkRed());
-        if (EnemyHealth <= 0)
+        if (enemyHealth <= 0)
         {
             Die();
         }

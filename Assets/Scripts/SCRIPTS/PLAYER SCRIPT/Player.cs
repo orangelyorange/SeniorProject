@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using Unity.Mathematics.Geometry;
 
 public class Player : MonoBehaviour
 {
@@ -17,18 +16,16 @@ public class Player : MonoBehaviour
     [Header("Skill States")]
     public bool isGrounded;
     public bool isMidAir;
-    
-    // toggled by EmotionSkill
-    public bool isSkillActive; 
+    public bool isSkillActive; // toggled by EmotionSkill
     public bool isSkillUsed;
 
-    
+    private EmotionSkill emotionSkill;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-       animator = GetComponent<Animator>();
-       
+        animator = GetComponent<Animator>();
+        emotionSkill = GetComponent<EmotionSkill>();
     }
 
     private void Update()
@@ -65,7 +62,7 @@ public class Player : MonoBehaviour
             rb.gravityScale = 1f;
 
         // Animation parameters
-        animator.SetBool("isRunning", Mathf.Abs(moveInput) > 0.1f);
+        animator.SetBool("isRunning", moveInput != 0);
         animator.SetBool("isJumping", !isGrounded);
         animator.SetBool("isJoyActive", isSkillActive);
     }
@@ -83,7 +80,6 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);  
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
     }
 }

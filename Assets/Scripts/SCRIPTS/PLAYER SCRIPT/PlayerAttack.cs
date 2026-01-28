@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 
 public class PlayerAttack : MonoBehaviour
@@ -22,13 +23,14 @@ public class PlayerAttack : MonoBehaviour
     }
 
     
+    
     public void Attack()
     {
         // To detect enemies in range of attack
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
         
-        // To deal damage
+        // To deal damage to enemy
 
         foreach (Collider2D enemy in hitEnemies)
         {
