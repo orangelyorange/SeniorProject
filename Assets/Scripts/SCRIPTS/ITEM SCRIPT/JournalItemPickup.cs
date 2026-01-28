@@ -36,7 +36,7 @@ public class JournalItemPickup : MonoBehaviour
                 playerHealthSystem.TakeHealing(1);
                 Debug.Log("Player is healing!");
             }
-            //ItemCounterUI.Instance.AddToCounter(collectibleItemName, amount);
+            ItemCounterUI.Instance.AddToCounter(collectibleItemName, amount);
             Destroy(gameObject);
         }
         
