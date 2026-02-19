@@ -4,11 +4,14 @@ using System.Collections;
 public class QuestManager : MonoBehaviour
 {
     public static QuestManager Instance;
-
+    
+    //Quest Status
     public bool questActive = false; //variable for activating quest items
     public bool questCompleted = false; //variable for completing quest items
-    public List<string> questItems = new List<string> { "ItemA", "ItemB", "ItemC", "ItemD" }; //quest items list
-
+    
+    //Quest Requirement
+    public string questItemName = "Rice Stalk"; //quest items name na hahanapin
+    public int targetAmount = 5; //item amount required
     private PlayerQuestItemInventory playerInventory; //reference player quest item inventory
 
     private void Awake()
@@ -26,41 +29,43 @@ public class QuestManager : MonoBehaviour
         playerInventory = FindObjectOfType<PlayerQuestItemInventory>();
     }
 
-    //Start Quest upon conversing with NPC
+    //Called by Quest System when you first accept the quest
     public void StartQuest()
     {
         if (questCompleted) return;
-        questCompleted = true;
-        Debug.Log("Quest started: Deliver 4 Rice stalks");
+        questActive = true;
+        Debug.Log($"Quest started: Deliver {targetAmount} {questItemName}s");
     }
 
     //To check quest progress
-    public void QuestProgress()
+    public bool QuestProgress()
     {
-        if (!questActive || questCompleted) return;
-        int collectedCount = 0;
-        foreach (string item in questItems)
-        {
-            if (playerInventory.inventory.Contains(item))
-            {
-                collectedCount++;
-            }
-            Debug.Log($"Quest Progress: {collectedCount}/{questItems.Count} items delivered.");
-        }
+        if (!questActive || questCompleted) return false;
+        
+        // from method in player quest item inventory
+        int currentAmount = playerInventory.GetItemCount(questItemName);
+        
+        Debug.Log($"Quest Progress: {currentAmount} {questItemName}s");
 
-        if (collectedCount == questItems.Count)
+        if (currentAmount >= targetAmount)
         {
             CompleteQuest();
+            return true;
         }
+        return false;
     }
 
-    private void CompleteQuest()
+    public void CompleteQuest()
     {
+        //remove items from player inventory
+        playerInventory.RemoveItem(questItemName, targetAmount);
+        
+        // update flags
         questCompleted = true;
         questActive = false;
         Debug.Log("Quest completed. All items delivered!");
 
-        string[] completionDialogue = new string[]
+        string[] completionDialogue = new string[] //To trigger completion dialogue
         {
             "Thank you, kind soul.",
             "I can finally harvest all the good rice! Praise Gugurang!"
