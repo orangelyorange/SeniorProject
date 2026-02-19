@@ -7,24 +7,42 @@
         public string[] questSuccessDialogue;
         public string[] afterCompletionDialogue;
 
-        public string questItemID = "Rice Stalk";
-        public int amountRequired = 5;
+        public bool isTalking = false;
         
         private NPCDialogueTrigger dialogueTrigger; //reference for npc trigger
-        private PlayerQuestItemInventory playerQuestInventory;
+        
         private void Start()
         {
             dialogueTrigger = GetComponent<NPCDialogueTrigger>();
-            if (playerQuestInventory == null) playerQuestInventory = FindFirstObjectByType<PlayerQuestItemInventory>();
-
+            
         }
 
         void Update()
         {
-            //Triggers when player presses F 
-            if (dialogueTrigger.enabled && dialogueTrigger.isPlayerInRange && Input.GetKeyDown(KeyCode.F))
+            //Triggers when player presses F and is inside the collider
+            if (Input.GetKeyDown(KeyCode.F))
             {
-                HandleInteraction();
+                Debug.Log("1. F was pressed");
+
+                if (dialogueTrigger == null)
+                {
+                    Debug.LogError("2. Dialogue Trigger was null. Make sure Quest System and Dialogue Trigger are on the same Game Object");
+                    return; //stops the code
+                }
+                
+                Debug.Log("3. Player is in collider range, Checking isTalking state.");
+
+                if (!isTalking)
+                {
+                    Debug.Log("4. Starting new conversation");
+                    HandleInteraction();
+                    isTalking = true;
+                }
+                else
+                {
+                    Debug.Log("4. Already talking, trying to show the next line");
+                    NPCDialogueManager.Instance.DisplayNextLine();
+                }
             }
         }
 
@@ -41,27 +59,30 @@
             else if (QuestManager.Instance.questActive)
             {
                 // check if player has sufficient items
-                int currentAmount = playerQuestInventory.GetItemCount(questItemID); //to check if player has collected items
-                if (currentAmount >= amountRequired)
+                //will return true if items are delivered, false if the player does not have enough items
+                bool isDelivered = QuestManager.Instance.QuestProgress();
+                if (isDelivered)
                 {
-					//Remove quest items to deliver to NPC
-                    playerQuestInventory.RemoveItem(questItemID, amountRequired);
-					
-					//To complete the quest
-					QuestManager.Instance.CompleteQuest();
-
-					NPCDialogueManager.Instance.StartDialogue(questSuccessDialogue);
+                    NPCDialogueManager.Instance.StartDialogue(questSuccessDialogue);
                 }
                 else
                 {
                     // Reminder Sequence if Player does not enough items
-                    
                     NPCDialogueManager.Instance.StartDialogue(questReminderDialogue);
                 }
             }
+            //if the quest is completed
             else if (QuestManager.Instance.questCompleted)
             {
-                NPCDialogueManager.Instance.StartDialogue(afterCompletionDialogue);
+                NPCDialogueManager.Instance.StartDialogue(questSuccessDialogue);
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                isTalking = false;
             }
         }
     }

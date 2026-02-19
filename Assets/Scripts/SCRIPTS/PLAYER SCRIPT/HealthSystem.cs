@@ -6,7 +6,7 @@ using UnityEngine;
 public class HealthSystem : MonoBehaviour
 {
     public int PlayerHealth; //tracks player's health
-    public int PlayerMaxHealth = 5; // full health
+    public int PlayerMaxHealth = 4; // full health
     private SpriteRenderer spriteRenderer;
 
     private void Start()

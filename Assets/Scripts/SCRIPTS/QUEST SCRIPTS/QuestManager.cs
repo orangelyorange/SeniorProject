@@ -6,10 +6,12 @@ public class QuestManager : MonoBehaviour
     public static QuestManager Instance;
     
     //Quest Status
+    [Header("Quest Status")]
     public bool questActive = false; //variable for activating quest items
     public bool questCompleted = false; //variable for completing quest items
     
-    //Quest Requirement
+    //Quest Requirements
+    [Header("Quest Requirements")]
     public string questItemName = "Rice Stalk"; //quest items name na hahanapin
     public int targetAmount = 5; //item amount required
     private PlayerQuestItemInventory playerInventory; //reference player quest item inventory
@@ -42,7 +44,7 @@ public class QuestManager : MonoBehaviour
     {
         if (!questActive || questCompleted) return false;
         
-        // from method in player quest item inventory
+        // count the number of items the player currently has
         int currentAmount = playerInventory.GetItemCount(questItemName);
         
         Debug.Log($"Quest Progress: {currentAmount} {questItemName}s");
@@ -50,9 +52,9 @@ public class QuestManager : MonoBehaviour
         if (currentAmount >= targetAmount)
         {
             CompleteQuest();
-            return true;
+            return true; //Tells QuestSystem that deliver is successful
         }
-        return false;
+        return false; //Tells QuestSystem they don't have enough items
     }
 
     public void CompleteQuest()
@@ -65,12 +67,5 @@ public class QuestManager : MonoBehaviour
         questActive = false;
         Debug.Log("Quest completed. All items delivered!");
 
-        string[] completionDialogue = new string[] //To trigger completion dialogue
-        {
-            "Thank you, kind soul.",
-            "I can finally harvest all the good rice! Praise Gugurang!"
-        };
-        
-        NPCDialogueManager.Instance.StartDialogue(completionDialogue);
     }
 }

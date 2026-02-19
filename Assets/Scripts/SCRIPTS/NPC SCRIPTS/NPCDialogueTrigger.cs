@@ -29,6 +29,7 @@ public class NPCDialogueTrigger : MonoBehaviour
         {
             Vector3 screenPos = mainCam.WorldToScreenPoint(transform.position + worldOffset);
             interactionUI.position = screenPos;
+			Debug.Log($"Interaction Label Hovering");
         }
     }
 
