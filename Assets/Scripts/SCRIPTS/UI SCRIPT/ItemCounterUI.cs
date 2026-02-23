@@ -21,6 +21,7 @@ public class ItemCounterUI : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
+        else Destroy(gameObject); 
     }
 
     public void AddToCounter(string itemName, int amount)
@@ -36,5 +37,21 @@ public class ItemCounterUI : MonoBehaviour
         }
 
         Debug.LogWarning($"[ItemCounterUI] No UI counter found for item name: {itemName}");
+    }
+
+    public void RemoveFromCounter(string itemName, int amount)
+    {
+        foreach (ItemUI item in items)
+        {
+            if (item.itemName == itemName)
+            {
+                item.count -= amount;
+                
+                //To prevent the UI from showing negative numbers
+                if (item.count < 0) item.count = 0;
+                item.counterText.text = item.count.ToString();
+                return;
+            }
+        }
     }
 }
