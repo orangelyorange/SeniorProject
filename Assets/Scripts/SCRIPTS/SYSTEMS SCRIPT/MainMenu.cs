@@ -45,7 +45,7 @@ public class MainMenu : MonoBehaviour
          musicSource.volume = startVolume; //reset in case player returns
       }
    //Loads next scene only while the loop above has finished
-   SceneManager.LoadScene("Level 1 Test Mechanics");
+   SceneManager.LoadScene(1);
       /* add na lang ung next scenes sa build settings*/
    }
 

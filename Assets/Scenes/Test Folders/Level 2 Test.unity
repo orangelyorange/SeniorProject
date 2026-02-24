@@ -538,7 +538,7 @@ Transform:
   m_GameObject: {fileID: 798434943}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.8943357, y: -1.0331321, z: -9.98622}
+  m_LocalPosition: {x: -6.7703743, y: -1.1971321, z: -9.98622}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -675,6 +675,10 @@ PrefabInstance:
     - target: {fileID: 2976230017127894436, guid: 31da21601f71d5c41bbf4cb60be6dab2, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4916225110114279712, guid: 31da21601f71d5c41bbf4cb60be6dab2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.88
       objectReference: {fileID: 0}
     - target: {fileID: 6321888384343839916, guid: 31da21601f71d5c41bbf4cb60be6dab2, type: 3}
       propertyPath: groundLayer.m_Bits
@@ -987,11 +991,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1084837762 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2577120680343148479, guid: 31da21601f71d5c41bbf4cb60be6dab2, type: 3}
-  m_PrefabInstance: {fileID: 809503687}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1103013016
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,11 +1152,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3352133733819882256, guid: 424e9130b69f271468b958d7d481bd30, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.8943357
+      value: -6.7703743
       objectReference: {fileID: 0}
     - target: {fileID: 3352133733819882256, guid: 424e9130b69f271468b958d7d481bd30, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.0331321
+      value: -1.1971321
       objectReference: {fileID: 0}
     - target: {fileID: 3352133733819882256, guid: 424e9130b69f271468b958d7d481bd30, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1198,7 +1197,7 @@ PrefabInstance:
     - target: {fileID: 3909723561547226731, guid: 424e9130b69f271468b958d7d481bd30, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
-      objectReference: {fileID: 1084837762}
+      objectReference: {fileID: 1773703452}
     - target: {fileID: 4694333335680214090, guid: 424e9130b69f271468b958d7d481bd30, type: 3}
       propertyPath: m_Name
       value: PlayerCamera
@@ -1416,6 +1415,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 463bfd9a6faccca4c9af8e583e0f44a0, type: 3}
+--- !u!4 &1773703452 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4916225110114279712, guid: 31da21601f71d5c41bbf4cb60be6dab2, type: 3}
+  m_PrefabInstance: {fileID: 809503687}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &85789733021575132
 MonoBehaviour:
   m_ObjectHideFlags: 0
