@@ -117,10 +117,10 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 900
-        height: 461
+        width: 389
+        height: 468
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -129,6 +129,28 @@ TextureImporter:
       bones: []
       spriteID: 48960232b24f57860800000000000000
       internalID: 7527190818329749892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fg tiles mid 3_1
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 0
+        width: 367
+        height: 377
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 758c06e2f79b23b40b62bb0b03fdd998
+      internalID: 6315345436412255247
       vertices: []
       indices: 
       edges: []
