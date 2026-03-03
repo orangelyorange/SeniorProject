@@ -3,31 +3,50 @@ using TMPro;
 
 public class NPCDialogueTrigger : MonoBehaviour
 {
-    [Header("UI Hover Settings")]
-    public RectTransform interactionUI; 
+    [Header("Dialogue")]
+    public string[] dialogueLines;
+
+    [Header("UI Hover Settings (Screen Space Overlay)")]
+    public RectTransform interactionUI;          // UI to hover (the label)
     public Vector3 worldOffset = new Vector3(0f, 2f, 0f);
-    public GameObject interactionLabel; 
 
-    [HideInInspector] public bool isPlayerInRange = false; 
-    
-    // Made this PUBLIC so QuestSystem can read it!
-    [HideInInspector] public PlayerQuestItemInventory playerInventory; 
+    [Header("Prompt Object")]
+    public GameObject interactionLabel;          // The "Press F to interact" object
 
-    private Camera mainCam; 
+    private bool isPlayerInRange = false;
+    private bool isDialogueActive = false;
+
+    private Camera mainCam;
 
     void Start()
     {
         mainCam = Camera.main;
-        if (interactionLabel != null) interactionLabel.SetActive(false);
+
+        if (interactionLabel != null)
+            interactionLabel.SetActive(false);
     }
 
     void Update()
     {
-        // Only handles hovering the UI now. No input checking!
-        if (interactionLabel != null && interactionLabel.activeSelf && interactionUI != null)
+        // Make UI hover above NPC when active
+        if (interactionLabel != null && interactionLabel.activeSelf)
         {
             Vector3 screenPos = mainCam.WorldToScreenPoint(transform.position + worldOffset);
             interactionUI.position = screenPos;
+        }
+
+        // Handle F key for dialogue
+        if (isPlayerInRange && Input.GetKeyDown(KeyCode.F))
+        {
+            if (!isDialogueActive)
+            {
+                NPCDialogueManager.Instance.StartDialogue(dialogueLines);
+                isDialogueActive = true;
+            }
+            else
+            {
+                NPCDialogueManager.Instance.DisplayNextLine();
+            }
         }
     }
 
@@ -36,8 +55,7 @@ public class NPCDialogueTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerInRange = true;
-            playerInventory = other.GetComponent<PlayerQuestItemInventory>(); // Store inventory
-            if (interactionLabel != null) interactionLabel.SetActive(true);
+            interactionLabel.SetActive(true);
         }
     }
 
@@ -46,14 +64,11 @@ public class NPCDialogueTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerInRange = false;
-            playerInventory = null; // Clear inventory
 
-            if (NPCDialogueManager.Instance != null) 
-            {
-                NPCDialogueManager.Instance.EndDialogue(); 
-            }
+            NPCDialogueManager.Instance.EndDialogue();
+            isDialogueActive = false;
 
-            if (interactionLabel != null) interactionLabel.SetActive(false);
+            interactionLabel.SetActive(false);
         }
     }
 }

@@ -8,6 +8,7 @@ public class FallDamage : MonoBehaviour
   {
     if (other.CompareTag("Player"))
     {
+      Destroy(other.gameObject);
       playerHealth.TakeDamage(5);
       playerHealth.Die();
       SceneManager.LoadScene(SceneManager.GetActiveScene().name);
