@@ -1,39 +1,75 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
+public class QuestItem
+{
+    public string itemName;
+    public int quantity;
+    public string description;
+    
+    //Constructor to create new item
+    public QuestItem(string name, int amount, string desc = "")
+    {
+        itemName = name;
+        quantity = amount;
+        description = desc;
+    }
+}
+
 public class PlayerQuestItemInventory : MonoBehaviour
 {
-    public List<string> inventory =  new List<string>();
+    //Inventory List
+    public List<QuestItem> inventory =  new List<QuestItem>();
 
-    public void AddItem(string itemName)
+    //Store Item PickUp script
+    public void AddItem(string itemName, int amountToAdd = 1, string description = "")
     {
-        inventory.Add(itemName);
-        Debug.Log("Added to inventory: " + itemName);
-        Debug.Log("Added to inventory: " + string.Join(",", inventory));
+        QuestItem existingItem = inventory.Find(item => item.itemName == itemName);
+
+        if (existingItem != null)
+        {
+            existingItem.quantity += amountToAdd;
+        }
+
+        else
+        {
+            inventory.Add(new QuestItem(itemName, amountToAdd, description));
+        }
+        
+        Debug.Log("Added {amountToAdd} {itemName}(s) to inventory.");
     }
 
     public int GetItemCount(string itemName)
     {
-        int count = 0;
-        foreach (string item in inventory)
-        {
-            if (item == itemName)
-            {
-                count++;
-            }
-        }
-        return count;
+       QuestItem existingItem = inventory.Find(item => item.itemName == itemName);
+
+       if (existingItem != null)
+       {
+           return existingItem.quantity;
+       }
+
+       return 0;
     }
 
     public void RemoveItem(string itemName, int amountToRemove)
     {
-        for (int i = 0; i < amountToRemove; i++)
+        QuestItem existingItem = inventory.Find(item => item.itemName == itemName);
+
+        if (existingItem != null)
         {
-            if (inventory.Contains(itemName))
+            existingItem.quantity -= amountToRemove;
+
+            if (existingItem.quantity <= 0)
             {
-                inventory.Remove(itemName);
+                inventory.Remove(existingItem);
             }
+            Debug.Log("Removed {amountToRemove} {itemName}(s) from inventory.");
         }
-        Debug.Log("Removed from inventory: " + itemName);
+        else
+        {
+            Debug.LogWarning($"Could not remove {itemName} because it is not in the inventory.");
+        }
     } 
 }

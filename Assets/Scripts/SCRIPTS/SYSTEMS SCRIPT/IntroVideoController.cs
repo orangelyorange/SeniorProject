@@ -6,7 +6,7 @@ public class IntroVideoController : MonoBehaviour
 {
     public VideoPlayer videoPlayer;
     
-    public string mainMenuSceneName = "MainMenu";
+    public string mainMenuSceneName = "Main Menu";
     
     private bool introSkipped = false;
 
