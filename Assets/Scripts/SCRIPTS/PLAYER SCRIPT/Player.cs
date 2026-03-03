@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -11,74 +10,75 @@ public class Player : MonoBehaviour
     public LayerMask groundLayer;
 
     private Rigidbody2D rb;
-    //private Animator animator;
+    private Animator animator;
 
     [Header("Skill States")]
     public bool isGrounded;
     public bool isMidAir;
-    public bool isSkillActive; // toggled by EmotionSkill
+    public bool isSkillActive; // set by EmotionSkill
     public bool isSkillUsed;
 
-    //private EmotionSkill emotionSkill;
+    private float moveInput;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-       //animator = GetComponent<Animator>();
-        //emotionSkill = GetComponent<EmotionSkill>();
+        animator = GetComponent<Animator>();
     }
 
-    private void Update()
+    void Update()
     {
-        // Movement
-        float moveInput = Input.GetAxis("Horizontal");
-        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+        moveInput = Input.GetAxis("Horizontal");
 
-        // Jump
+        // Jump input
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isGrounded)
             {
                 Jump();
             }
-            /*else if (isMidAir && isSkillActive && !isSkillUsed)
+            else if (isMidAir && isSkillActive && !isSkillUsed)
             {
                 Jump();
                 isSkillUsed = true;
                 Debug.Log("Double Jump Activated!");
-            }*/
+            }
         }
 
         // Flip sprite
         if (moveInput > 0.01f)
-            transform.localScale = Vector3.one;
+            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
         else if (moveInput < -0.01f)
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
 
-        // Gravity adjustment for smoother fall
-        if (rb.linearVelocity.y < 0)
-            rb.gravityScale = 3f;
-        else
-            rb.gravityScale = 1f;
-
-        // Animation parameters
-        /*animator.SetBool("isRunning", moveInput != 0);
+        // Animations
+        animator.SetBool("isRunning", moveInput != 0);
         animator.SetBool("isJumping", !isGrounded);
-        animator.SetBool("isJoyActive", isSkillActive);*/
+        animator.SetBool("isJoyActive", isSkillActive);
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+        // Movement
+        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+
+        // Ground check
+        isGrounded = Physics2D.OverlapCircle(
+            groundCheck.position,
+            groundCheckRadius,
+            groundLayer
+        );
+
         isMidAir = !isGrounded;
 
-        /*if (isGrounded)
-        {
-            isSkillUsed = false; // reset double jump on landing
-        }*/
+        if (isGrounded)
+            isSkillUsed = false;
+
+        // Better falling
+        rb.gravityScale = rb.linearVelocity.y < 0 ? 3f : 1f;
     }
 
-    private void Jump()
+    void Jump()
     {
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
     }
