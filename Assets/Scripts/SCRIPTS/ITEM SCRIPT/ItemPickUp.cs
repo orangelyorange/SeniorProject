@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ItemPickUp : MonoBehaviour
 {
-    public string collectibleItemName = "Rice Stalk"; //For item
+    public string itemName = "Rice Stalk"; //For item
     public int amount = 1;  
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -15,9 +15,10 @@ public class ItemPickUp : MonoBehaviour
 
             if (inventory != null)
             {
-                inventory.AddItem(collectibleItemName);
-                //QuestManager.Instance.QuestProgress(); para sa quest chuchu
-                ItemCounterUI.Instance.AddToCounter(collectibleItemName, amount); //para maadd sa counter 
+                inventory.AddItem(itemName);
+                QuestManager.Instance.QuestProgress(); //para sa quest system
+                ItemCounterUI.Instance.AddToCounter(itemName, amount); //para maadd sa counter
+                
                 Destroy(gameObject);
             }
             
