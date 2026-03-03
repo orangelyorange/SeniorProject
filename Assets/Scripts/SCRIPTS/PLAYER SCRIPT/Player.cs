@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [Header("Movement")]
+    [Header("Player Movement")]
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
     public Transform groundCheck;
@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     public bool isSkillActive; // set by EmotionSkill
     public bool isSkillUsed;
 
+    public bool isInvulnerable = false; //for the sadness shield
+
     private float moveInput;
 
     void Start()
@@ -30,22 +32,16 @@ public class Player : MonoBehaviour
     {
         moveInput = Input.GetAxis("Horizontal");
 
-        // Jump input
+        // Player jump logic
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isGrounded)
             {
                 Jump();
             }
-            else if (isMidAir && isSkillActive && !isSkillUsed)
-            {
-                Jump();
-                isSkillUsed = true;
-                Debug.Log("Double Jump Activated!");
-            }
         }
 
-        // Flip sprite
+        // Flip sprite when pressed A or D
         if (moveInput > 0.01f)
             transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
         else if (moveInput < -0.01f)
@@ -70,7 +66,8 @@ public class Player : MonoBehaviour
         );
 
         isMidAir = !isGrounded;
-
+        
+        //resets double jump skill when touching the ground
         if (isGrounded)
             isSkillUsed = false;
 
@@ -78,7 +75,7 @@ public class Player : MonoBehaviour
         rb.gravityScale = rb.linearVelocity.y < 0 ? 3f : 1f;
     }
 
-    void Jump()
+    public void Jump()
     {
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
     }
