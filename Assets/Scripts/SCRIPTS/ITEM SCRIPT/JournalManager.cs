@@ -46,8 +46,13 @@ namespace SCRIPTS.ITEM_SCRIPT
            GameObject newEntry = Instantiate(journalEntryPrefab, scrollViewContent);
            
            //grabs script on the prefab and fills the text
+           JournalEntry entryScript = newEntry.GetComponent<JournalEntry>();
+           if (entryScript != null)
+           {
+               entryScript.Setup(title, content);
+           }
            
-           //shows panel
+           //shows panel open to show new lore
            journalUIPanel.SetActive(true);
            
            //pauses game when journal panel is active
@@ -57,7 +62,10 @@ namespace SCRIPTS.ITEM_SCRIPT
        //Toggles the panel on and off 
        public void ToggleJournal()
        {
+           //flips active state of the panel
            journalUIPanel.SetActive(!journalUIPanel.activeSelf);
+           
+           //if the panel is now active, pause the game; if it's closed, resume the game
            Time.timeScale = journalUIPanel.activeSelf ? 0f : 1f;
        }
     }
