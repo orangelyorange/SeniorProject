@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class OptionsPanel : MonoBehaviour
 {
    public GameObject optionsPanel;
+   public GameObject settingsPanel;
    
    public bool isOpen = false;
 
@@ -12,6 +13,7 @@ public class OptionsPanel : MonoBehaviour
       if (optionsPanel != null)
       {
          optionsPanel.SetActive(false);
+         settingsPanel.SetActive(false);
          isOpen = false;
       }
    }
@@ -43,16 +45,18 @@ public class OptionsPanel : MonoBehaviour
             Time.timeScale = 1; //unfreezes the game
          }
       }
+      
+      if (settingsPanel != null){
+         settingsPanel.SetActive(false);
+      }
    }
-   
-   //connect on resume button on click event
-   public void ResumeGame()
+
+   public void SettingsPanel()
    {
-      if (optionsPanel != null)
+      if (settingsPanel != null)
       {
+         settingsPanel.SetActive(true);
          optionsPanel.SetActive(false);
-         isOpen = false;
-         Time.timeScale = 1; //to unfreeze the game
       }
    }
    

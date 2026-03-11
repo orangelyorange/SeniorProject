@@ -52,11 +52,6 @@ namespace SCRIPTS.ITEM_SCRIPT
                entryScript.Setup(title, content);
            }
            
-           //shows panel open to show new lore
-           journalUIPanel.SetActive(true);
-           
-           //pauses game when journal panel is active
-           Time.timeScale = 0f;
        }
 
        //Toggles the panel on and off 
