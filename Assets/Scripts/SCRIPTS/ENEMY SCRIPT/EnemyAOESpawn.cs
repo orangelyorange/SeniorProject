@@ -4,8 +4,11 @@ public class EnemyAOESpawn : MonoBehaviour
 {
     [Header("Attack settings")] 
     public GameObject wavePrefab; //Wave Prefab
-    public Transform spawnPoint; //wave spawn point
     public float attackCooldown = 3f; //time between attacks
+
+    [Header("Spawn settings")] 
+    public float undergroundYPosition = -6f;
+    public string targetTag = "Player";
 
     private float nextAttackTime = 0f;
 
@@ -21,15 +24,16 @@ public class EnemyAOESpawn : MonoBehaviour
 
     public void SpawnWave()
     {
-        if (wavePrefab != null && spawnPoint != null)
+        //Find the player position
+        GameObject player = GameObject.FindGameObjectWithTag(targetTag);
+        
+        if (player != null && wavePrefab != null)
         {
-            //Creates the wave on the assigned spawn point
-            Instantiate(wavePrefab, spawnPoint.position, spawnPoint.rotation);
-            Debug.Log("Spawning wave");
-        }
-        else
-        {
-            Debug.Log("No wave, missing prefab or spawn point");
+            //creates new position for the wave to spawn directly under the player
+            Vector2 spawnPosition = new Vector2(player.transform.position.x, undergroundYPosition);
+            //spawns the wave at the new position
+            Instantiate(wavePrefab, spawnPosition, Quaternion.identity);
+            Debug.Log("Wave spawned!");
         }
     }
 }

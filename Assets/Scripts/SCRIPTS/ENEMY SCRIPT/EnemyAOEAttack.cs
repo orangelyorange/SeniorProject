@@ -2,41 +2,37 @@ using UnityEngine;
 
 public class EnemyAOEAttack : MonoBehaviour
 {
-    [Header("AOE Wave Settings")] 
-    public int damage = 1; //wave damage
-    public float speed = 2f; //wave speed
-    public float lifeTime = 3f; //how long the wave will last
-    
-    [Header("Player Targetting")]
-    public string targetTag = "Player";
-    
-    public void Start()
+    [Header("Wave Settings")]
+    public int damage = 10;
+    public float speed = 10f;        // Make this faster for a quick eruption!
+    public float lifeTime = 2f;      // How long it lasts
+
+    [Header("Targeting")]
+    public string targetTag = "Player"; 
+
+    void Start()
     {
-        //Destroys the wave after seconds so it does not fly forever
+        // Set the timer to destroy the wave
         Destroy(gameObject, lifeTime);
     }
 
-    public void Update()
+    void Update()
     {
-        //Moves the wave forward to the right
-        transform.Translate(Vector2.right * speed *Time.deltaTime);
+        // Move the wave straight UP every frame
+        transform.Translate(Vector2.up * speed * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //checks if the game object hits the needed tag which is the player tag
-        //make sure 'Player" tag is assigned to player
         if (other.CompareTag(targetTag))
         {
-            HealthSystem playerHealth = other.GetComponent<HealthSystem>();//finds the health system attached to player
-
+            HealthSystem playerHealth = other.GetComponent<HealthSystem>();
+            
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(damage);
-                Debug.Log("Player has sustained damage");
-                Destroy(gameObject); //destroys object after colliding with player
+                Debug.Log("Player is hit!");
             }
-        } 
+        }
     }
-
 }
