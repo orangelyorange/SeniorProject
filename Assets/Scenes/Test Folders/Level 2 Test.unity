@@ -2519,7 +2519,6 @@ GameObject:
   - component: {fileID: 6183267756583621413}
   - component: {fileID: 1390409427345451699}
   - component: {fileID: 8641288854695761854}
-  - component: {fileID: 8591727859554581154}
   - component: {fileID: 331940393540737086}
   - component: {fileID: 7196114762131384895}
   - component: {fileID: 3574878973997045226}
@@ -3688,8 +3687,8 @@ MonoBehaviour:
   - {fileID: -8578418458684398838, guid: 391a934f6814ced40b237eae7cd1fa13, type: 3}
   - {fileID: -8578418458684398838, guid: 391a934f6814ced40b237eae7cd1fa13, type: 3}
   - {fileID: 7968478665934269200, guid: 2be052fdf7a38f14495c83a84bd582f3, type: 3}
-  playerHealth: {fileID: 0}
-  targetImage: {fileID: 0}
+  playerHealth: {fileID: 1390409427345451699}
+  targetImage: {fileID: 1102383964076579804}
 --- !u!222 &6987264370690331196
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4045,18 +4044,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8093468354264638736}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8591727859554581154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3947168200777305138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bdd999ec89342545b97e92267ffddd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8641288854695761854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4104,14 +4091,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2586362019426488478}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d580aba4f4cc25d46896b54bf26fb984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   wavePrefab: {fileID: 2486602239823962376, guid: 4b6680cd12c14274695014251281fa4a, type: 3}
-  spawnPoint: {fileID: 4322260835887179354}
   attackCooldown: 3
+  undergroundYPosition: -6
+  targetTag: Player
 --- !u!95 &8912567961923521604
 Animator:
   serializedVersion: 7
