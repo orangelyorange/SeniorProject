@@ -19,6 +19,11 @@ public class MainMenu : MonoBehaviour
       {
          mainVolumeSlider.value = AudioListener.volume;
       }
+      
+      if (optionsPanel != null)
+      {
+         optionsPanel.SetActive(false);
+      }
    }
 
    public void StartGame()

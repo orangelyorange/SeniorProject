@@ -42,13 +42,13 @@ public class PlayerAttack : MonoBehaviour
                 int damageToDeal = baseDamage; 
                 EmotionSkill activeSkill = skillManager.currentSkill;
 
-                // MATCHUP 1: Joy vs Water Ghost
+                // Joy vs Water Ghost
                 if (activeSkill == EmotionSkill.Joy && enemyHealth.enemyType == EnemyType.WaterGhost)
                 {
                     damageToDeal = emotionDamage;
                     Debug.Log("Joy deals heavy damage to Water Ghost!");
                 }
-                // MATCHUP 2: Sadness vs Fire Sentinel
+                // Sadness vs Fire Sentinel
                 else if (activeSkill == EmotionSkill.Sadness && enemyHealth.enemyType == EnemyType.FireSentinel)
                 {
                     damageToDeal = emotionDamage;

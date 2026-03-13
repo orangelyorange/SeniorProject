@@ -15,6 +15,13 @@ public class EnemyPatrolAi : MonoBehaviour
         animator = GetComponent<Animator>();
         currentPoint = enemyPointB.transform;
         animator.SetBool("isRunning", true);
+        
+        //Finds the player at the start
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            
+        }
     }
 
     void Update()

@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
         animator.SetBool("isRunning", moveInput != 0);
         animator.SetBool("isJumping", !isGrounded);
         animator.SetBool("isJoyActive", isSkillActive);
+        animator.SetBool("isSadnessActive", isSkillActive);
     }
 
     void FixedUpdate()
