@@ -28,7 +28,7 @@ public class MainMenu : MonoBehaviour
    
    //fade out sequence 
    private IEnumerator FadeOutAndLoad(){
-      //finds audio source
+      //finds audio source. wala pa atm 
       AudioSource musicSource = FindObjectOfType<AudioSource>();
 
       if (musicSource != null)
