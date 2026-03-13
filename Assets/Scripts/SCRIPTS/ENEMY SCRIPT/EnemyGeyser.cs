@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class EnemyAOEAttack : MonoBehaviour
+public class EnemyGeyser : MonoBehaviour
 {
-    [Header("Wave Settings")]
+    [Header("Geyser Settings")]
     public int damage = 1;
     public float speed = 2f;        // Make this faster for a quick eruption!
     public float lifeTime = 3f;      // How long it lasts

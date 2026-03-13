@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-    private GameObject Player;
     private Rigidbody2D rb;
     [SerializeField] public float bulletForce;
     public int damage = 1;
@@ -13,10 +12,8 @@ public class EnemyBullet : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        Player = GameObject.FindGameObjectWithTag("Player");
-        
-        Vector3 direction = Player.transform.position - transform.position;
-        rb.linearVelocity = new Vector2(direction.x, direction.y).normalized * bulletForce;
+        // Velocity is set by the spawner (EnemyAttack). This avoids per-bullet FindWithTag calls
+        // and prevents conflicting velocity assignments.
     }
 
     void Update()
@@ -34,7 +31,7 @@ public class EnemyBullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+
         if (collide.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             Destroy(gameObject);

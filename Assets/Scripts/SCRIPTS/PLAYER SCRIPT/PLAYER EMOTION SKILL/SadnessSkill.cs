@@ -23,7 +23,7 @@ public class SadnessSkill : MonoBehaviour
     [Header("Unlock Requirements")] 
     public int unlockSceneIndex = 2; 
 
-    public bool isSadnessActive = false;
+    public bool isSadnessSkillActive = false;
     private bool isShieldActive = false;
     private bool isPerformingDownwardSlash = false; // Tracks if we are currently slamming down
 
@@ -37,6 +37,11 @@ public class SadnessSkill : MonoBehaviour
         {
             shieldObject.SetActive(false); 
         }
+
+        if (animator != null)
+        {
+            animator.SetBool("isSadnessActive", false);
+        }
     }
 
     private void Update()
@@ -44,7 +49,7 @@ public class SadnessSkill : MonoBehaviour
         // 1. Initiate the downward slash in mid-air
         if (Input.GetMouseButtonDown(0))
         {
-            if (isSadnessActive && player.isMidAir && !isShieldActive && !isPerformingDownwardSlash)
+            if (isSadnessSkillActive && player.isMidAir && !isShieldActive && !isPerformingDownwardSlash)
             {
                 ExecuteDownwardSlash();
             }
@@ -69,7 +74,11 @@ public class SadnessSkill : MonoBehaviour
             }
         }
 
-        isSadnessActive = isActive;
+        isSadnessSkillActive = isActive;
+        if (animator != null)
+        {
+            animator.SetBool("isSadnessActive", true);
+        }
         Debug.Log(isActive ? "Sadness skill activated." : "Sadness skill Unequipped");
         return true;
     }
@@ -128,7 +137,7 @@ public class SadnessSkill : MonoBehaviour
         Debug.Log("Shield Deactivated");
     }
 
-    // visualize the AoE radius in the Unity Scene view!
+    // visualize the AoE radius in the Unity Scene view
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;
