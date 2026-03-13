@@ -600,7 +600,7 @@ Transform:
   m_GameObject: {fileID: 798434943}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.340374, y: -1.017132, z: -9.98622}
+  m_LocalPosition: {x: 15.299625, y: -0.8771321, z: -9.98622}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1400,7 +1400,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1986102659}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f162beafec96fab4f915e5e431847b4e, type: 3}
   m_Name: 
@@ -2245,7 +2245,7 @@ Transform:
   m_GameObject: {fileID: 4694333336936321137}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.340374, y: -1.017132, z: -9.98622}
+  m_LocalPosition: {x: 15.299625, y: -0.8771321, z: -9.98622}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2356,6 +2356,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   attackPoint: {fileID: 1431725069040352746}
+  downwardSlashForce: 15
+  plungeAoERadius: 2.5
 --- !u!224 &3665067464544001720
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2525,6 +2527,7 @@ GameObject:
   - component: {fileID: 8912567961923521607}
   - component: {fileID: 8912567961923521606}
   - component: {fileID: 8912567961923521605}
+  - component: {fileID: 8912567961923521608}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2779,7 +2782,7 @@ Transform:
   m_GameObject: {fileID: 3947168200777305138}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.45, y: -1.78, z: 0.013779943}
+  m_LocalPosition: {x: 14.19, y: -1.64, z: 0.013779943}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3348,6 +3351,7 @@ MonoBehaviour:
   isSkillActive: 0
   isSkillUsed: 0
   isInvulnerable: 0
+  isDashing: 0
 --- !u!222 &6198177287032743040
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4096,11 +4100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d580aba4f4cc25d46896b54bf26fb984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wavePrefab: {fileID: 2486602239823962376, guid: 4b6680cd12c14274695014251281fa4a, type: 3}
-  attackCooldown: 3
-  undergroundYPosition: -6
-  targetTag: Player
-  nextAttackTime: 0
 --- !u!95 &8912567961923521604
 Animator:
   serializedVersion: 7
@@ -4148,15 +4147,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dbd594a91deb0947b7699f23983cdc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  downwardSlashForce: 15
   shieldObject: {fileID: 881057665}
   shieldDuration: 5
-  aoeRadius: 2.5
-  baseAoEDamage: 1
-  emotionAoEDamage: 2
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  shieldCooldown: 8
   unlockSceneIndex: 2
   isSadnessSkillActive: 0
 --- !u!114 &8912567961923521607
@@ -4173,6 +4166,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   extraJumpValue: 1
   extraJump: 0
+--- !u!114 &8912567961923521608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3947168200777305138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bfc5d78324033d4d8c8c6484bcd2ab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isRageEquipped: 0
+  dashSpeed: 5
+  dashDuration: 0.2
+  skillCooldown: 10
+  unlockSceneIndex: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
