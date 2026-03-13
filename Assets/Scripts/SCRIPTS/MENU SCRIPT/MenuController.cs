@@ -9,14 +9,14 @@ public class MenuController : MonoBehaviour
     public string _newGameLevel;
     //load level when we need it
     private string levelToLoad;
-    [SerializeField] private GameObject noSavedGameDialogue = null;
+    [SerializeField] private GameObject noSavedGameDialog = null;
 
     //control when i click "yes"
-    public void NewGameDialogueYes()
+    public void NewGameDialogYes()
     {
         SceneManager.LoadScene(_newGameLevel);
     }
-    public void LoadGameDialogueYes()
+    public void LoadGameDialogYes()
     {
         if (PlayerPrefs.HasKey("SavedLevel"))
         {
@@ -25,7 +25,7 @@ public class MenuController : MonoBehaviour
         }
         else
         {
-            noSavedGameDialogue.SetActive(true);
+            noSavedGameDialog.SetActive(true);
         }
 
     }
