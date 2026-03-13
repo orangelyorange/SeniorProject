@@ -3,9 +3,9 @@ using UnityEngine;
 public class EnemyAOEAttack : MonoBehaviour
 {
     [Header("Wave Settings")]
-    public int damage = 10;
-    public float speed = 10f;        // Make this faster for a quick eruption!
-    public float lifeTime = 2f;      // How long it lasts
+    public int damage = 1;
+    public float speed = 2f;        // Make this faster for a quick eruption!
+    public float lifeTime = 3f;      // How long it lasts
 
     [Header("Targeting")]
     public string targetTag = "Player"; 
