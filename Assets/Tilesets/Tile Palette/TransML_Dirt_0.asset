@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: TransML_Dirt_0
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -8302154883876871118, guid: d35812d66e03ce14386a74eea9fb7bf2, type: 3}
+  m_Sprite: {fileID: -8302154883876871118, guid: 09d72843c04107744b5614f27976169b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

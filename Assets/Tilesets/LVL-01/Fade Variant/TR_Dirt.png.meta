@@ -103,7 +103,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TR_Dirt_1
+      name: TR_Dirt_0
       rect:
         serializedVersion: 2
         x: 0
@@ -118,8 +118,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6339188599c332490800000000000000
-      internalID: -7772301902598794442
+      spriteID: c2c3afbfb14029b90800000000000000
+      internalID: -7236717132992857044
       vertices: []
       indices: 
       edges: []
@@ -128,7 +128,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 88795890853e4a240aa9635cf8e34939
+    spriteID: bac0205175bcd8549bac1f1f8380580f
     internalID: 0
     vertices: []
     indices: 
