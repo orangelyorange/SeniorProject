@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &129886572457092303
+--- !u!1 &137323333992782819
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,59 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 566165928628628361}
-  - component: {fileID: 8748434235741732584}
+  - component: {fileID: 3209124908559496008}
+  - component: {fileID: 4154003716797572235}
+  m_Layer: 0
+  m_Name: ItemCounterUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3209124908559496008
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137323333992782819}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 446.34543, y: 728.08655, z: -1.3264192}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6568823483894918295}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4154003716797572235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137323333992782819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf344cfacdaff84da675fd0bfaeeefd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - itemName: Rice Stalk
+    counterText: {fileID: 0}
+    count: 0
+  - itemName: Journal Item
+    counterText: {fileID: 0}
+    count: 0
+--- !u!1 &2358451283025082739
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 394262931975939430}
+  - component: {fileID: 5763861997217246431}
   m_Layer: 0
   m_Name: QuestManager
   m_TagString: Untagged
@@ -17,28 +68,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &566165928628628361
+--- !u!4 &394262931975939430
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 129886572457092303}
+  m_GameObject: {fileID: 2358451283025082739}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8006054960863640528}
+  m_Father: {fileID: 6568823483894918295}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8748434235741732584
+--- !u!114 &5763861997217246431
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 129886572457092303}
+  m_GameObject: {fileID: 2358451283025082739}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89a5417185292e947b67cdcc5adebb53, type: 3}
@@ -51,7 +102,7 @@ MonoBehaviour:
     requiredAmount: 5
     questActive: 0
     questCompleted: 0
---- !u!1 &1414720619727586183
+--- !u!1 &4956368320060588003
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,8 +110,71 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7196233023536669887}
-  - component: {fileID: 4841511528703944271}
+  - component: {fileID: 4824474737003631124}
+  - component: {fileID: 5678889795251555571}
+  - component: {fileID: 1833013556837642006}
+  m_Layer: 0
+  m_Name: JournalPanelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4824474737003631124
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4956368320060588003}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6568823483894918295}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5678889795251555571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4956368320060588003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5566f7319b12924badf7ef6b99ff2fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  optionsPanel: {fileID: 0}
+  settingsPanel: {fileID: 0}
+  isOpen: 0
+--- !u!114 &1833013556837642006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4956368320060588003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07e58fa61d9d47acb14c492ede47cf36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  journalUIPanel: {fileID: 0}
+  scrollViewContent: {fileID: 0}
+  journalEntryPrefab: {fileID: 1196802311766197153, guid: e76ec750412c871469ab780ca1449808, type: 3}
+--- !u!1 &8535272688324002720
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5813468131047105450}
+  - component: {fileID: 4398233193456813451}
   m_Layer: 0
   m_Name: Music Manager
   m_TagString: Untagged
@@ -68,33 +182,33 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7196233023536669887
+--- !u!4 &5813468131047105450
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1414720619727586183}
+  m_GameObject: {fileID: 8535272688324002720}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 906.92255, y: 469.80865, z: -5.5614195}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8006054960863640528}
+  m_Father: {fileID: 6568823483894918295}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &4841511528703944271
+--- !u!82 &4398233193456813451
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1414720619727586183}
+  m_GameObject: {fileID: 8535272688324002720}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 4c9d365f2ad86ef4dbff398dc68fb6a0, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -180,7 +294,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &2525254499747156292
+--- !u!1 &8926896082138040631
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,45 +302,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8006054960863640528}
-  m_Layer: 0
-  m_Name: Game Managers
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8006054960863640528
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2525254499747156292}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.7665296, y: -4.2896113, z: -0.015222484}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7347691438252232826}
-  - {fileID: 2813945620996045370}
-  - {fileID: 566165928628628361}
-  - {fileID: 6065376017991206921}
-  - {fileID: 3011043924859816848}
-  - {fileID: 7196233023536669887}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2747043180946396750
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2813945620996045370}
-  - component: {fileID: 8743533442855822933}
+  - component: {fileID: 3817748709415210833}
+  - component: {fileID: 4381780994535879558}
   m_Layer: 0
   m_Name: NPCDialogueManager
   m_TagString: Untagged
@@ -234,28 +311,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2813945620996045370
+--- !u!4 &3817748709415210833
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2747043180946396750}
+  m_GameObject: {fileID: 8926896082138040631}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 896.3019, y: 405.2453, z: -6.95136}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8006054960863640528}
+  m_Father: {fileID: 6568823483894918295}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8743533442855822933
+--- !u!114 &4381780994535879558
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2747043180946396750}
+  m_GameObject: {fileID: 8926896082138040631}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c0ddfbc98a3f074c9e38af9db877fab, type: 3}
@@ -263,7 +340,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialoguePanel: {fileID: 0}
   dialogueText: {fileID: 0}
---- !u!1 &3467794885061351774
+--- !u!1 &8936861547631466009
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -271,45 +348,36 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3011043924859816848}
-  - component: {fileID: 2947057325330551854}
+  - component: {fileID: 6568823483894918295}
   m_Layer: 0
-  m_Name: JournalPanelManager
+  m_Name: Game Managers 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3011043924859816848
+--- !u!4 &6568823483894918295
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3467794885061351774}
+  m_GameObject: {fileID: 8936861547631466009}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 6.7665296, y: -4.2896113, z: -0.015222484}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8006054960863640528}
+  m_Children:
+  - {fileID: 3209124908559496008}
+  - {fileID: 3817748709415210833}
+  - {fileID: 394262931975939430}
+  - {fileID: 6820479166814739893}
+  - {fileID: 4824474737003631124}
+  - {fileID: 5813468131047105450}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2947057325330551854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3467794885061351774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5566f7319b12924badf7ef6b99ff2fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  optionsPanel: {fileID: 0}
-  isOpen: 0
---- !u!1 &5665779489780303059
+--- !u!1 &9086566230209384935
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -317,8 +385,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6065376017991206921}
-  - component: {fileID: 882722401897822238}
+  - component: {fileID: 6820479166814739893}
+  - component: {fileID: 6802468241645364497}
   m_Layer: 0
   m_Name: PlayerHealthMonitor
   m_TagString: Untagged
@@ -326,28 +394,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6065376017991206921
+--- !u!4 &6820479166814739893
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5665779489780303059}
+  m_GameObject: {fileID: 9086566230209384935}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8006054960863640528}
+  m_Father: {fileID: 6568823483894918295}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &882722401897822238
+--- !u!114 &6802468241645364497
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5665779489780303059}
+  m_GameObject: {fileID: 9086566230209384935}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4401c2211ef41e54db9380d61b7ab39b, type: 3}
@@ -362,54 +430,3 @@ MonoBehaviour:
   - {fileID: 7968478665934269200, guid: 2be052fdf7a38f14495c83a84bd582f3, type: 3}
   playerHealth: {fileID: 0}
   targetImage: {fileID: 0}
---- !u!1 &6160880480830966589
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7347691438252232826}
-  - component: {fileID: 6566618495817101377}
-  m_Layer: 0
-  m_Name: ItemCounterUI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7347691438252232826
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6160880480830966589}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 446.34543, y: 728.08655, z: -1.3264192}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8006054960863640528}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6566618495817101377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6160880480830966589}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbf344cfacdaff84da675fd0bfaeeefd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items:
-  - itemName: Rice Stalk
-    counterText: {fileID: 0}
-    count: 0
-  - itemName: Journal Item
-    counterText: {fileID: 0}
-    count: 0

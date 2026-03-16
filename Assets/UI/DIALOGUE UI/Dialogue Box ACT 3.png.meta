@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c80b49dfa99e7c3448b1e57d27224667
+guid: 7fd31b310f30b994e8d52925941ee00e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6177499577804226639
-    second: Betrayed Woman_0
+      213: -204424425653817212
+    second: Dialogue Box ACT 3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Betrayed Woman_0
+      name: Dialogue Box ACT 3_0
       rect:
         serializedVersion: 2
-        x: 435
-        y: 6
-        width: 931
-        height: 1788
+        x: 0
+        y: 0
+        width: 1419
+        height: 325
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1bf7ad02ddc154aa0800000000000000
-      internalID: -6177499577804226639
+      spriteID: 480bd75611db92df0800000000000000
+      internalID: -204424425653817212
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Betrayed Woman_0: -6177499577804226639
+      Dialogue Box ACT 3_0: -204424425653817212
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

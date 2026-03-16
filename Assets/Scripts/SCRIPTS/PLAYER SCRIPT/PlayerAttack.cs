@@ -88,7 +88,7 @@ public class PlayerAttack : MonoBehaviour
         DealDamageToEnemies(hitEnemies);
     }
 
-    // --- HELPER METHOD: Applies Damage & Emotion Weaknesses ---
+    // Applies Damage & Emotion Weaknesses 
     private void DealDamageToEnemies(Collider2D[] enemiesToHit)
     {
         foreach (Collider2D enemy in enemiesToHit)

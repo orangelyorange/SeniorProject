@@ -1735,7 +1735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1bb0417b35b0f34dad66edd611d89d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
+  enemyType: 1
   maxHealth: 3
 --- !u!224 &591024673627544867
 RectTransform:
@@ -2197,6 +2197,7 @@ GameObject:
   - component: {fileID: 1333925889180750900}
   - component: {fileID: 5987123433061244950}
   - component: {fileID: 8704192863908731170}
+  - component: {fileID: 8704192863908731171}
   m_Layer: 3
   m_Name: LunodShadeEnemy
   m_TagString: Enemy
@@ -2271,7 +2272,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8435809531253731775, guid: 795c501636e320045b41d00078f205a4, type: 3}
+  m_Sprite: {fileID: 2504945849208094889, guid: 245317f8e9ff3d74e92bf22c988ba5cb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4100,6 +4101,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d580aba4f4cc25d46896b54bf26fb984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8704192863908731171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2586362019426488478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d949ca489b876f488cf333d5900ff12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackStyle: 1
+  attackPrefab: {fileID: 2486602239823962376, guid: 4b6680cd12c14274695014251281fa4a, type: 3}
+  detectionRadius: 10
+  attackCooldown: 2
+  attackSpawnPoint: {fileID: 0}
+  undergroundYPosition: -6
+  skyYPosition: 12
 --- !u!95 &8912567961923521604
 Animator:
   serializedVersion: 7
@@ -4198,6 +4218,6 @@ SceneRoots:
   - {fileID: 1103013020}
   - {fileID: 3665067464544001720}
   - {fileID: 749374438}
-  - {fileID: 7479582870904655849}
   - {fileID: 8093468354264638736}
   - {fileID: 2082641860}
+  - {fileID: 7479582870904655849}
