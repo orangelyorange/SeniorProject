@@ -24,7 +24,10 @@ public class JoySkill : MonoBehaviour
     // Called by NewMonoBehaviourScript to explicitly turn Joy on or off
     public void SetJoy(bool isActive)
     {
-        player.isSkillActive = isActive;
+        if (animator != null)
+        {
+            animator.SetBool("isJoyActive", isActive);
+        }
 
         if (isActive)
         {
@@ -40,6 +43,11 @@ public class JoySkill : MonoBehaviour
 
     private void Update()
     {
+        if (player.isSkillActive && !player.isMidAir)
+        {
+            player.isSkillUsed = false;
+        }
+        
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (player.isMidAir && player.isSkillActive && !player.isSkillUsed)
