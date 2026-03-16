@@ -10,6 +10,7 @@ public class RageSkill : MonoBehaviour
 
     [Header("Rage Skill State")] 
     public bool isRageEquipped = false;
+    public bool isUnlocked = false; // Added to track if the skill is unlocked yet
 
     [Header("Rage Skill Setup")] 
     public float dashSpeed = 10f;
@@ -32,31 +33,51 @@ public class RageSkill : MonoBehaviour
         {
             animator.SetBool("isRageActive", false);
         } 
+        
+        // Check if the skill should be unlocked when the scene loads
+        CheckUnlockStatus();
     }
 
     private void Update()
     {
-        //automatic rage skill dash when c (player skill) is equipped
-        if (isRageEquipped)
+        // Check if unlocked, equipped, NOT currently dashing, and cooldown has passed
+        if (isUnlocked && isRageEquipped && !isDashing && Time.time >= lastSkillUsedTime + skillCooldown)
         {
-            StartCoroutine(PerformDash());
+            // Assuming "C" is the key you want to press to activate the skill
+            if (Input.GetKeyDown(KeyCode.C)) 
+            {
+                StartCoroutine(PerformDash());
+            }
+        }
+    }
+
+    // New method to handle the scene checking logic
+    private void CheckUnlockStatus()
+    {
+        // Gets the build index of the currently active scene
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        
+        // Unlocks if we are on or past the required scene
+        if (currentSceneIndex >= unlockSceneIndex)
+        {
+            isUnlocked = true;
         }
     }
 
     private IEnumerator PerformDash()
     {
         isDashing = true;
-        player.isDashing = true; //tells the player script that we are dashing, so it can disable other movement inputs
+        player.isDashing = true; // Tells the player script that we are dashing
         
-        lastSkillUsedTime = Time.time; //resets cooldown timer
+        lastSkillUsedTime = Time.time; // Resets cooldown timer
         
-        //triggers animation
+        // Triggers animation
         if (animator != null)
         {
             animator.SetBool("isRageActive", true);
         }
         
-        //turns off gravity while dashing
+        // Turns off gravity while dashing
         float originalGravity = 0f;
         if (rb != null)
         {
@@ -64,26 +85,28 @@ public class RageSkill : MonoBehaviour
             rb.gravityScale = 0f;
         }
         
-        //Determine the dash direction based on player facing
-        float facingX = Mathf.Sign(transform.position.x);
+        // NOTE: Mathf.Sign(transform.position.x) gets the sign of your world coordinate, 
+        // not where the player is looking. See my notes below!
+        float facingX = Mathf.Sign(transform.localScale.x); // Fixed this to use localScale
         Vector2 dashDirection = new Vector2(facingX, 0f);
         
-        float StartTime = Time.time;
+        float startTime = Time.time;
         
-        //Apply velocity for the duration of the dash
-        while (Time.time < StartTime + dashDuration)
+        // Apply velocity for the duration of the dash
+        while (Time.time < startTime + dashDuration)
         {
             if (rb != null)
             {
                 rb.linearVelocity = dashDirection * dashSpeed;
             }
-            yield return null; //wait for next frame
+            yield return null; // Wait for next frame
         }
-        //Clean up when the dash ends
+        
+        // Clean up when the dash ends
         if (rb != null)
         {
-            rb.linearVelocity = Vector2.zero; //stops momentum
-            rb.gravityScale = originalGravity; //restores gravity
+            rb.linearVelocity = Vector2.zero; // Stops momentum
+            rb.gravityScale = originalGravity; // Restores gravity
         }
         
         if (animator != null)
@@ -91,21 +114,12 @@ public class RageSkill : MonoBehaviour
             animator.SetBool("isRageActive", false);
         }
         
-        player.isDashing = false; //gives control back to the player script
+        player.isDashing = false; // Gives control back to the player script
         isDashing = false;
     }
     
     public void SetRage(bool isRage)
     {
-	if (isActive) 
-	{
-		int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-		if (currentSceneIndex < unlockSceneIndex)
-            {
-                Debug.Log("Rage skill locked. Reach level " + unlockSceneIndex + " to unlock.");
-                return false; 
-			}	
+        isRageEquipped = isRage;
     }
-     isRageEquipped = isRage;
-}
 }
