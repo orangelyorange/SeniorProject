@@ -97,8 +97,14 @@ public class RageSkill : MonoBehaviour
     
     public void SetRage(bool isRage)
     {
-        isRageEquipped = isRage;
+	if (isActive) 
+	{
+		int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+		if (currentSceneIndex < unlockSceneIndex)
+            {
+                Debug.Log("Rage skill locked. Reach level " + unlockSceneIndex + " to unlock.");
+                return false; 
+			}	
     }
-    
-    
+     isRageEquipped = isRage;
 }

@@ -4,7 +4,8 @@ using UnityEngine;
 public enum EnemyAttackStyle
 {
     ShootProjectile,
-    SpawnGeyserUnderground
+    SpawnGeyserUnderground,
+	SpawnFallingRock
 }
 
 public class EnemyAttack : MonoBehaviour
@@ -15,11 +16,14 @@ public class EnemyAttack : MonoBehaviour
     public float detectionRadius = 10f;      // How close the player needs to be
     public float attackCooldown = 2f;        // Time between attacks
 
-    [Header("Projectile Settings (Ignore for Geyser)")]
+    [Header("Level 1 Attack Settings")]
     public Transform attackSpawnPoint;       // Where bullets shoot from
 
-    [Header("Geyser Settings (Ignore for Projectile)")]
-    public float undergroundYPosition = -6f; // How deep the geyser starts
+    [Header("Level 2 Attack Settings")]
+    public float undergroundYPosition = -6f; // How deep the geyser 
+
+	[Header("Level 3 Attack Settings")]
+public float skyYPosition = 12f; //how high the falling rock spawns
 
     private GameObject player;
     private float timer;

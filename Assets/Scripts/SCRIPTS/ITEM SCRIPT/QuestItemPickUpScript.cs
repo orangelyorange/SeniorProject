@@ -3,8 +3,8 @@ using UnityEngine;
 //Attach to items
 public class QuestItemPickUpScript : MonoBehaviour
 {
-   [Header("Item Details")]
-   public string itemName = "Rice Stalk";
+   [Header("Item Details")] 
+   public string itemName;
    public int amount = 1;
    public string itemDescription = "";
 
