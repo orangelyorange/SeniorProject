@@ -111,7 +111,7 @@ TextureImporter:
         width: 900
         height: 900
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -124,11 +124,33 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: BL_Dirt1_1
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 717
+        width: 6
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4cbdceb131792ac40800000000000000
+      internalID: 5522142201438329796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e02e0f44843d8ee4c8aac277a704dab2
+    spriteID: 8bbf1dad435cfcd44a87554eecfcb55b
     internalID: 0
     vertices: []
     indices: 
