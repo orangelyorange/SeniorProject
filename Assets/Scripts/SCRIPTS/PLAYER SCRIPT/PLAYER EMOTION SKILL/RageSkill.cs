@@ -108,3 +108,4 @@ public class RageSkill : MonoBehaviour
     }
      isRageEquipped = isRage;
 }
+}
