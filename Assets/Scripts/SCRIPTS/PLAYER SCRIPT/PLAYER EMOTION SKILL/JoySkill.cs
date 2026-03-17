@@ -21,7 +21,7 @@ public class JoySkill : MonoBehaviour
         } 
     }
    
-    // Called by NewMonoBehaviourScript to explicitly turn Joy on or off
+    // Called by Emotion Skill Manager to explicitly turn Joy on or off
     public void SetJoy(bool isActive)
     {
         if (animator != null)
