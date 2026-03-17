@@ -427,9 +427,9 @@ GameObject:
   - component: {fileID: 74517472}
   - component: {fileID: 74517471}
   - component: {fileID: 74517470}
-  - component: {fileID: 74517469}
   - component: {fileID: 74517468}
   - component: {fileID: 74517467}
+  - component: {fileID: 74517474}
   m_Layer: 3
   m_Name: RiceMouse_Enemy
   m_TagString: Enemy
@@ -490,18 +490,6 @@ MonoBehaviour:
   enemyPointA: {fileID: 875755690}
   enemyPointB: {fileID: 1974633042}
   speed: 5
---- !u!114 &74517469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 74517465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cc5cf6eadf13a44ea1340562bab8692, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &74517470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -644,6 +632,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &74517474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74517465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d949ca489b876f488cf333d5900ff12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackStyle: 0
+  attackPrefab: {fileID: 6571900647461822765, guid: 444396ee47e558a488c312ddeaba75fc, type: 3}
+  detectionRadius: 10
+  attackCooldown: 2
+  attackSpawnPoint: {fileID: 1449186550}
+  undergroundYPosition: -6
+  skyYPosition: 12
 --- !u!1 &106926154
 GameObject:
   m_ObjectHideFlags: 0
@@ -82887,9 +82894,9 @@ GameObject:
   - component: {fileID: 1914835546}
   - component: {fileID: 1914835545}
   - component: {fileID: 1914835544}
-  - component: {fileID: 1914835543}
   - component: {fileID: 1914835542}
   - component: {fileID: 1914835541}
+  - component: {fileID: 1914835548}
   m_Layer: 3
   m_Name: RiceMouse_Enemy
   m_TagString: Enemy
@@ -82950,18 +82957,6 @@ MonoBehaviour:
   enemyPointA: {fileID: 615537296}
   enemyPointB: {fileID: 1975163192}
   speed: 5
---- !u!114 &1914835543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1914835539}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cc5cf6eadf13a44ea1340562bab8692, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1914835544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83104,6 +83099,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1914835548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914835539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d949ca489b876f488cf333d5900ff12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackStyle: 0
+  attackPrefab: {fileID: 6571900647461822765, guid: 444396ee47e558a488c312ddeaba75fc, type: 3}
+  detectionRadius: 10
+  attackCooldown: 2
+  attackSpawnPoint: {fileID: 371912060}
+  undergroundYPosition: -6
+  skyYPosition: 12
 --- !u!1 &1968643326
 GameObject:
   m_ObjectHideFlags: 0
