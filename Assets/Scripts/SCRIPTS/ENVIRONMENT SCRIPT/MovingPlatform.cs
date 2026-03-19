@@ -42,6 +42,7 @@ public class MovingPlatform : MonoBehaviour
         }
     }
 
+
     // Parent the player to the platform so they move with it
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -55,8 +56,7 @@ public class MovingPlatform : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-        {
-            collision.transform.SetParent(null);
+        { }
+            collision.transform.SetParent(null); 
         }
     }
-}
