@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 namespace SCRIPTS.ITEM_SCRIPT
 {
@@ -6,10 +7,15 @@ namespace SCRIPTS.ITEM_SCRIPT
     {
         public static JournalManager Instance;
        
-       [Header("UI References")]
+       [Header("Main Journal UI")]
        public GameObject journalUIPanel;
        public Transform scrollViewContent; //where entries are spawned
        public GameObject journalEntryPrefab; //visual template for entry
+       
+       [Header("Pop-up Journal UI")]
+       public GameObject PopUpPanel;
+       public TextMeshProUGUI popUpTitle;
+       public TextMeshProUGUI popUpContent;
 
        private void Awake()
        {
@@ -28,14 +34,24 @@ namespace SCRIPTS.ITEM_SCRIPT
            {
                journalUIPanel.SetActive(false);
            }
+           
+           if (PopUpPanel != null) PopUpPanel.SetActive(false);
        }
 
        private void Update()
        {
            //calls when J is pressed
-           if (Input.GetKeyDown(KeyCode.J))
+           if (Input.GetKeyDown(KeyCode.J) && (PopUpPanel == null || !PopUpPanel.activeSelf))
            {
                ToggleJournal();
+           }
+           
+           if (PopUpPanel != null && PopUpPanel.activeSelf)
+           {
+               if (Input.GetMouseButtonDown(0))
+               {
+                   ClosePopUp();
+               }
            }
        }
        
@@ -52,6 +68,36 @@ namespace SCRIPTS.ITEM_SCRIPT
                entryScript.Setup(title, content);
            }
            
+           //shows pop up to player
+           ShowPopUp(title, content);
+       }
+       
+       //handles the turning on of the pop up panel and filling in the text
+       private void ShowPopUp(string title, string content)
+       {
+              if (PopUpPanel != null)
+              {
+                popUpTitle.text = title;
+                popUpContent.text = content;
+                PopUpPanel.SetActive(true);
+                
+                //freezes game so player can read it
+                Time.timeScale = 0;
+              }
+       }
+
+       private void ClosePopUp()
+       {
+           if (PopUpPanel != null)
+           {
+                PopUpPanel.SetActive(false);
+                
+                //resumes game
+                if (!journalUIPanel.activeSelf) //only resumes if journal isn't open
+                {
+                    Time.timeScale = 1;
+                }
+           }
        }
 
        //Toggles the panel on and off 
