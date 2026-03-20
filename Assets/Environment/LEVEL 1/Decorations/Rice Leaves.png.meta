@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f9094fb7751e1e54ea41e05b60d33c95
+guid: 2f519d664761b6e44b9ed32a1d1df015
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8868764607407489732
-    second: 1 x 1 Bush_0
+      213: 2754957222423238403
+    second: Rice Leaves_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 1 x 1 Bush_0
+      name: Rice Leaves_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 14
         y: 0
-        width: 900
-        height: 900
+        width: 460
+        height: 865
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c3d7bea0491dbe480800000000000000
-      internalID: -8868764607407489732
+      spriteID: 3071fe55ff29b3620800000000000000
+      internalID: 2754957222423238403
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 68045eb1463cea54e9cbdca6ac2c8ee5
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      1 x 1 Bush_0: -8868764607407489732
+      Rice Leaves_0: 2754957222423238403
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
