@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class EnemyPatrolAi : MonoBehaviour
 {
-    public GameObject enemypointC;
-    public GameObject enemypointD;
+    public GameObject EnemyPointA;
+    public GameObject EnemyPointB;
     private Rigidbody2D rb;
     private Animator animator;
     private Transform currentPoint;
@@ -13,7 +13,7 @@ public class EnemyPatrolAi : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        currentPoint = enemypointD.transform;
+        currentPoint = EnemyPointB.transform;
         animator.SetBool("isRunning", true);
         
         //Finds the player at the start
@@ -27,7 +27,7 @@ public class EnemyPatrolAi : MonoBehaviour
     void Update()
     {
         Vector2 point = currentPoint.position - transform.position; //give the direction for enemy
-        if (currentPoint == enemypointD.transform)
+        if (currentPoint == EnemyPointB.transform)
         {
             rb.linearVelocity = new Vector2(speed, 0); //enemy goes to right
         }
@@ -36,16 +36,16 @@ public class EnemyPatrolAi : MonoBehaviour
             rb.linearVelocity = new Vector2(-speed, 0); // enemy goes to left
         }
 
-        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == enemypointD.transform)
+        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == EnemyPointB.transform)
         {
             Flip();
-            currentPoint = enemypointC.transform;
+            currentPoint = EnemyPointA.transform;
         }
         
-        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == enemypointC.transform)
+        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == EnemyPointA.transform)
         {
             Flip();
-            currentPoint = enemypointD.transform;
+            currentPoint = EnemyPointB.transform;
         }
     }
 
