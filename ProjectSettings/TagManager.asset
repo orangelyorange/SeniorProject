@@ -4,11 +4,11 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Ground
   - Enemy
   - NPC
   - JournalItem
   - ExitLevel
+  - Platform
   layers:
   - Default
   - TransparentFX
