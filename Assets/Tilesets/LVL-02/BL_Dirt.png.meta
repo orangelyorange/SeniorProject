@@ -103,9 +103,9 @@ TextureImporter:
       name: BL_Dirt_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 0
-        width: 899
+        width: 900
         height: 900
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
