@@ -75,7 +75,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 1080
+  spritePixelsToUnits: 900
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -127,9 +127,9 @@ TextureImporter:
       name: The Herbalist_0
       rect:
         serializedVersion: 2
-        x: 495
+        x: 496
         y: 0
-        width: 810
+        width: 808
         height: 1800
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -141,182 +141,6 @@ TextureImporter:
       bones: []
       spriteID: eb71c2ecb0e00f070800000000000000
       internalID: 8138019970524911550
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: The Herbalist_1
-      rect:
-        serializedVersion: 2
-        x: 710
-        y: 312
-        width: 380
-        height: 125
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 442bf5d5e9fa82900800000000000000
-      internalID: 659970440116023876
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: The Herbalist_2
-      rect:
-        serializedVersion: 2
-        x: 727
-        y: 179
-        width: 346
-        height: 129
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 350fe8eb352a45230800000000000000
-      internalID: 3626702080503115859
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: The Herbalist_3
-      rect:
-        serializedVersion: 2
-        x: 742
-        y: 147
-        width: 316
-        height: 77
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9fae1594a80a88a10800000000000000
-      internalID: 1911954557614811897
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: The Herbalist_4
-      rect:
-        serializedVersion: 2
-        x: 755
-        y: 177
-        width: 74
-        height: 94
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dcc0f292e2e533b60800000000000000
-      internalID: 7724621338222988493
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: The Herbalist_5
-      rect:
-        serializedVersion: 2
-        x: 972
-        y: 177
-        width: 75
-        height: 96
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 096ae2c3972ba4ee0800000000000000
-      internalID: -1276011310635637104
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: The Herbalist_6
-      rect:
-        serializedVersion: 2
-        x: 756
-        y: 67
-        width: 288
-        height: 76
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b9cece71a207c13a0800000000000000
-      internalID: -6693351620087059301
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: The Herbalist_7
-      rect:
-        serializedVersion: 2
-        x: 776
-        y: 31
-        width: 248
-        height: 27
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 400bb5b923c834980800000000000000
-      internalID: -8555840718091079676
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: The Herbalist_8
-      rect:
-        serializedVersion: 2
-        x: 786
-        y: 0
-        width: 227
-        height: 21
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 236549859875a82e0800000000000000
-      internalID: -2122788026943515086
       vertices: []
       indices: 
       edges: []
@@ -336,14 +160,6 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       The Herbalist_0: 8138019970524911550
-      The Herbalist_1: 659970440116023876
-      The Herbalist_2: 3626702080503115859
-      The Herbalist_3: 1911954557614811897
-      The Herbalist_4: 7724621338222988493
-      The Herbalist_5: -1276011310635637104
-      The Herbalist_6: -6693351620087059301
-      The Herbalist_7: -8555840718091079676
-      The Herbalist_8: -2122788026943515086
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
