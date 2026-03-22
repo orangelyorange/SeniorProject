@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f603054922b293d41a139efdf281bffe
+guid: 397c28ba77dcdc641b3b3f1a1191c350
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -103,12 +103,12 @@ TextureImporter:
       name: ML_Dirt_0
       rect:
         serializedVersion: 2
-        x: 3
+        x: 0
         y: 0
-        width: 897
+        width: 900
         height: 900
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: a7638155f7bf1374393efaf71aa3fdcd
     internalID: 0
     vertices: []
     indices: 
