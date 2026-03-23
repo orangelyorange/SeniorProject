@@ -14,7 +14,7 @@ public class SadnessSkill : MonoBehaviour
     public float shieldCooldown = 8f; // How long until the shield can be used again
 
     [Header("Unlock Requirements")] 
-    public int unlockSceneIndex = 2; 
+    public int unlockSceneIndex = 4; 
 
     public bool isSadnessSkillActive = false;
     private bool isShieldActive = false;
