@@ -61,13 +61,23 @@ public class QuestSystem : MonoBehaviour
         // Condition A: Quest has not started
         if (!currentQuest.questActive && !currentQuest.questCompleted)
         {
-            NPCDialogueManager.Instance.StartDialogue(questStartDialogue);
             currentQuest.questActive = true; // Mark it as started!
+
+            // Start dialogue and pass the UI trigger as the 'onComplete' action
+            NPCDialogueManager.Instance.StartDialogue(questStartDialogue, () => 
+            {
+                // This block of code ONLY runs when EndDialogue() is called!
+                if (QuestUIManager.Instance != null)
+                {
+                    QuestUIManager.Instance.DisplayNewQuest(currentQuest);
+                }
+            });
         }
         
         // Condition B: Quest is in progress
         else if (currentQuest.questActive && !currentQuest.questCompleted)
         {
+            // ... (Your existing Condition B code remains exactly the same)
             int currentAmount = inventory.GetItemCount(currentQuest.requiredItemName);
 
             // Check if player has sufficient items
@@ -98,7 +108,6 @@ public class QuestSystem : MonoBehaviour
         // Condition C: Quest is completely finished
         else if (currentQuest.questCompleted)
         {
-            // NEW: Using the array you created for after completion!
             NPCDialogueManager.Instance.StartDialogue(afterCompletionDialogue); 
         }
     }
