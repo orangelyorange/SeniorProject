@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: BR_Dirt_0
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 6378820718144739195, guid: 1ca4e12fb83a2824aa225ce3e64467d6, type: 3}
+  m_Sprite: {fileID: 6378820718144739195, guid: 272de04feaa59ce449f2f589f2f7a20c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
