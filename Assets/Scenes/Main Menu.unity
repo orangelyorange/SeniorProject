@@ -3680,7 +3680,7 @@ MonoBehaviour:
   volumeTextValue: {fileID: 0}
   volumeSlider: {fileID: 0}
   confirmationPrompt: {fileID: 0}
-  _newGameLevel: LEVEL1
+  _newGameLevel: Intro
   noSavedGameDialog: {fileID: 498281178}
 --- !u!1 &1175113147
 GameObject:
