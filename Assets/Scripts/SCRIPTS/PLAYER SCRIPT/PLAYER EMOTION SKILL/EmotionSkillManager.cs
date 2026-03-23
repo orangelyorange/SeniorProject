@@ -13,7 +13,8 @@ public class EmotionSkillManager : MonoBehaviour
     private RageSkill rageSkill;
     private Player player;
 
-    [Header("Current State")] public EmotionSkill currentSkill = EmotionSkill.None;
+    [Header("Current State")] 
+    public EmotionSkill currentSkill = EmotionSkill.None;
 
     private void Start()
     {
@@ -26,6 +27,23 @@ public class EmotionSkillManager : MonoBehaviour
         {
             player.isSkillActive = false;
         }
+    }
+
+    // NEW: A public method that any skill can call to tell the Manager to reset
+    public void ForceResetSkill()
+    {
+        currentSkill = EmotionSkill.None;
+        
+        joySkill.SetJoy(false);
+        sadnessSkill.SetSadness(false);
+        rageSkill.SetRage(false);
+
+        if (player != null) 
+        {
+            player.isSkillActive = false;
+        }
+        
+        Debug.Log("Manager: Skills have been auto-reset.");
     }
 
     private void Update()
@@ -43,7 +61,7 @@ public class EmotionSkillManager : MonoBehaviour
             }
             else
             {
-                // Turn ON Joy (and force Sadness off)
+                // Turn ON Joy (and force Sadness & Rage off)
                 currentSkill = EmotionSkill.Joy;
                 joySkill.SetJoy(true);
                 sadnessSkill.SetSadness(false);
@@ -61,7 +79,8 @@ public class EmotionSkillManager : MonoBehaviour
                 // Turn OFF Sadness
                 currentSkill = EmotionSkill.None;
                 sadnessSkill.SetSadness(false);
-                player.isSkillActive = false;
+                
+                if (player != null) player.isSkillActive = false;
             }
             else
             {
@@ -72,7 +91,8 @@ public class EmotionSkillManager : MonoBehaviour
                     currentSkill = EmotionSkill.Sadness;
                     joySkill.SetJoy(false); // Force Joy off
                     rageSkill.SetRage(false);
-                    player.isSkillActive = true;
+                    
+                    if (player != null) player.isSkillActive = true;
                 }
             }
         }
@@ -89,7 +109,6 @@ public class EmotionSkillManager : MonoBehaviour
 
                 if (player != null) player.isSkillActive = false;
             }
-
             else
             {
                 //turn on rage (and force joy and sadness off)
