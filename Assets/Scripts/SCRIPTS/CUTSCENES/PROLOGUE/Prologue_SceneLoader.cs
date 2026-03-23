@@ -1,11 +1,49 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Playables;
 
 public class Prologue_SceneLoader : MonoBehaviour
 {
-    private void OnEnable()
+    [SerializeField] private string nextSceneName = "LEVEL1";
+    [SerializeField] private PlayableDirector playableDirector;
+
+    private void Start()
     {
-        //only specifying the sceneName or sceneBuildIndex will load the scene with the single mode
-        SceneManager.LoadScene("Level1", LoadSceneMode.Single);
+        if (playableDirector == null)
+        {
+            playableDirector = GetComponent<PlayableDirector>();
+        }
+        
+        if (playableDirector == null)
+        {
+            playableDirector = FindFirstObjectByType<PlayableDirector>();
+        }
+
+        if (playableDirector != null)
+        {
+            playableDirector.stopped += OnDirectorStopped;
+        }
+        else
+        {
+            LoadNextLevel();
+        }
+    }
+
+    private void OnDirectorStopped(PlayableDirector director)
+    {
+        LoadNextLevel();
+    }
+
+    private void LoadNextLevel()
+    {
+        SceneManager.LoadScene(nextSceneName, LoadSceneMode.Single);
+    }
+
+    private void OnDisable()
+    {
+        if (playableDirector != null)
+        {
+            playableDirector.stopped -= OnDirectorStopped;
+        }
     }
 }
