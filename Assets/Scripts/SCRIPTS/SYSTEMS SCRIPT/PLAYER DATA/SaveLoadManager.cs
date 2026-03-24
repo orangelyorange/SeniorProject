@@ -93,6 +93,11 @@ public class SaveLoadManager : MonoBehaviour
             }
         }
     }
+    
+    public bool HasSaveFile()
+    {
+        return File.Exists(saveFilePath);
+    }
 
     private void OnDestroy()
     {
@@ -102,4 +107,5 @@ public class SaveLoadManager : MonoBehaviour
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
     }
+    
 }
