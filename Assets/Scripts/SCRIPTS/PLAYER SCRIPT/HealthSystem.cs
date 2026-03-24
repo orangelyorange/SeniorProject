@@ -9,14 +9,20 @@ public class HealthSystem : MonoBehaviour
     public int PlayerMaxHealth = 4; // full health
     private SpriteRenderer spriteRenderer;
 
+	private Animator animator;
+	private bool isDead = false; //prevents multiple death triggers
+
     private void Start()
     {
         PlayerHealth = PlayerMaxHealth; //sets current health to full
         spriteRenderer = GetComponent<SpriteRenderer>();
+		animator = GetComponent<Animator>();
     }
 
     public void TakeDamage(int damage) // tracker of damage player takes
     {
+		if (isDead) return; // Prevents taking damage if already dead
+
          PlayerHealth -= damage;
          StartCoroutine(BlinkRed());
         
@@ -45,11 +51,19 @@ public class HealthSystem : MonoBehaviour
             PlayerHealth = PlayerMaxHealth;
         }
     }
+    
 
-    public void Die()
-    {
-        Destroy(gameObject);
-    }
+private IEnumerator Die()
+{
+animator.SetTrigger("Death");
+
+GetComponent<Player>().enabled = false; // Disable player movement
+GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero; // Stop player movement
+
+yield return new WaitForSeconds(1f); // Wait for the death animation to finish
+
+SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene to restart the game
+}
     
     public IEnumerator BlinkRed() //player blinks red when taking damage
     {
