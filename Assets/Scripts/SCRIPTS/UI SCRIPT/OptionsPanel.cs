@@ -5,6 +5,7 @@ public class OptionsPanel : MonoBehaviour
 {
    public GameObject optionsPanel;
    public GameObject settingsPanel;
+	public GameObject creditsPanel;
    
    public bool isOpen = false;
 
@@ -14,6 +15,7 @@ public class OptionsPanel : MonoBehaviour
       {
          optionsPanel.SetActive(false);
          settingsPanel.SetActive(false);
+		creditsPanel.SetActive(false);
          isOpen = false;
       }
    }
@@ -49,6 +51,10 @@ public class OptionsPanel : MonoBehaviour
       if (settingsPanel != null){
          settingsPanel.SetActive(false);
       }
+
+	if (creditsPanel != null){
+         creditsPanel.SetActive(false);
+      }
    }
 
    public void SettingsPanel()
@@ -57,8 +63,19 @@ public class OptionsPanel : MonoBehaviour
       {
          settingsPanel.SetActive(true);
          optionsPanel.SetActive(false);
+		creditsPanel.SetActive(false);
       }
    }
+
+public void CreditsPanel()
+   {
+      if (creditsPanel != null)
+      {
+         creditsPanel.SetActive(true);
+         optionsPanel.SetActive(false);
+    settingsPanel.SetActive(false);
+      }
+}
    
    //to connect to main menu button
    public void LoadMainMenu()
