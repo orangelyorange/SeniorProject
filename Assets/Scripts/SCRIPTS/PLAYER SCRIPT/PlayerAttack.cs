@@ -60,6 +60,11 @@ public class PlayerAttack : MonoBehaviour
 
     public void Attack()
     {
+		//set the animation trigger for the attack
+        if (animator != null)        {
+            animator.SetTrigger("Attack");
+        }
+
         // Get enemies in front of the player
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
         
