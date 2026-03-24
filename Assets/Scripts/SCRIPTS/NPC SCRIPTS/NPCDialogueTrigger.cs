@@ -16,6 +16,7 @@ public class NPCDialogueTrigger : MonoBehaviour
     [HideInInspector] public PlayerQuestItemInventory playerInventory;
 
     private Camera mainCam;
+    private Animator animator;
 
     void Start()
     {
@@ -23,6 +24,8 @@ public class NPCDialogueTrigger : MonoBehaviour
 
         if (interactionLabel != null)
             interactionLabel.SetActive(false);
+        
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -33,6 +36,8 @@ public class NPCDialogueTrigger : MonoBehaviour
             Vector3 screenPos = mainCam.WorldToScreenPoint(transform.position + worldOffset);
             interactionUI.position = screenPos;
         }
+        
+        animator.SetBool("isTalking", false);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -42,6 +47,7 @@ public class NPCDialogueTrigger : MonoBehaviour
             isPlayerInRange = true;
             playerInventory = other.GetComponent<PlayerQuestItemInventory>();
             if (interactionLabel != null) interactionLabel.SetActive(true);
+            animator.SetBool("isTalking", true);
         }
     }
 
@@ -57,6 +63,7 @@ public class NPCDialogueTrigger : MonoBehaviour
             }
             
             if (interactionLabel != null) interactionLabel.SetActive(false);
+            animator.SetBool("isTalking", false);
         }
     }
 }
