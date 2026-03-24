@@ -22,12 +22,15 @@ public class PlayerAttack : MonoBehaviour
     private EmotionSkillManager skillManager;
     private Player player;
     private Rigidbody2D rb;
+	private Animator animator;
 
     void Start()
     {
         skillManager = GetComponent<EmotionSkillManager>();
         player = GetComponent<Player>();      // Needed to check if the player is in mid-air
         rb = GetComponent<Rigidbody2D>();     // Needed to apply the slam force
+
+		animator = GetComponent<Animator>();     // Needed to trigger attack animations
     }
 
     void Update()
