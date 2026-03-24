@@ -20,6 +20,8 @@ public class QuestItem
 
 public class PlayerQuestItemInventory : MonoBehaviour
 {
+	public SaveLoadManager saveLoadManager; // Reference to the SaveLoadManager
+
     //Inventory List
     public List<QuestItem> inventory =  new List<QuestItem>();
 
@@ -65,7 +67,7 @@ public class PlayerQuestItemInventory : MonoBehaviour
             {
                 inventory.Remove(existingItem);
             }
-            Debug.Log("Removed {amountToRemove} {itemName}(s) from inventory.");
+            Debug.Log("Removed {$amountToRemove} {$itemName}(s) from inventory.");
         }
         else
         {
