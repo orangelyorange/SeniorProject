@@ -5,12 +5,9 @@ using UnityEngine.SceneManagement;
 public class IntroVideoController : MonoBehaviour
 {
     public VideoPlayer videoPlayer;
-    
-    public string mainMenuSceneName = "MainMenu";
-    
-    private bool introSkipped = false;
 
-    
+    public string mainMenuSceneName = "Main Menu";
+
     void Start()
     {
         // Crucial Check: Ensure the VideoPlayer is assigned and has a source.
@@ -30,44 +27,13 @@ public class IntroVideoController : MonoBehaviour
         Debug.Log("Playing H.264 intro video...");
     }
 
-    
-    void Update()
-    {
-        // Allow the user to skip the intro by pressing a key (e.g., Spacebar or Enter)
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
-        {
-            SkipIntro();
-        }
-    }
-
-
-    
     /// Called when the video naturally reaches its end.
     void OnVideoFinished(VideoPlayer vp)
     {
-        if (!introSkipped)
-        {
-            Debug.Log("Intro video finished playing naturally. Loading main menu...");
-            LoadMainMenu();
-        }
+        Debug.Log("Intro video finished playing naturally. Loading main menu...");
+        LoadMainMenu();
     }
 
-    
-    
-    /// Skips the intro and loads the main menu.
-    void SkipIntro()
-    {
-        if (!introSkipped)
-        {
-            introSkipped = true;
-            Debug.Log("Intro skipped by user. Loading main menu...");
-            
-            videoPlayer.Stop();
-            LoadMainMenu();
-        }
-    }
-
-    
     /// The core function to switch to the next scene.
     void LoadMainMenu()
     {
@@ -76,7 +42,13 @@ public class IntroVideoController : MonoBehaviour
         {
             videoPlayer.loopPointReached -= OnVideoFinished;
         }
-        
+
+        if (!Application.CanStreamedLevelBeLoaded(mainMenuSceneName))
+        {
+            Debug.LogError($"Scene '{mainMenuSceneName}' can't be loaded. Make sure it's added to Build Settings (Scenes In Build) and the name matches the scene asset exactly (e.g., 'Main Menu').");
+            return;
+        }
+
         SceneManager.LoadScene(mainMenuSceneName);
     }
 }
