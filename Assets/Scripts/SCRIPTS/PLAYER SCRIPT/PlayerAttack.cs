@@ -61,7 +61,7 @@ public class PlayerAttack : MonoBehaviour
     public void Attack()
     {
 		//set the animation trigger for the attack
-        if (animator != null)        {
+        if (animator != null){
             animator.SetTrigger("Attack");
         }
 

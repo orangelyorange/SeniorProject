@@ -29,8 +29,8 @@ public class HealthSystem : MonoBehaviour
             //if Player's HP reaches zero, the game object is destroyed
          if (PlayerHealth <= 0)
          {
-             Die();
-             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+             isDead = true;
+             StartCoroutine(Die());
          }
     }
 
@@ -53,16 +53,16 @@ public class HealthSystem : MonoBehaviour
     }
     
 
-private IEnumerator Die()
-{
-animator.SetTrigger("Death");
+    public IEnumerator Die()
+		{
+		animator.SetBool("isDead", true); // Trigger death animation
 
-GetComponent<Player>().enabled = false; // Disable player movement
-GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero; // Stop player movement
+		GetComponent<Player>().enabled = false; // Disable player movement
+		GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero; // Stop player movement
 
-yield return new WaitForSeconds(1f); // Wait for the death animation to finish
+		yield return new WaitForSeconds(0.5f); // Wait for the death animation to finish
 
-SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene to restart the game
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene to restart the game
 }
     
     public IEnumerator BlinkRed() //player blinks red when taking damage

@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
 
     public bool isInvulnerable = false; //for the sadness shield
     
-    public bool isDashing = false;
+    public bool isDashing = false; //for rage skill
     private float moveInput;
 
     void Start()
