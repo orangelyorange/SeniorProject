@@ -1,54 +1,91 @@
+using System;
 using UnityEngine;
 using UnityEngine.Video;
-using UnityEngine.SceneManagement;
 
 public class IntroVideoController : MonoBehaviour
 {
+    [Header("Video Settings")]
     public VideoPlayer videoPlayer;
+    public GameObject videoScreen; 
 
-    public string mainMenuSceneName = "Main Menu";
+    [Header("UI Settings")]
+    [Tooltip("The parent GameObject containing all your Main Menu buttons and graphics.")]
+    public GameObject mainMenuUI;
+
+    private bool isVideoPlaying = false;
 
     void Start()
     {
+        // Hide the Main Menu UI right as the scene loads
+        if (mainMenuUI != null)
+        {
+            mainMenuUI.SetActive(false);
+        }
+
         // Crucial Check: Ensure the VideoPlayer is assigned and has a source.
         if (videoPlayer == null || videoPlayer.source != VideoSource.VideoClip)
         {
-            // The source must be set to 'VideoClip' and a file must be assigned in the Inspector.
-            Debug.LogError("VideoPlayer component is not assigned or is missing an assigned VideoClip (e.g., your H.264 MP4 file). Loading Main Menu immediately.");
-            LoadMainMenu();
+            Debug.LogError("VideoPlayer is missing or has no VideoClip assigned. Skipping directly to Main Menu.");
+            ShowMainMenu();
             return;
         }
 
         // Subscribe to the event that fires when the video finishes playing
         videoPlayer.loopPointReached += OnVideoFinished;
 
-        // Start playing the assigned H.264 video clip
+        // Start playing the video
         videoPlayer.Play();
-        Debug.Log("Playing H.264 intro video...");
+        isVideoPlaying = true;
+        Debug.Log("Playing intro video...");
+    }
+
+    private void Update()
+    {
+        //check for skip input only if the video is playing
+
+        if (isVideoPlaying)
+        {
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("Playing intro video...");
+                ShowMainMenu();
+            }
+        }
     }
 
     /// Called when the video naturally reaches its end.
     void OnVideoFinished(VideoPlayer vp)
     {
-        Debug.Log("Intro video finished playing naturally. Loading main menu...");
-        LoadMainMenu();
+        Debug.Log("Intro video finished playing naturally. Showing main menu...");
+        ShowMainMenu();
     }
 
-    /// The core function to switch to the next scene.
-    void LoadMainMenu()
+    /// The core function to transition from the video to the menu UI.
+    void ShowMainMenu()
     {
-        // Ensure we clean up the subscription before loading the next scene
+        // Ensure we clean up the subscription
         if (videoPlayer != null)
         {
             videoPlayer.loopPointReached -= OnVideoFinished;
+            videoPlayer.Stop(); // Optional: Stop the player completely to save resources
         }
 
-        if (!Application.CanStreamedLevelBeLoaded(mainMenuSceneName))
+        // Hide the video screen so it doesn't block the UI
+        if (videoScreen != null)
         {
-            Debug.LogError($"Scene '{mainMenuSceneName}' can't be loaded. Make sure it's added to Build Settings (Scenes In Build) and the name matches the scene asset exactly (e.g., 'Main Menu').");
-            return;
+            videoScreen.SetActive(false);
         }
 
-        SceneManager.LoadScene(mainMenuSceneName);
+        // Reveal the main menu
+        if (mainMenuUI != null)
+        {
+            mainMenuUI.SetActive(true);
+        }
+        
+        //Tell the MusicManager to start the music!
+        if (MusicManager.instance != null)
+        {
+            MusicManager.instance.PlayMusic();
+        }
     }
 }
