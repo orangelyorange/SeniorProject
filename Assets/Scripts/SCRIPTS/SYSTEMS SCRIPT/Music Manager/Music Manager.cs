@@ -5,7 +5,7 @@ using UnityEngine;
 public class MusicManager : MonoBehaviour
 {
     public static MusicManager instance;
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] public AudioSource audioSource;
 
     void Awake()
     {
@@ -13,17 +13,17 @@ public class MusicManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            // DontDestroyOnLoad(gameObject); // Uncomment to keep music playing across scenes
+            //DontDestroyOnLoad(gameObject); // Uncomment to keep music playing across scenes
+            audioSource = gameObject.GetComponent<AudioSource>();
         }
         else
         {
             Destroy(gameObject);
-            return; // Stop running this Awake function if we are destroying the object
+            return;
+            // Stop running this Awake function if we are destroying the object
         }
-
-        // Grab the AudioSource component attached to this object
-        audioSource = GetComponent<AudioSource>();
     }
+    
     
     /// Call this function to start the background music.
     public void PlayMusic()
@@ -42,8 +42,20 @@ public class MusicManager : MonoBehaviour
 
         if (!audioSource.isPlaying)
         {
+            // Reset the global master volume to 100%
+            AudioListener.volume = 1f;
+            
             audioSource.Play();
             Debug.Log($"Background music '{audioSource.clip.name}' started playing successfully.");
+            
+            // Diagnostic logs to check for runtime volume or pitch issues
+            Debug.Log($"Diagnostics: Source Volume = {audioSource.volume}, Mute = {audioSource.mute}, Pitch = {audioSource.pitch}, Spatial Blend = {audioSource.spatialBlend}");
+            Debug.Log($"Diagnostics: Global AudioListener Volume = {AudioListener.volume}");
+            
+            if (Time.timeScale == 0)
+            {
+                Debug.LogWarning("Diagnostics: Time.timeScale is 0! Standard audio playback will be paused.");
+            }
         }
     }
 }
