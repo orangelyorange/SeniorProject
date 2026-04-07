@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
    [Header("UI Panels")]
    public GameObject mainMenuPanel;
    public GameObject optionsPanel;
+   public GameObject creditsPanel;
    
    [Header("Audio Settings")]
    public Slider mainVolumeSlider; //reference UI slider main object
@@ -23,6 +24,11 @@ public class MainMenu : MonoBehaviour
       if (optionsPanel != null)
       {
          optionsPanel.SetActive(false);
+      }
+      
+      if (creditsPanel != null)
+      {
+         creditsPanel.SetActive(false);
       }
    }
 
@@ -50,14 +56,15 @@ public class MainMenu : MonoBehaviour
          musicSource.volume = startVolume; //reset in case player returns
       }
    //Loads next scene only while the loop above has finished
-   SceneManager.LoadScene(1);
-      /* add na lang ung next scenes sa build settings*/
+   SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+   
    }
 
    public void OpenOptions()
    {
       mainMenuPanel.SetActive(false);
       optionsPanel.SetActive(true);
+      creditsPanel.SetActive(false);
       Debug.Log("Options menu opened");
    }
 
@@ -65,6 +72,7 @@ public class MainMenu : MonoBehaviour
    {
       mainMenuPanel.SetActive(true);
       optionsPanel.SetActive(false);
+      creditsPanel.SetActive(false);
       Debug.Log("Options menu closed");
    }
 
@@ -73,6 +81,13 @@ public class MainMenu : MonoBehaviour
       Debug.Log("Quit game");
       Application.Quit();
    }
+
+   public void CreditsPanel()
+   {
+      mainMenuPanel.SetActive(false);
+      optionsPanel.SetActive(false);
+      creditsPanel.SetActive(true);
+      }
    
    public void SetVolume(float volume)
    {
