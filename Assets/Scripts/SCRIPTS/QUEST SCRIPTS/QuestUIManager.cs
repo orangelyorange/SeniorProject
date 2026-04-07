@@ -8,9 +8,7 @@ public class QuestUIManager : MonoBehaviour
     [Header("UI Elements")]
     [Tooltip("The parent panel for the quest notification")]
     public GameObject questNotificationPanel;
-    
-    [Tooltip("Text to display 'New Quest Activated' or the Quest ID")]
-    public TextMeshProUGUI titleText;
+   
     
     [Tooltip("Text to display the objective (e.g. 'Gather 5 Apples')")]
     public TextMeshProUGUI objectiveText;
@@ -41,9 +39,7 @@ public class QuestUIManager : MonoBehaviour
             return;
         }
 
-        // 1. Update the UI Text
-        if (titleText != null) 
-            titleText.text = "Quest Started: " + newQuest.questID;
+   
             
         if (objectiveText != null) 
             objectiveText.text = $"Gather {newQuest.requiredAmount} {newQuest.requiredItemName}(s) for {newQuest.npcName}.";
