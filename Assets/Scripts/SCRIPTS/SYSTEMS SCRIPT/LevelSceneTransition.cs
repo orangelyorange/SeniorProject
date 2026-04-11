@@ -6,7 +6,7 @@ public class LevelSceneTransition : MonoBehaviour
    public string playerTag = "Player"; // Tag to identify the player
    private bool levelComplated = false; // Flag to prevent multiple triggers
 
-   private void OnTriggerEnter(Collider levelCollision)
+   private void OnTriggerEnter2D(Collider2D levelCollision)
    {
       //checks if player triggered the exit and has not completed the level yet
       if (levelCollision.CompareTag(playerTag) && !levelComplated)
