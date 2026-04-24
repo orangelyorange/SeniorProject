@@ -1,2 +1,39 @@
 fileFormatVersion: 2
 guid: a631051ed83f1314abd82c86186c1e75
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - musicSource: {instanceID: 0}
+  - sfxSource: {instanceID: 0}
+  - mainMenuMusic: {instanceID: 0}
+  - level1Music: {instanceID: 0}
+  - level2Music: {instanceID: 0}
+  - level3Music: {instanceID: 0}
+  - playerJump: {fileID: 8300000, guid: 63a197041b6fae34abe479e4e9916adc, type: 3}
+  - playerLand: {fileID: 8300000, guid: c8fca2e70c4af6f428dc0920ce574492, type: 3}
+  - playerAttack: {instanceID: 0}
+  - playerPlungeSlam: {instanceID: 0}
+  - playerDash: {instanceID: 0}
+  - playerTakeDamage: {instanceID: 0}
+  - playerDeath: {fileID: 8300000, guid: d409f498a5a243f42a4438b07ebcd2c8, type: 3}
+  - playerHeal: {fileID: 8300000, guid: 513751884bb21104cb2b5fe9ee731bf2, type: 3}
+  - joyActivate: {fileID: 8300000, guid: 4e966ac2feac60044bd9f866ed319c8b, type: 3}
+  - sadnessActivate: {instanceID: 0}
+  - sadnessShieldExpire: {instanceID: 0}
+  - rageActivate: {instanceID: 0}
+  - enemyTakeDamage: {instanceID: 0}
+  - enemyDie: {instanceID: 0}
+  - enemyShoot: {instanceID: 0}
+  - itemPickup: {instanceID: 0}
+  - itemDrop: {instanceID: 0}
+  - jumpPad: {instanceID: 0}
+  - fallingPlatformCrumble: {instanceID: 0}
+  - buttonClick: {instanceID: 0}
+  - questComplete: {instanceID: 0}
+  - panelOpen: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
