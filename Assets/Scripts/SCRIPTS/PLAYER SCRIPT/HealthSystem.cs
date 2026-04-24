@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
-    public static bool PendingRespawnSfx { get; private set; }
+    private const string PendingRespawnSfxKey = "PendingRespawnSfx";
 
     public int PlayerHealth; //tracks player's health
     public int PlayerMaxHealth = 4; // full health
@@ -76,19 +76,21 @@ public class HealthSystem : MonoBehaviour
 
 		yield return new WaitForSeconds(0.5f); // Wait for the death animation to finish
 
-        PendingRespawnSfx = true;
+        PlayerPrefs.SetInt(PendingRespawnSfxKey, 1);
+        PlayerPrefs.Save();
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene to restart the game
 }
 
     public static bool ConsumeRespawnSfxRequest()
     {
-        if (!PendingRespawnSfx)
+        if (PlayerPrefs.GetInt(PendingRespawnSfxKey, 0) == 0)
         {
             return false;
         }
 
-        PendingRespawnSfx = false;
+        PlayerPrefs.SetInt(PendingRespawnSfxKey, 0);
+        PlayerPrefs.Save();
         return true;
     }
     

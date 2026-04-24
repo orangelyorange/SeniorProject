@@ -102,9 +102,9 @@ public class Player : MonoBehaviour
 
     private void HandleRunningSfx()
     {
-        bool shouldRunSfxPlay = Mathf.Abs(moveInput) > MoveThreshold && isGrounded && !isDashing;
+        bool shouldPlayRunSfx = Mathf.Abs(moveInput) > MoveThreshold && isGrounded && !isDashing;
 
-        if (shouldRunSfxPlay && !isRunLoopPlaying)
+        if (shouldPlayRunSfx && !isRunLoopPlaying)
         {
             if (AudioManager.Instance != null)
             {
@@ -112,7 +112,7 @@ public class Player : MonoBehaviour
             }
             isRunLoopPlaying = true;
         }
-        else if (!shouldRunSfxPlay && isRunLoopPlaying)
+        else if (!shouldPlayRunSfx && isRunLoopPlaying)
         {
             StopRunningSfx();
         }
