@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
+    private const string PendingRespawnSfxKey = "PendingRespawnSfx";
+
     public int PlayerHealth; //tracks player's health
     public int PlayerMaxHealth = 4; // full health
     private SpriteRenderer spriteRenderer;
@@ -61,21 +63,36 @@ public class HealthSystem : MonoBehaviour
     }
     
 
-	public IEnumerator Die()
-		{
-		animator.SetBool("isDead", true); // Trigger death animation
+    public IEnumerator Die()
+    {
+        animator.SetBool("isDead", true); // Trigger death animation
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.PlaySfx(AudioManager.Instance.playerDeath);
         }
 
-		GetComponent<Player>().enabled = false; // Disable player movement
-		GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero; // Stop player movement
+        GetComponent<Player>().enabled = false; // Disable player movement
+        GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero; // Stop player movement
 
-		yield return new WaitForSeconds(0.5f); // Wait for the death animation to finish
+        yield return new WaitForSeconds(0.5f); // Wait for the death animation to finish
+
+        PlayerPrefs.SetInt(PendingRespawnSfxKey, 1);
+        PlayerPrefs.Save();
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene to restart the game
-}
+    }
+
+    public static bool ConsumeRespawnSfxRequest()
+    {
+        if (PlayerPrefs.GetInt(PendingRespawnSfxKey, 0) == 0)
+        {
+            return false;
+        }
+
+        PlayerPrefs.SetInt(PendingRespawnSfxKey, 0);
+        PlayerPrefs.Save();
+        return true;
+    }
     
     public IEnumerator BlinkRed() //player blinks red when taking damage
     {

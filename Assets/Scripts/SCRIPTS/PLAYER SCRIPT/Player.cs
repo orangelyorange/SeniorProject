@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private const float MoveThreshold = 0.01f;
+
     [Header("Player Movement")]
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
@@ -22,17 +24,24 @@ public class Player : MonoBehaviour
     
     public bool isDashing = false; //for rage skill
     private float moveInput;
+    private bool isRunLoopPlaying;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        RestoreCheckpointPosition();
+        PlayPendingRespawnSfx();
     }
 
     void Update()
     {
         //ignores normal inputs so player can't move or jump while dashing
-        if (isDashing) return;
+        if (isDashing)
+        {
+            StopRunningSfx();
+            return;
+        }
         
         moveInput = Input.GetAxis("Horizontal");
 
@@ -46,14 +55,16 @@ public class Player : MonoBehaviour
         }
 
         // Flip sprite when pressed A or D
-        if (moveInput > 0.01f)
+        if (moveInput > MoveThreshold)
             transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
-        else if (moveInput < -0.01f)
+        else if (moveInput < -MoveThreshold)
             transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
 
         // Animation parameters
         animator.SetBool("isRunning", moveInput != 0);
         animator.SetBool("isJumping", !isGrounded);
+
+        HandleRunningSfx();
     }
 
     void FixedUpdate()
@@ -86,6 +97,71 @@ public class Player : MonoBehaviour
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.PlaySfx(AudioManager.Instance.playerJump);
+        }
+    }
+
+    private void HandleRunningSfx()
+    {
+        bool shouldPlayRunSfx = Mathf.Abs(moveInput) > MoveThreshold && isGrounded && !isDashing;
+
+        if (shouldPlayRunSfx && !isRunLoopPlaying)
+        {
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlayLoopingSfx(AudioManager.Instance.playerRun);
+            }
+            isRunLoopPlaying = true;
+        }
+        else if (!shouldPlayRunSfx && isRunLoopPlaying)
+        {
+            StopRunningSfx();
+        }
+    }
+
+    private void StopRunningSfx()
+    {
+        if (!isRunLoopPlaying)
+        {
+            return;
+        }
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopLoopingSfx(AudioManager.Instance.playerRun);
+        }
+        isRunLoopPlaying = false;
+    }
+
+    private void OnDisable()
+    {
+        StopRunningSfx();
+    }
+
+    private void RestoreCheckpointPosition()
+    {
+        if (!Checkpoint.TryGetCheckpointForCurrentScene(out Vector3 checkpointPosition))
+        {
+            return;
+        }
+
+        transform.position = checkpointPosition;
+        if (rb != null)
+        {
+            rb.position = checkpointPosition;
+            rb.linearVelocity = Vector2.zero;
+        }
+    }
+
+    private void PlayPendingRespawnSfx()
+    {
+        if (!HealthSystem.ConsumeRespawnSfxRequest())
+        {
+            return;
+        }
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.playerRespawn);
         }
     }
 }
