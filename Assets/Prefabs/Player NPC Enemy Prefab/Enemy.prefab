@@ -242,8 +242,11 @@ MonoBehaviour:
   speed: 5
   awarenessRadius: 1.5
   separationDistance: 0.8
-  separationStrength: 2
+  separationStrength: 1.5
   enemyTag: Enemy
+  preferredGroupSize: 3
+  preferredGroupSpacing: 1.1
+  groupCohesionStrength: 1.25
 --- !u!95 &6422317224385140416
 Animator:
   serializedVersion: 7

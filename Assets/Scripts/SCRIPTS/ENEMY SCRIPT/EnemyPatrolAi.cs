@@ -15,6 +15,11 @@ public class EnemyPatrolAi : MonoBehaviour
     public float separationStrength = 2f;
     public string enemyTag = "Enemy";
 
+    [Header("Group Patrol")]
+    public int preferredGroupSize = 3;
+    public float preferredGroupSpacing = 1.1f;
+    public float groupCohesionStrength = 1.25f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -58,7 +63,8 @@ public class EnemyPatrolAi : MonoBehaviour
         }
 
         float separationVelocityX = CalculateSeparationVelocityX();
-        float targetVelocityX = (patrolDirectionX * speed) + separationVelocityX;
+        float groupVelocityX = CalculateGroupCohesionVelocityX();
+        float targetVelocityX = (patrolDirectionX * speed) + separationVelocityX + groupVelocityX;
 
         rb.linearVelocity = new Vector2(targetVelocityX, rb.linearVelocity.y);
     }
@@ -90,6 +96,66 @@ public class EnemyPatrolAi : MonoBehaviour
         return separationForceX * separationStrength;
     }
 
+    private float CalculateGroupCohesionVelocityX()
+    {
+        if (awarenessRadius <= 0f || preferredGroupSize <= 1 || groupCohesionStrength <= 0f)
+        {
+            return 0f;
+        }
+
+        int desiredNeighbors = Mathf.Clamp(preferredGroupSize - 1, 1, 2);
+        Collider2D[] neighbors = Physics2D.OverlapCircleAll(transform.position, awarenessRadius);
+
+        float firstDistance = float.MaxValue;
+        float secondDistance = float.MaxValue;
+        float firstX = 0f;
+        float secondX = 0f;
+        int found = 0;
+
+        foreach (Collider2D neighbor in neighbors)
+        {
+            if (neighbor.gameObject == gameObject) continue;
+            if (neighbor.attachedRigidbody == rb) continue;
+            if (!neighbor.CompareTag(enemyTag)) continue;
+
+            float neighborX = neighbor.transform.position.x;
+            float distance = Mathf.Abs(neighborX - transform.position.x);
+            if (distance <= 0f || distance > awarenessRadius) continue;
+
+            if (distance < firstDistance)
+            {
+                secondDistance = firstDistance;
+                secondX = firstX;
+                firstDistance = distance;
+                firstX = neighborX;
+            }
+            else if (distance < secondDistance)
+            {
+                secondDistance = distance;
+                secondX = neighborX;
+            }
+        }
+
+        if (firstDistance < float.MaxValue) found++;
+        if (secondDistance < float.MaxValue) found++;
+        if (found == 0) return 0f;
+
+        int usedNeighbors = Mathf.Min(found, desiredNeighbors);
+        float centerX = firstX;
+        if (usedNeighbors > 1) centerX = (firstX + secondX) * 0.5f;
+
+        float xToGroupCenter = centerX - transform.position.x;
+        float desiredBand = preferredGroupSpacing * 0.5f;
+        if (Mathf.Abs(xToGroupCenter) <= desiredBand)
+        {
+            return 0f;
+        }
+
+        float adjustedDistance = Mathf.Abs(xToGroupCenter) - desiredBand;
+        float normalizedPull = Mathf.Clamp01(adjustedDistance / Mathf.Max(0.01f, awarenessRadius));
+        return Mathf.Sign(xToGroupCenter) * normalizedPull * groupCohesionStrength;
+    }
+
     private void Flip()
     {
         Vector3 localScale = transform.localScale;
@@ -104,5 +170,8 @@ public class EnemyPatrolAi : MonoBehaviour
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, separationDistance);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, preferredGroupSpacing);
     }
 }
