@@ -68,7 +68,7 @@ public class EnemyAttack : MonoBehaviour
                 }
                 else
                 {
-                    // Keep allies coordinated by retrying sooner when a shot/spawn was blocked by ally-awareness rules.
+                    // Keep allies coordinated by scheduling a short delayed retry when blocked by ally-awareness rules.
                     timer = Mathf.Max(0f, attackCooldown - blockedAttackRetryDelay);
                 }
             }

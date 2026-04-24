@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyPatrolAi : MonoBehaviour
@@ -103,46 +104,46 @@ public class EnemyPatrolAi : MonoBehaviour
             return 0f;
         }
 
-        int desiredNeighbors = Mathf.Clamp(preferredGroupSize - 1, 1, 2);
+        int desiredNeighbors = Mathf.Max(preferredGroupSize - 1, 1);
         Collider2D[] neighbors = Physics2D.OverlapCircleAll(transform.position, awarenessRadius);
+        HashSet<int> selectedIds = new HashSet<int>();
+        float groupCenterXSum = 0f;
+        int usedNeighbors = 0;
 
-        float firstDistance = float.MaxValue;
-        float secondDistance = float.MaxValue;
-        float firstX = 0f;
-        float secondX = 0f;
-        int found = 0;
-
-        foreach (Collider2D neighbor in neighbors)
+        for (int i = 0; i < desiredNeighbors; i++)
         {
-            if (neighbor.gameObject == gameObject) continue;
-            if (neighbor.attachedRigidbody == rb) continue;
-            if (!neighbor.CompareTag(enemyTag)) continue;
+            Collider2D bestNeighbor = null;
+            float bestDistance = float.MaxValue;
 
-            float neighborX = neighbor.transform.position.x;
-            float distance = Mathf.Abs(neighborX - transform.position.x);
-            if (distance <= 0f || distance > awarenessRadius) continue;
+            foreach (Collider2D neighbor in neighbors)
+            {
+                if (neighbor.gameObject == gameObject) continue;
+                if (neighbor.attachedRigidbody == rb) continue;
+                if (!neighbor.CompareTag(enemyTag)) continue;
 
-            if (distance < firstDistance)
-            {
-                secondDistance = firstDistance;
-                secondX = firstX;
-                firstDistance = distance;
-                firstX = neighborX;
+                int neighborId = neighbor.GetInstanceID();
+                if (selectedIds.Contains(neighborId)) continue;
+
+                Vector2 offset = neighbor.transform.position - transform.position;
+                float distance = offset.magnitude;
+                if (distance <= 0f || distance > awarenessRadius) continue;
+
+                if (distance < bestDistance)
+                {
+                    bestDistance = distance;
+                    bestNeighbor = neighbor;
+                }
             }
-            else if (distance < secondDistance)
-            {
-                secondDistance = distance;
-                secondX = neighborX;
-            }
+
+            if (bestNeighbor == null) break;
+
+            selectedIds.Add(bestNeighbor.GetInstanceID());
+            groupCenterXSum += bestNeighbor.transform.position.x;
+            usedNeighbors++;
         }
 
-        if (firstDistance < float.MaxValue) found++;
-        if (secondDistance < float.MaxValue) found++;
-        if (found == 0) return 0f;
-
-        int usedNeighbors = Mathf.Min(found, desiredNeighbors);
-        float centerX = firstX;
-        if (usedNeighbors > 1) centerX = (firstX + secondX) * 0.5f;
+        if (usedNeighbors == 0) return 0f;
+        float centerX = groupCenterXSum / usedNeighbors;
 
         float xToGroupCenter = centerX - transform.position.x;
         float desiredBand = preferredGroupSpacing * 0.5f;
