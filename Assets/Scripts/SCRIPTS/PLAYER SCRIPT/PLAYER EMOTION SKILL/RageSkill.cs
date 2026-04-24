@@ -71,15 +71,10 @@ public class RageSkill : MonoBehaviour
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.PlaySfx(AudioManager.Instance.rageActivate);
+            StartCoroutine(PlayDashSfxWithDelay(0.1f));
         }
         
         lastSkillUsedTime = Time.time; // Resets cooldown timer
-        yield return null;
-
-        if (AudioManager.Instance != null)
-        {
-            AudioManager.Instance.PlaySfx(AudioManager.Instance.playerDash);
-        }
         
         // Triggers animation
         if (animator != null)
@@ -131,5 +126,14 @@ public class RageSkill : MonoBehaviour
     public void SetRage(bool isRage)
     {
         isRageEquipped = isRage;
+    }
+
+    private IEnumerator PlayDashSfxWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.playerDash);
+        }
     }
 }
