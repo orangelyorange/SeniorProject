@@ -278,7 +278,6 @@ public class AudioManager : MonoBehaviour
         }
 
         loopingSfxSource.clip = clip;
-        loopingSfxSource.loop = true;
         loopingSfxSource.volume = masterVolume * sfxVolume;
         loopingSfxSource.Play();
     }
