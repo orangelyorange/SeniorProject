@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     
     public bool isDashing = false; //for rage skill
     private float moveInput;
+    private bool isRunLoopPlaying;
 
     void Start()
     {
@@ -32,7 +33,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         //ignores normal inputs so player can't move or jump while dashing
-        if (isDashing) return;
+        if (isDashing)
+        {
+            StopRunningSfx();
+            return;
+        }
         
         moveInput = Input.GetAxis("Horizontal");
 
@@ -54,6 +59,8 @@ public class Player : MonoBehaviour
         // Animation parameters
         animator.SetBool("isRunning", moveInput != 0);
         animator.SetBool("isJumping", !isGrounded);
+
+        HandleRunningSfx();
     }
 
     void FixedUpdate()
@@ -87,5 +94,42 @@ public class Player : MonoBehaviour
         {
             AudioManager.Instance.PlaySfx(AudioManager.Instance.playerJump);
         }
+    }
+
+    private void HandleRunningSfx()
+    {
+        bool shouldRunSfxPlay = Mathf.Abs(moveInput) > 0.01f && isGrounded && !isDashing;
+
+        if (shouldRunSfxPlay && !isRunLoopPlaying)
+        {
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlayLoopingSfx(AudioManager.Instance.playerRun);
+            }
+            isRunLoopPlaying = true;
+        }
+        else if (!shouldRunSfxPlay && isRunLoopPlaying)
+        {
+            StopRunningSfx();
+        }
+    }
+
+    private void StopRunningSfx()
+    {
+        if (!isRunLoopPlaying)
+        {
+            return;
+        }
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopLoopingSfx(AudioManager.Instance.playerRun);
+        }
+        isRunLoopPlaying = false;
+    }
+
+    private void OnDisable()
+    {
+        StopRunningSfx();
     }
 }

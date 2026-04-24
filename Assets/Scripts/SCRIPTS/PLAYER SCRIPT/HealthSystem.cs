@@ -74,6 +74,11 @@ public class HealthSystem : MonoBehaviour
 
 		yield return new WaitForSeconds(0.5f); // Wait for the death animation to finish
 
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.playerRespawn);
+        }
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene to restart the game
 }
     

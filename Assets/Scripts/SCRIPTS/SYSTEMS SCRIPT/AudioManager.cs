@@ -17,12 +17,14 @@ public class AudioManager : MonoBehaviour
 
     [Header("Player SFX")]
     public AudioClip playerJump;
+    public AudioClip playerRun;
     public AudioClip playerLand;
     public AudioClip playerAttack;
     public AudioClip playerPlungeSlam;
     public AudioClip playerDash;
     public AudioClip playerTakeDamage;
     public AudioClip playerDeath;
+    public AudioClip playerRespawn;
     public AudioClip playerHeal;
 
     [Header("Emotion Skill SFX")]
@@ -48,6 +50,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip buttonClick;
     public AudioClip questComplete;
     public AudioClip panelOpen;
+    public AudioClip checkpointActivate;
 
     [Header("Volume Settings")]
     [Range(0f, 1f)] [SerializeField] private float masterVolume = 1f;
@@ -66,6 +69,7 @@ public class AudioManager : MonoBehaviour
     private const string SfxVolumeKey = "SfxVolume";
 
     private Coroutine musicFadeCoroutine;
+    private AudioSource loopingSfxSource;
 
     private void Awake()
     {
@@ -107,11 +111,27 @@ public class AudioManager : MonoBehaviour
             }
         }
 
+        if (loopingSfxSource == null)
+        {
+            AudioSource[] sources = GetComponents<AudioSource>();
+            if (sources.Length > 2)
+            {
+                loopingSfxSource = sources[2];
+            }
+            else
+            {
+                loopingSfxSource = gameObject.AddComponent<AudioSource>();
+            }
+        }
+
         musicSource.loop = true;
         musicSource.playOnAwake = false;
 
         sfxSource.loop = false;
         sfxSource.playOnAwake = false;
+
+        loopingSfxSource.loop = true;
+        loopingSfxSource.playOnAwake = false;
     }
 
     private void LoadVolumeSettings()
@@ -131,6 +151,11 @@ public class AudioManager : MonoBehaviour
         if (sfxSource != null)
         {
             sfxSource.volume = 1f;
+        }
+
+        if (loopingSfxSource != null)
+        {
+            loopingSfxSource.volume = masterVolume * sfxVolume;
         }
     }
 
@@ -238,6 +263,40 @@ public class AudioManager : MonoBehaviour
         }
 
         sfxSource.PlayOneShot(clip, masterVolume * sfxVolume);
+    }
+
+    public void PlayLoopingSfx(AudioClip clip)
+    {
+        if (clip == null || loopingSfxSource == null)
+        {
+            return;
+        }
+
+        if (loopingSfxSource.isPlaying && loopingSfxSource.clip == clip)
+        {
+            return;
+        }
+
+        loopingSfxSource.clip = clip;
+        loopingSfxSource.loop = true;
+        loopingSfxSource.volume = masterVolume * sfxVolume;
+        loopingSfxSource.Play();
+    }
+
+    public void StopLoopingSfx(AudioClip clip = null)
+    {
+        if (loopingSfxSource == null || !loopingSfxSource.isPlaying)
+        {
+            return;
+        }
+
+        if (clip != null && loopingSfxSource.clip != clip)
+        {
+            return;
+        }
+
+        loopingSfxSource.Stop();
+        loopingSfxSource.clip = null;
     }
 
     private IEnumerator CrossfadeMusic(AudioClip nextClip)
