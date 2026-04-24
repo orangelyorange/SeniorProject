@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
+    public static bool PendingRespawnSfx { get; private set; }
+
     public int PlayerHealth; //tracks player's health
     public int PlayerMaxHealth = 4; // full health
     private SpriteRenderer spriteRenderer;
@@ -61,7 +63,7 @@ public class HealthSystem : MonoBehaviour
     }
     
 
-	public IEnumerator Die()
+    public IEnumerator Die()
 		{
 		animator.SetBool("isDead", true); // Trigger death animation
         if (AudioManager.Instance != null)
@@ -74,13 +76,21 @@ public class HealthSystem : MonoBehaviour
 
 		yield return new WaitForSeconds(0.5f); // Wait for the death animation to finish
 
-        if (AudioManager.Instance != null)
-        {
-            AudioManager.Instance.PlaySfx(AudioManager.Instance.playerRespawn);
-        }
+        PendingRespawnSfx = true;
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene to restart the game
 }
+
+    public static bool ConsumeRespawnSfxRequest()
+    {
+        if (!PendingRespawnSfx)
+        {
+            return false;
+        }
+
+        PendingRespawnSfx = false;
+        return true;
+    }
     
     public IEnumerator BlinkRed() //player blinks red when taking damage
     {

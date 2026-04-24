@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         RestoreCheckpointPosition();
+        PlayPendingRespawnSfx();
     }
 
     void Update()
@@ -148,6 +149,19 @@ public class Player : MonoBehaviour
         {
             rb.position = checkpointPosition;
             rb.linearVelocity = Vector2.zero;
+        }
+    }
+
+    private void PlayPendingRespawnSfx()
+    {
+        if (!HealthSystem.ConsumeRespawnSfxRequest())
+        {
+            return;
+        }
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.playerRespawn);
         }
     }
 }
