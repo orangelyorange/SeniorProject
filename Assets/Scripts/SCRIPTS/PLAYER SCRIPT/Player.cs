@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private const float MoveThreshold = 0.01f;
+
     [Header("Player Movement")]
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
@@ -51,9 +53,9 @@ public class Player : MonoBehaviour
         }
 
         // Flip sprite when pressed A or D
-        if (moveInput > 0.01f)
+        if (moveInput > MoveThreshold)
             transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
-        else if (moveInput < -0.01f)
+        else if (moveInput < -MoveThreshold)
             transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
 
         // Animation parameters
@@ -98,7 +100,7 @@ public class Player : MonoBehaviour
 
     private void HandleRunningSfx()
     {
-        bool shouldRunSfxPlay = Mathf.Abs(moveInput) > 0.01f && isGrounded && !isDashing;
+        bool shouldRunSfxPlay = Mathf.Abs(moveInput) > MoveThreshold && isGrounded && !isDashing;
 
         if (shouldRunSfxPlay && !isRunLoopPlaying)
         {
