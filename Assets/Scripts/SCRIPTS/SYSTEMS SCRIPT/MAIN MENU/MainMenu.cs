@@ -12,13 +12,25 @@ public class MainMenu : MonoBehaviour
    
    [Header("Audio Settings")]
    public Slider mainVolumeSlider; //reference UI slider main object
+   public Slider musicVolumeSlider;
+   public Slider sfxVolumeSlider;
    public float fadeDuration = 1f;
 
    void Start()
    {
       if (mainVolumeSlider!= null)
       {
-         mainVolumeSlider.value = AudioListener.volume;
+         mainVolumeSlider.value = AudioManager.Instance != null ? AudioManager.Instance.MasterVolume : 1f;
+      }
+
+      if (musicVolumeSlider != null)
+      {
+         musicVolumeSlider.value = AudioManager.Instance != null ? AudioManager.Instance.MusicVolume : 1f;
+      }
+
+      if (sfxVolumeSlider != null)
+      {
+         sfxVolumeSlider.value = AudioManager.Instance != null ? AudioManager.Instance.SfxVolume : 1f;
       }
       
       if (optionsPanel != null)
@@ -39,24 +51,12 @@ public class MainMenu : MonoBehaviour
    
    //fade out sequence 
    private IEnumerator FadeOutAndLoad(){
-      //finds audio source. wala pa atm 
-      AudioSource musicSource = FindObjectOfType<AudioSource>();
-
-      if (musicSource != null)
+      if (AudioManager.Instance != null)
       {
-         float startVolume = musicSource.volume;
-
-         while (musicSource.volume > 0)
-         {
-            musicSource.volume -= startVolume * Time.deltaTime / fadeDuration;
-            yield return null;
-         }
-         
-         musicSource.Stop();
-         musicSource.volume = startVolume; //reset in case player returns
+         yield return AudioManager.Instance.FadeOutMusic(fadeDuration);
       }
-   //Loads next scene only while the loop above has finished
-   SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+      //Loads next scene only while the loop above has finished
+      SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
    
    }
 
@@ -91,7 +91,25 @@ public class MainMenu : MonoBehaviour
    
    public void SetVolume(float volume)
    {
-      // AudioListener.volume controls the master volume (0.0 to 1.0)
-      AudioListener.volume = volume; 
+      if (AudioManager.Instance != null)
+      {
+         AudioManager.Instance.SetMasterVolume(volume);
+      }
+   }
+
+   public void SetMusicVolume(float volume)
+   {
+      if (AudioManager.Instance != null)
+      {
+         AudioManager.Instance.SetMusicVolume(volume);
+      }
+   }
+
+   public void SetSfxVolume(float volume)
+   {
+      if (AudioManager.Instance != null)
+      {
+         AudioManager.Instance.SetSfxVolume(volume);
+      }
    }
 }

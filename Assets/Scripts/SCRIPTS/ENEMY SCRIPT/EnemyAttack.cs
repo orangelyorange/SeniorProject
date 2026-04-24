@@ -80,6 +80,10 @@ public float skyYPosition = 12f; //how high the falling rock spawns
     private void ShootStandardProjectile()
     {
         if (attackPrefab == null || attackSpawnPoint == null) return;
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.enemyShoot);
+        }
 
         // Spawn bullet
         GameObject newBullet = Instantiate(attackPrefab, attackSpawnPoint.position, Quaternion.identity);

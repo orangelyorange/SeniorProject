@@ -24,6 +24,10 @@ public class HealthSystem : MonoBehaviour
 		if (isDead) return; // Prevents taking damage if already dead
 
          PlayerHealth -= damage;
+         if (AudioManager.Instance != null)
+         {
+             AudioManager.Instance.PlaySfx(AudioManager.Instance.playerTakeDamage);
+         }
          StartCoroutine(BlinkRed());
         
             //if Player's HP reaches zero, the game object is destroyed
@@ -44,6 +48,10 @@ public class HealthSystem : MonoBehaviour
         }
         
         PlayerHealth += healing;
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.playerHeal);
+        }
         StartCoroutine(BlinkGreen());
 
         if (PlayerHealth >= PlayerMaxHealth)
@@ -53,9 +61,13 @@ public class HealthSystem : MonoBehaviour
     }
     
 
-    public IEnumerator Die()
+	public IEnumerator Die()
 		{
 		animator.SetBool("isDead", true); // Trigger death animation
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.playerDeath);
+        }
 
 		GetComponent<Player>().enabled = false; // Disable player movement
 		GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero; // Stop player movement

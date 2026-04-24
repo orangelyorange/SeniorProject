@@ -32,6 +32,10 @@ public class EnemyHealthSystem : MonoBehaviour
     {
         // Subtract from currentHealth so we don't lose our maxHealth value
         currentHealth -= damage; 
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.enemyTakeDamage);
+        }
         
         // Optional: A helpful log to watch the math happen in the Unity Console
         Debug.Log(gameObject.name + " (" + enemyType + ") took " + damage + " damage! Health: " + currentHealth);
@@ -47,6 +51,10 @@ public class EnemyHealthSystem : MonoBehaviour
     public void Die()
     {
         Debug.Log(gameObject.name + " defeated!");
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.enemyDie);
+        }
         Destroy(gameObject);
     }
 

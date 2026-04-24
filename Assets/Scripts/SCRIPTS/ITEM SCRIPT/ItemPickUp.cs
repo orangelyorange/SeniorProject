@@ -18,6 +18,10 @@ public class ItemPickUp : MonoBehaviour
                 inventory.AddItem(collectibleItemName);
                 //QuestManager.Instance.QuestProgress(); para sa quest chuchu
                 ItemCounterUI.Instance.AddToCounter(collectibleItemName, amount);
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.PlaySfx(AudioManager.Instance.itemPickup);
+                }
                 Destroy(gameObject);
             }
             

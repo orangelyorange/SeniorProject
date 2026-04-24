@@ -32,6 +32,10 @@ public class JoySkill : MonoBehaviour
         if (isActive)
         {
             player.isSkillUsed = false;
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlaySfx(AudioManager.Instance.joyActivate);
+            }
             Debug.Log("Joy skill activated - Double Jump enabled");
         }
         else

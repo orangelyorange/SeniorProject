@@ -68,6 +68,11 @@ public class RageSkill : MonoBehaviour
     {
         isDashing = true;
         player.isDashing = true; // Tells the player script that we are dashing
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.rageActivate);
+            StartCoroutine(PlayDashSfxWithDelay(0.1f));
+        }
         
         lastSkillUsedTime = Time.time; // Resets cooldown timer
         
@@ -121,5 +126,14 @@ public class RageSkill : MonoBehaviour
     public void SetRage(bool isRage)
     {
         isRageEquipped = isRage;
+    }
+
+    private IEnumerator PlayDashSfxWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.playerDash);
+        }
     }
 }
