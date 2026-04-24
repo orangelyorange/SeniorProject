@@ -130,7 +130,7 @@ public class AudioManager : MonoBehaviour
 
         if (sfxSource != null)
         {
-            sfxSource.volume = masterVolume * sfxVolume;
+            sfxSource.volume = 1f;
         }
     }
 
@@ -158,6 +158,12 @@ public class AudioManager : MonoBehaviour
         ApplyVolumes();
     }
 
+    /// <summary>
+    /// Plays a music clip and optionally crossfades from the currently active track.
+    /// If the same clip is already playing, this call does nothing.
+    /// </summary>
+    /// <param name="clip">Music clip to play.</param>
+    /// <param name="fadeIn">When true, performs a crossfade/fade-in transition.</param>
     public void PlayMusic(AudioClip clip, bool fadeIn = true)
     {
         if (clip == null || musicSource == null)
@@ -231,7 +237,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        sfxSource.PlayOneShot(clip, 1f);
+        sfxSource.PlayOneShot(clip, masterVolume * sfxVolume);
     }
 
     private IEnumerator CrossfadeMusic(AudioClip nextClip)
