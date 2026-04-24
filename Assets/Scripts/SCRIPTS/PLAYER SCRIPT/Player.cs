@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        RestoreCheckpointPosition();
     }
 
     void Update()
@@ -133,5 +134,20 @@ public class Player : MonoBehaviour
     private void OnDisable()
     {
         StopRunningSfx();
+    }
+
+    private void RestoreCheckpointPosition()
+    {
+        if (!Checkpoint.TryGetCheckpointForCurrentScene(out Vector3 checkpointPosition))
+        {
+            return;
+        }
+
+        transform.position = checkpointPosition;
+        if (rb != null)
+        {
+            rb.position = checkpointPosition;
+            rb.linearVelocity = Vector2.zero;
+        }
     }
 }
