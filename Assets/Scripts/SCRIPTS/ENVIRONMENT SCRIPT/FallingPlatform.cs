@@ -25,6 +25,10 @@ public class FallingPlatform : MonoBehaviour
     private IEnumerator Fall()
     {
         isFalling = true;
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.fallingPlatformCrumble);
+        }
         yield return new WaitForSeconds(fallWait);
         rb.bodyType = RigidbodyType2D.Dynamic;
         Destroy(gameObject, destroyWait);

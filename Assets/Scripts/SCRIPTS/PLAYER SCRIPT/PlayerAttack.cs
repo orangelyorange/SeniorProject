@@ -60,6 +60,11 @@ public class PlayerAttack : MonoBehaviour
 
     public void Attack()
     {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.playerAttack);
+        }
+
 		//set the animation trigger for the attack
         if (animator != null){
             animator.SetTrigger("Attack");
@@ -88,6 +93,10 @@ public class PlayerAttack : MonoBehaviour
     {
         isPerformingDownwardSlash = false; // Reset the state
         Debug.Log("Slammed into the ground! Triggering AoE.");
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.playerPlungeSlam);
+        }
 
         // Detect all enemies within the blast radius (centered on the player's body)
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, plungeAoERadius, enemyLayer);

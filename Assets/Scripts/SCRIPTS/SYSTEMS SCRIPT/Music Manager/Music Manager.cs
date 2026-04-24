@@ -2,6 +2,7 @@ using UnityEngine;
 
 // This ensures there's an AudioSource attached to the same GameObject
 [RequireComponent(typeof(AudioSource))] 
+[System.Obsolete("Use AudioManager instead.")]
 public class MusicManager : MonoBehaviour
 {
     public static MusicManager instance;
@@ -28,6 +29,12 @@ public class MusicManager : MonoBehaviour
     /// Call this function to start the background music.
     public void PlayMusic()
     {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayMusic(audioSource != null ? audioSource.clip : null);
+            return;
+        }
+
         if (audioSource == null)
         {
             Debug.LogError("MusicManager: AudioSource is missing!");
@@ -42,20 +49,7 @@ public class MusicManager : MonoBehaviour
 
         if (!audioSource.isPlaying)
         {
-            // Reset the global master volume to 100%
-            AudioListener.volume = 1f;
-            
             audioSource.Play();
-            Debug.Log($"Background music '{audioSource.clip.name}' started playing successfully.");
-            
-            // Diagnostic logs to check for runtime volume or pitch issues
-            Debug.Log($"Diagnostics: Source Volume = {audioSource.volume}, Mute = {audioSource.mute}, Pitch = {audioSource.pitch}, Spatial Blend = {audioSource.spatialBlend}");
-            Debug.Log($"Diagnostics: Global AudioListener Volume = {AudioListener.volume}");
-            
-            if (Time.timeScale == 0)
-            {
-                Debug.LogWarning("Diagnostics: Time.timeScale is 0! Standard audio playback will be paused.");
-            }
         }
     }
 }

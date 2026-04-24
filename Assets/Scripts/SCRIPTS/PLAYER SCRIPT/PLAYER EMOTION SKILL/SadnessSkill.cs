@@ -77,6 +77,10 @@ public class SadnessSkill : MonoBehaviour
     private void ExecuteShieldSkill()
     {
         Debug.Log("Activating Sadness Shield.");
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.sadnessActivate);
+        }
         
         // Set the timer for when the shield can be used next
         nextShieldTime = Time.time + shieldCooldown; 
@@ -96,6 +100,10 @@ public class SadnessSkill : MonoBehaviour
         if (player != null) player.isInvulnerable = false;
         
         isShieldActive = false;
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.sadnessShieldExpire);
+        }
         Debug.Log("Shield Deactivated");
     }
 }
