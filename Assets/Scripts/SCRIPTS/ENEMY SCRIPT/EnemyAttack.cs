@@ -25,7 +25,7 @@ public class EnemyAttack : MonoBehaviour
     public float undergroundYPosition = -6f; // How deep the geyser 
 
 	[Header("Level 3 Attack Settings")]
-    public float skyYPosition = 12f; //how high the falling rock spawns
+    public float skyYPosition = 12f; // how high the falling rock spawns
 
     [Header("Ally Awareness Settings")]
     public float allyAwarenessRadius = 2f;
@@ -68,6 +68,7 @@ public class EnemyAttack : MonoBehaviour
                 }
                 else
                 {
+                    // Keep allies coordinated by retrying sooner when a shot/spawn was blocked by ally-awareness rules.
                     timer = Mathf.Max(0f, attackCooldown - blockedAttackRetryDelay);
                 }
             }

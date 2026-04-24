@@ -32,6 +32,7 @@ public class EnemyPatrolAi : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Physics-driven movement belongs in FixedUpdate so velocity changes align with Rigidbody2D simulation steps.
         if (currentPoint == null || rb == null) return;
 
         float distanceToPoint = Vector2.Distance(transform.position, currentPoint.position);
