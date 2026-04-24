@@ -71,10 +71,15 @@ public class RageSkill : MonoBehaviour
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.PlaySfx(AudioManager.Instance.rageActivate);
-            AudioManager.Instance.PlaySfx(AudioManager.Instance.playerDash);
         }
         
         lastSkillUsedTime = Time.time; // Resets cooldown timer
+        yield return null;
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.playerDash);
+        }
         
         // Triggers animation
         if (animator != null)

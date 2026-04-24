@@ -11,6 +11,9 @@ public class LevelMusicManager : MonoBehaviour
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.PlayMusic(levelTrack, fadeIn);
+            return;
         }
+
+        Debug.LogWarning("LevelMusicManager: AudioManager instance is missing in the scene.");
     }
 }
