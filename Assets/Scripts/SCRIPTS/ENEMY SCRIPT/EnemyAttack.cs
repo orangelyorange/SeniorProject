@@ -23,7 +23,15 @@ public class EnemyAttack : MonoBehaviour
     public float undergroundYPosition = -6f; // How deep the geyser 
 
 	[Header("Level 3 Attack Settings")]
-public float skyYPosition = 12f; //how high the falling rock spawns
+    public float skyYPosition = 12f; //how high the falling rock spawns
+
+    [Header("Ally Awareness Settings")]
+    public float allyAwarenessRadius = 2f;
+    public float allySpacingRadius = 1f;
+    public float allyLineOfFireBlockRadius = 0.25f;
+    public float blockedAttackRetryDelay = 0.25f;
+    public LayerMask allyLayerMask;
+    public string allyTag = "Enemy";
 
     private GameObject player;
     private float timer;
@@ -52,8 +60,14 @@ public float skyYPosition = 12f; //how high the falling rock spawns
 
             if (timer >= attackCooldown)
             {
-                PerformAttack();
-                timer = 0f; // Reset timer after attacking
+                if (PerformAttack())
+                {
+                    timer = 0f; // Reset timer after attacking
+                }
+                else
+                {
+                    timer = Mathf.Max(0f, attackCooldown - blockedAttackRetryDelay);
+                }
             }
         }
         else
@@ -64,22 +78,40 @@ public float skyYPosition = 12f; //how high the falling rock spawns
         }
     }
 
-    private void PerformAttack()
+    private bool PerformAttack()
     {
         // Check our dropdown to see which attack to use!
         if (attackStyle == EnemyAttackStyle.ShootProjectile)
         {
-            ShootStandardProjectile();
+            return ShootStandardProjectile();
         }
-        else if (attackStyle == EnemyAttackStyle.SpawnGeyserUnderground)
+
+        if (attackStyle == EnemyAttackStyle.SpawnGeyserUnderground)
         {
-            SpawnUndergroundGeyser();
+            return SpawnUndergroundGeyser();
         }
+
+        if (attackStyle == EnemyAttackStyle.SpawnFallingRock)
+        {
+            return SpawnFallingRock();
+        }
+
+        return false;
     }
 
-    private void ShootStandardProjectile()
+    private bool ShootStandardProjectile()
     {
-        if (attackPrefab == null || attackSpawnPoint == null) return;
+        if (attackPrefab == null || attackSpawnPoint == null) return false;
+
+        Vector2 direction = (player.transform.position - attackSpawnPoint.position).normalized;
+        float distanceToPlayer = Vector2.Distance(attackSpawnPoint.position, player.transform.position);
+        if (distanceToPlayer <= 0f) return false;
+
+        if (IsAllyInLineOfFire(attackSpawnPoint.position, direction, distanceToPlayer))
+        {
+            return false;
+        }
+
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.PlaySfx(AudioManager.Instance.enemyShoot);
@@ -89,20 +121,90 @@ public float skyYPosition = 12f; //how high the falling rock spawns
         GameObject newBullet = Instantiate(attackPrefab, attackSpawnPoint.position, Quaternion.identity);
         
         // Calculate angle to player and rotate bullet
-        Vector2 direction = (player.transform.position - attackSpawnPoint.position).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         newBullet.transform.rotation = Quaternion.Euler(0, 0, angle);
+        return true;
     }
 
-    private void SpawnUndergroundGeyser()
+    private bool SpawnUndergroundGeyser()
     {
-        if (attackPrefab == null) return;
+        if (attackPrefab == null) return false;
+        if (IsAllyTooCloseToTargetArea(player.transform.position)) return false;
 
         // Create a new position: Player's exact X, but our deep underground Y
         Vector2 spawnPos = new Vector2(player.transform.position.x, undergroundYPosition);
 
         // Spawn the geyser pointing straight up
         Instantiate(attackPrefab, spawnPos, Quaternion.identity);
+        return true;
+    }
+
+    private bool SpawnFallingRock()
+    {
+        if (attackPrefab == null) return false;
+        if (IsAllyTooCloseToTargetArea(player.transform.position)) return false;
+
+        Vector2 spawnPos = new Vector2(player.transform.position.x, skyYPosition);
+        Instantiate(attackPrefab, spawnPos, Quaternion.identity);
+        return true;
+    }
+
+    private bool IsAllyInLineOfFire(Vector2 start, Vector2 direction, float distance)
+    {
+        if (allyLineOfFireBlockRadius <= 0f || distance <= 0f) return false;
+
+        RaycastHit2D[] hits;
+        if (allyLayerMask.value == 0)
+        {
+            hits = Physics2D.CircleCastAll(start, allyLineOfFireBlockRadius, direction, distance);
+        }
+        else
+        {
+            hits = Physics2D.CircleCastAll(start, allyLineOfFireBlockRadius, direction, distance, allyLayerMask);
+        }
+
+        foreach (RaycastHit2D hit in hits)
+        {
+            Collider2D hitCollider = hit.collider;
+            if (hitCollider == null) continue;
+            if (hitCollider.attachedRigidbody != null && hitCollider.attachedRigidbody.gameObject == gameObject) continue;
+            if (!hitCollider.CompareTag(allyTag)) continue;
+            if (Vector2.Distance(start, hitCollider.ClosestPoint(start)) <= 0.05f) continue;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool IsAllyTooCloseToTargetArea(Vector2 targetPosition)
+    {
+        if (allyAwarenessRadius <= 0f || allySpacingRadius <= 0f) return false;
+
+        Collider2D[] nearbyAllies;
+        if (allyLayerMask.value == 0)
+        {
+            nearbyAllies = Physics2D.OverlapCircleAll(targetPosition, allySpacingRadius);
+        }
+        else
+        {
+            nearbyAllies = Physics2D.OverlapCircleAll(targetPosition, allySpacingRadius, allyLayerMask);
+        }
+
+        foreach (Collider2D ally in nearbyAllies)
+        {
+            if (ally == null) continue;
+            if (!ally.CompareTag(allyTag)) continue;
+            if (ally.attachedRigidbody != null && ally.attachedRigidbody.gameObject == gameObject) continue;
+
+            float allyDistance = Vector2.Distance(transform.position, ally.transform.position);
+            if (allyDistance <= allyAwarenessRadius)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // Draws a helpful yellow circle in the Unity editor to show the detection range
@@ -110,5 +212,8 @@ public float skyYPosition = 12f; //how high the falling rock spawns
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, allyAwarenessRadius);
     }
 }

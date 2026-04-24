@@ -8,6 +8,12 @@ public class EnemyPatrolAi : MonoBehaviour
     private Animator animator;
     private Transform currentPoint;
     public float speed;
+    
+    [Header("Awareness Spacing")]
+    public float awarenessRadius = 1.5f;
+    public float separationDistance = 0.8f;
+    public float separationStrength = 2f;
+    public string enemyTag = "Enemy";
 
     void Start()
     {
@@ -24,29 +30,62 @@ public class EnemyPatrolAi : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        Vector2 point = currentPoint.position - transform.position; //give the direction for enemy
-        if (currentPoint == EnemyPointB.transform)
-        {
-            rb.linearVelocity = new Vector2(speed, 0); //enemy goes to right
-        }
-        else
-        {
-            rb.linearVelocity = new Vector2(-speed, 0); // enemy goes to left
-        }
+        if (currentPoint == null || rb == null) return;
 
-        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == EnemyPointB.transform)
+        float distanceToPoint = Vector2.Distance(transform.position, currentPoint.position);
+        if (distanceToPoint < 0.5f && currentPoint == EnemyPointB.transform)
         {
             Flip();
             currentPoint = EnemyPointA.transform;
         }
-        
-        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == EnemyPointA.transform)
+        else if (distanceToPoint < 0.5f && currentPoint == EnemyPointA.transform)
         {
             Flip();
             currentPoint = EnemyPointB.transform;
         }
+
+        float patrolDirectionX;
+        if (currentPoint == EnemyPointB.transform)
+        {
+            patrolDirectionX = 1f;
+        }
+        else
+        {
+            patrolDirectionX = -1f;
+        }
+
+        float separationVelocityX = CalculateSeparationVelocityX();
+        float targetVelocityX = (patrolDirectionX * speed) + separationVelocityX;
+
+        rb.linearVelocity = new Vector2(targetVelocityX, rb.linearVelocity.y);
+    }
+
+    private float CalculateSeparationVelocityX()
+    {
+        if (awarenessRadius <= 0f || separationDistance <= 0f || separationStrength <= 0f)
+        {
+            return 0f;
+        }
+
+        Collider2D[] neighbors = Physics2D.OverlapCircleAll(transform.position, awarenessRadius);
+        float separationForceX = 0f;
+
+        foreach (Collider2D neighbor in neighbors)
+        {
+            if (neighbor == null || neighbor.attachedRigidbody == rb) continue;
+            if (!neighbor.CompareTag(enemyTag)) continue;
+
+            Vector2 offset = (Vector2)transform.position - neighbor.ClosestPoint(transform.position);
+            float distance = offset.magnitude;
+            if (distance <= 0f || distance > separationDistance) continue;
+
+            float strength = 1f - (distance / separationDistance);
+            separationForceX += Mathf.Sign(offset.x) * strength;
+        }
+
+        return separationForceX * separationStrength;
     }
 
     private void Flip()
@@ -54,5 +93,14 @@ public class EnemyPatrolAi : MonoBehaviour
         Vector3 localScale = transform.localScale;
         localScale.x *= -1;
         transform.localScale = localScale;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, awarenessRadius);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, separationDistance);
     }
 }
