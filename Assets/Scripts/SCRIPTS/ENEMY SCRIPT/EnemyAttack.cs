@@ -10,6 +10,8 @@ public enum EnemyAttackStyle
 
 public class EnemyAttack : MonoBehaviour
 {
+    private const float SelfHitTolerance = 0.05f;
+
     [Header("General Attack Settings")]
     public EnemyAttackStyle attackStyle;     // Choose the attack type from the dropdown
     public GameObject attackPrefab;          // The Bullet OR the Tsunami prefab
@@ -103,9 +105,10 @@ public class EnemyAttack : MonoBehaviour
     {
         if (attackPrefab == null || attackSpawnPoint == null) return false;
 
-        Vector2 direction = (player.transform.position - attackSpawnPoint.position).normalized;
-        float distanceToPlayer = Vector2.Distance(attackSpawnPoint.position, player.transform.position);
+        Vector2 toPlayer = player.transform.position - attackSpawnPoint.position;
+        float distanceToPlayer = toPlayer.magnitude;
         if (distanceToPlayer <= 0f) return false;
+        Vector2 direction = toPlayer / distanceToPlayer;
 
         if (IsAllyInLineOfFire(attackSpawnPoint.position, direction, distanceToPlayer))
         {
@@ -169,7 +172,7 @@ public class EnemyAttack : MonoBehaviour
             if (hitCollider == null) continue;
             if (hitCollider.attachedRigidbody != null && hitCollider.attachedRigidbody.gameObject == gameObject) continue;
             if (!hitCollider.CompareTag(allyTag)) continue;
-            if (Vector2.Distance(start, hitCollider.ClosestPoint(start)) <= 0.05f) continue;
+            if (Vector2.Distance(start, hitCollider.ClosestPoint(start)) <= SelfHitTolerance) continue;
 
             return true;
         }
@@ -181,6 +184,9 @@ public class EnemyAttack : MonoBehaviour
     {
         if (allyAwarenessRadius <= 0f || allySpacingRadius <= 0f) return false;
 
+        // Two-step filtering:
+        // 1) Ally must already be in the target zone (allySpacingRadius around targetPosition),
+        // 2) and also be part of this enemy's local awareness neighborhood (allyAwarenessRadius).
         Collider2D[] nearbyAllies;
         if (allyLayerMask.value == 0)
         {

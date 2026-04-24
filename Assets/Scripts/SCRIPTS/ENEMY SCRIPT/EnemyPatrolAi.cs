@@ -74,7 +74,8 @@ public class EnemyPatrolAi : MonoBehaviour
 
         foreach (Collider2D neighbor in neighbors)
         {
-            if (neighbor == null || neighbor.attachedRigidbody == rb) continue;
+            if (neighbor.gameObject == gameObject) continue;
+            if (neighbor.attachedRigidbody == rb) continue;
             if (!neighbor.CompareTag(enemyTag)) continue;
 
             Vector2 offset = (Vector2)transform.position - neighbor.ClosestPoint(transform.position);
