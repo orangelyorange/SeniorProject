@@ -12,6 +12,7 @@ public class EmotionSkillCooldownUI : MonoBehaviour
 
     [Header("UI Elements")]
     [SerializeField] private GameObject container;
+    [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private Image iconImage;
     [SerializeField] private Image cooldownFillImage;
     [SerializeField] private TMP_Text cooldownText;
@@ -28,6 +29,15 @@ public class EmotionSkillCooldownUI : MonoBehaviour
             container = gameObject;
         }
 
+        if (canvasGroup == null && container != null)
+        {
+            canvasGroup = container.GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+            {
+                canvasGroup = container.AddComponent<CanvasGroup>();
+            }
+        }
+
         if (cooldownFillImage != null)
         {
             cooldownFillImage.type = Image.Type.Filled;
@@ -41,11 +51,6 @@ public class EmotionSkillCooldownUI : MonoBehaviour
 
     private void Update()
     {
-        if (skillManager == null)
-        {
-            ResolveReferencesIfNeeded();
-        }
-
         if (skillManager == null)
         {
             SetVisible(false);
@@ -157,28 +162,27 @@ public class EmotionSkillCooldownUI : MonoBehaviour
 
     private void SetVisible(bool isVisible)
     {
-        if (container != null && container != gameObject)
+        if (canvasGroup == null)
         {
-            if (container.activeSelf != isVisible)
+            if (iconImage != null)
             {
-                container.SetActive(isVisible);
+                iconImage.enabled = isVisible;
+            }
+
+            if (cooldownFillImage != null)
+            {
+                cooldownFillImage.enabled = isVisible;
+            }
+
+            if (cooldownText != null)
+            {
+                cooldownText.enabled = isVisible;
             }
             return;
         }
 
-        if (iconImage != null)
-        {
-            iconImage.enabled = isVisible;
-        }
-
-        if (cooldownFillImage != null)
-        {
-            cooldownFillImage.enabled = isVisible;
-        }
-
-        if (cooldownText != null)
-        {
-            cooldownText.enabled = isVisible;
-        }
+        canvasGroup.alpha = isVisible ? 1f : 0f;
+        canvasGroup.blocksRaycasts = isVisible;
+        canvasGroup.interactable = isVisible;
     }
 }
