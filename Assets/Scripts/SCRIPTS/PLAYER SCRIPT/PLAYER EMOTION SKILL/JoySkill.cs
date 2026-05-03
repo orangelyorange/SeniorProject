@@ -12,7 +12,7 @@ public class JoySkill : MonoBehaviour
 
     [Header("Joy Cooldown")]
     public float skillCooldown = 5f;
-    private float nextSkillTime = 0f;
+    private float nextSkillTime = -Mathf.Infinity;
     private bool hasSkillBeenUsed = false;
 
     public bool HasSkillBeenUsed => hasSkillBeenUsed;

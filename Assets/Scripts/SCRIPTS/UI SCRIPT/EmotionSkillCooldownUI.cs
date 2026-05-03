@@ -34,9 +34,17 @@ public class EmotionSkillCooldownUI : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void Start()
     {
         ResolveReferencesIfNeeded();
+    }
+
+    private void Update()
+    {
+        if (skillManager == null)
+        {
+            ResolveReferencesIfNeeded();
+        }
 
         if (skillManager == null)
         {
