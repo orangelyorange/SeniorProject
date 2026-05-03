@@ -19,6 +19,11 @@ public class SadnessSkill : MonoBehaviour
     public bool isSadnessSkillActive = false;
     private bool isShieldActive = false;
     private float nextShieldTime = 0f; // Tracks the cooldown timer
+    private bool hasSkillBeenUsed = false;
+
+    public bool HasSkillBeenUsed => hasSkillBeenUsed;
+    public float CooldownRemaining => Mathf.Max(0f, nextShieldTime - Time.time);
+    public float CooldownDuration => shieldCooldown;
 
     private void Start()
     {
@@ -83,6 +88,7 @@ public class SadnessSkill : MonoBehaviour
         }
         
         // Set the timer for when the shield can be used next
+        hasSkillBeenUsed = true;
         nextShieldTime = Time.time + shieldCooldown; 
         
         StartCoroutine(ShieldRoutine());

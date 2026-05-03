@@ -10,6 +10,15 @@ public class JoySkill : MonoBehaviour
     public int extraJumpValue = 1; 
     public int extraJump = 0;
 
+    [Header("Joy Cooldown")]
+    public float skillCooldown = 5f;
+    private float nextSkillTime = 0f;
+    private bool hasSkillBeenUsed = false;
+
+    public bool HasSkillBeenUsed => hasSkillBeenUsed;
+    public float CooldownRemaining => Mathf.Max(0f, nextSkillTime - Time.time);
+    public float CooldownDuration => skillCooldown;
+
     private void Start()
     {
         player = GetComponent<Player>();
@@ -69,10 +78,12 @@ public class JoySkill : MonoBehaviour
         // Double Jump Logic
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (player.isMidAir && player.isSkillActive && !player.isSkillUsed)
+            if (player.isMidAir && player.isSkillActive && !player.isSkillUsed && Time.time >= nextSkillTime)
             {
                 player.Jump(); 
                 player.isSkillUsed = true; // Marks that the double jump was consumed
+                hasSkillBeenUsed = true;
+                nextSkillTime = Time.time + skillCooldown;
                 Debug.Log("Double Jump Activated");
             }
         }
