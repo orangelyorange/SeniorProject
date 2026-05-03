@@ -41,6 +41,8 @@ public class EmotionSkillCooldownUI : MonoBehaviour
         if (cooldownFillImage != null)
         {
             cooldownFillImage.type = Image.Type.Filled;
+            cooldownFillImage.fillMethod = Image.FillMethod.Radial360;
+            cooldownFillImage.fillOrigin = (int)Image.Origin360.Top;
         }
     }
 
@@ -182,7 +184,6 @@ public class EmotionSkillCooldownUI : MonoBehaviour
         }
 
         canvasGroup.alpha = isVisible ? 1f : 0f;
-        canvasGroup.blocksRaycasts = isVisible;
-        canvasGroup.interactable = isVisible;
+        canvasGroup.blocksRaycasts = false;
     }
 }
