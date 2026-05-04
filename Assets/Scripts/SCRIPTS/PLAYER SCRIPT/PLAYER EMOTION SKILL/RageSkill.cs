@@ -22,6 +22,11 @@ public class RageSkill : MonoBehaviour
     
     private float lastSkillUsedTime = -Mathf.Infinity;
     private bool isDashing = false;
+    private bool hasSkillBeenUsed = false;
+
+    public bool HasSkillBeenUsed => hasSkillBeenUsed;
+    public float CooldownRemaining => Mathf.Max(0f, (lastSkillUsedTime + skillCooldown) - Time.time);
+    public float CooldownDuration => skillCooldown;
     
     private void Start()
     {
@@ -74,6 +79,7 @@ public class RageSkill : MonoBehaviour
             StartCoroutine(PlayDashSfxWithDelay(0.1f));
         }
         
+        hasSkillBeenUsed = true;
         lastSkillUsedTime = Time.time; // Resets cooldown timer
         
         // Triggers animation
