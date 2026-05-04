@@ -24,8 +24,13 @@ public class EnemyAttack : MonoBehaviour
     [Header("Level 2 Attack Settings")]
     public float undergroundYPosition = -6f; // How deep the geyser 
 
-	[Header("Level 3 Attack Settings")]
+    [Header("Level 3 Attack Settings")]
     public float skyYPosition = 12f; // how high the falling rock spawns
+
+    [Header("Pre-Attack Step Back")]
+    public bool enablePreAttackStepBack = false;
+    public float stepBackDistance = 0.75f;
+    public float stepBackDuration = 0.2f;
 
     [Header("Ally Awareness Settings")]
     public float allyAwarenessRadius = 2f;
@@ -37,11 +42,15 @@ public class EnemyAttack : MonoBehaviour
 
     private GameObject player;
     private float timer;
+    private EnemyPatrolAi patrolAi;
+    private bool isPreparingAttack;
+    private float stepBackEndTime;
 
     void Start()
     {
         // Find the player once at the start
         player = GameObject.FindGameObjectWithTag("Player");
+        patrolAi = GetComponent<EnemyPatrolAi>();
         
         // Start the timer at the cooldown max so the enemy attacks immediately when the player enters range
         timer = attackCooldown; 
@@ -62,6 +71,28 @@ public class EnemyAttack : MonoBehaviour
 
             if (timer >= attackCooldown)
             {
+                if (enablePreAttackStepBack && patrolAi != null)
+                {
+                    if (!isPreparingAttack)
+                    {
+                        if (stepBackDuration > 0f && stepBackDistance > 0f &&
+                            patrolAi.BeginStepBack(player.transform, stepBackDistance, stepBackDuration))
+                        {
+                            isPreparingAttack = true;
+                            stepBackEndTime = Time.time + stepBackDuration;
+                            return;
+                        }
+                    }
+                    else if (Time.time < stepBackEndTime)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        isPreparingAttack = false;
+                    }
+                }
+
                 if (PerformAttack())
                 {
                     timer = 0f; // Reset timer after attacking
@@ -78,6 +109,7 @@ public class EnemyAttack : MonoBehaviour
             // Optional: If you want the enemy to be ready to attack the exact moment the 
             // player steps back into range, keep the timer primed.
             timer = attackCooldown; 
+            isPreparingAttack = false;
         }
     }
 
