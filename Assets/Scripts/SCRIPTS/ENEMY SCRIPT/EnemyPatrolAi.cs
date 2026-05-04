@@ -142,9 +142,7 @@ public class EnemyPatrolAi : MonoBehaviour
         if (target == null || distance <= 0f || duration <= 0f) return false;
         if (isSteppingBack || IsFleeing()) return false;
 
-        float directionX = GetDirectionAwayFrom(target.position.x);
-
-        _stepBackDirectionX = directionX;
+        _stepBackDirectionX = GetDirectionAwayFrom(target.position.x);
         _stepBackSpeed = distance / duration;
         _stepBackEndTime = Time.time + duration;
         isSteppingBack = true;
