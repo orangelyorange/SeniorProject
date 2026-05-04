@@ -149,6 +149,11 @@ public class EnemyPatrolAi : MonoBehaviour
         return true;
     }
 
+    public bool IsFleeingActive()
+    {
+        return enablePlayerFlee && IsFleeing();
+    }
+
     /// <summary>
     /// Returns true when an ally enemy is detected directly ahead in the patrol direction,
     /// indicating a head-on jam. Uses a CircleCast so it catches partially-overlapping bodies.

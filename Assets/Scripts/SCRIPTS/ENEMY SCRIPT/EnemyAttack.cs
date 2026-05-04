@@ -45,6 +45,8 @@ public class EnemyAttack : MonoBehaviour
     private EnemyPatrolAi patrolAiComponent;
     private bool isPreparingAttack;
     private float stepBackEndTime;
+    private bool wasFleeing;
+    private bool queueAttackAfterFlee;
 
     void Start()
     {
@@ -60,6 +62,24 @@ public class EnemyAttack : MonoBehaviour
     {
         // If the player is missing or destroyed, do nothing
         if (player == null) return;
+
+        if (patrolAiComponent != null && patrolAiComponent.IsFleeingActive())
+        {
+            wasFleeing = true;
+            queueAttackAfterFlee = true;
+            isPreparingAttack = false;
+            return;
+        }
+
+        if (wasFleeing)
+        {
+            wasFleeing = false;
+            if (queueAttackAfterFlee)
+            {
+                timer = attackCooldown;
+                queueAttackAfterFlee = false;
+            }
+        }
 
         // Check distance to the player
         float distance = Vector2.Distance(transform.position, player.transform.position);
