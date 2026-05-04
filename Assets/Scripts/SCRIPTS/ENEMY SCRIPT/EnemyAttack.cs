@@ -42,7 +42,7 @@ public class EnemyAttack : MonoBehaviour
 
     private GameObject player;
     private float timer;
-    private EnemyPatrolAi patrolAi;
+    private EnemyPatrolAi patrolAiComponent;
     private bool isPreparingAttack;
     private float stepBackEndTime;
 
@@ -50,7 +50,7 @@ public class EnemyAttack : MonoBehaviour
     {
         // Find the player once at the start
         player = GameObject.FindGameObjectWithTag("Player");
-        patrolAi = GetComponent<EnemyPatrolAi>();
+        patrolAiComponent = GetComponent<EnemyPatrolAi>();
         
         // Start the timer at the cooldown max so the enemy attacks immediately when the player enters range
         timer = attackCooldown; 
@@ -71,11 +71,11 @@ public class EnemyAttack : MonoBehaviour
 
             if (timer >= attackCooldown)
             {
-                if (enablePreAttackStepBack && patrolAi != null)
+                if (enablePreAttackStepBack && patrolAiComponent != null)
                 {
                     if (!isPreparingAttack)
                     {
-                        if (patrolAi.BeginStepBack(player.transform, stepBackDistance, stepBackDuration))
+                        if (patrolAiComponent.BeginStepBack(player.transform, stepBackDistance, stepBackDuration))
                         {
                             isPreparingAttack = true;
                             stepBackEndTime = Time.time + stepBackDuration;
