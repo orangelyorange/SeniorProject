@@ -1,6 +1,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// ============================================================
+// HordeAI Design Notes (see also Docs/HordeAI.md)
+// ------------------------------------------------------------
+// Current approach: each enemy independently patrols A<->B
+// and uses separation + cohesion + alignment + anti-jam reversal.
+//
+// Smarter future approach outline:
+//   1. Leader/follower slots: one enemy leads, others trail in
+//      formation slots behind it.
+//   2. Head-on detection (implemented below): enemies that spot
+//      an ally coming toward them reverse to their origin patrol
+//      point instead of jamming.
+//   3. Alignment (implemented below): enemies blend their velocity
+//      with neighbors so the horde moves more cohesively.
+//   4. NonAlloc queries (implemented below): reuse a pre-allocated
+//      buffer to avoid per-frame GC pressure.
+// ============================================================
+
 public class EnemyPatrolAi : MonoBehaviour
 {
     public GameObject EnemyPointA;
@@ -9,7 +27,7 @@ public class EnemyPatrolAi : MonoBehaviour
     private Animator animator;
     private Transform currentPoint;
     public float speed;
-    
+
     [Header("Awareness Spacing")]
     public float awarenessRadius = 1.5f;
     public float separationDistance = 0.8f;
@@ -21,18 +39,38 @@ public class EnemyPatrolAi : MonoBehaviour
     public float preferredGroupSpacing = 1.1f;
     public float groupCohesionStrength = 1.25f;
 
+    [Header("Horde Pathing / Anti-Jam")]
+    [Tooltip("How far ahead (in the current patrol direction) to look for a blocking ally. Set 0 to disable.")]
+    public float forwardBlockCheckDistance = 0.6f;
+    [Tooltip("Radius of the forward-check circle cast.")]
+    public float forwardBlockRadius = 0.25f;
+    [Tooltip("Minimum seconds between patrol reversals to prevent rapid flip-flopping.")]
+    public float blockRepathCooldown = 0.5f;
+    [Tooltip("Layer(s) that count as ally enemies for the anti-jam check. Assign the Enemy layer here for best results; leave empty to fall back to tag-only filtering.")]
+    public LayerMask allyLayerMask;
+
+    [Header("Alignment")]
+    [Tooltip("How strongly this enemy steers to match the average X velocity of nearby allies (0 = off, 1 = full match each frame).")]
+    public float alignmentStrength = 0.5f;
+
+    // Pre-allocated buffer reused every FixedUpdate — avoids per-frame heap allocations from OverlapCircleAll.
+    // Unity FixedUpdate runs on the main thread sequentially so sharing this buffer between calls is safe.
+    private readonly Collider2D[] _neighborBuffer = new Collider2D[32];
+
+    private float _lastRepathTime = -999f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         currentPoint = EnemyPointB.transform;
         animator.SetBool("isRunning", true);
-        
+
         //Finds the player at the start
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
-            
+
         }
     }
 
@@ -53,21 +91,61 @@ public class EnemyPatrolAi : MonoBehaviour
             currentPoint = EnemyPointB.transform;
         }
 
-        float patrolDirectionX;
-        if (currentPoint == EnemyPointB.transform)
+        float patrolDirectionX = (currentPoint == EnemyPointB.transform) ? 1f : -1f;
+
+        // Anti-jam: if an ally is directly blocking our patrol direction, reverse back to the other patrol point.
+        if (Time.time - _lastRepathTime >= blockRepathCooldown)
         {
-            patrolDirectionX = 1f;
-        }
-        else
-        {
-            patrolDirectionX = -1f;
+            if (IsAllyBlockingAhead(patrolDirectionX))
+            {
+                _lastRepathTime = Time.time;
+                ReversePatrolTarget();
+                patrolDirectionX = (currentPoint == EnemyPointB.transform) ? 1f : -1f;
+            }
         }
 
         float separationVelocityX = CalculateSeparationVelocityX();
         float groupVelocityX = CalculateGroupCohesionVelocityX();
-        float targetVelocityX = (patrolDirectionX * speed) + separationVelocityX + groupVelocityX;
+        float alignmentVelocityX = CalculateAlignmentVelocityX();
+        float targetVelocityX = (patrolDirectionX * speed) + separationVelocityX + groupVelocityX + alignmentVelocityX;
 
         rb.linearVelocity = new Vector2(targetVelocityX, rb.linearVelocity.y);
+    }
+
+    /// <summary>
+    /// Returns true when an ally enemy is detected directly ahead in the patrol direction,
+    /// indicating a head-on jam. Uses a CircleCast so it catches partially-overlapping bodies.
+    /// </summary>
+    private bool IsAllyBlockingAhead(float patrolDirectionX)
+    {
+        if (forwardBlockCheckDistance <= 0f || forwardBlockRadius <= 0f) return false;
+
+        Vector2 origin = rb.position;
+        Vector2 direction = new Vector2(Mathf.Sign(patrolDirectionX), 0f);
+
+        RaycastHit2D hit = (allyLayerMask.value != 0)
+            ? Physics2D.CircleCast(origin, forwardBlockRadius, direction, forwardBlockCheckDistance, allyLayerMask)
+            : Physics2D.CircleCast(origin, forwardBlockRadius, direction, forwardBlockCheckDistance);
+
+        if (hit.collider == null) return false;
+
+        // Exclude self
+        if (hit.rigidbody != null && hit.rigidbody == rb) return false;
+
+        // Must be an ally enemy (tag-based confirmation works even without a layer mask)
+        return hit.collider.CompareTag(enemyTag);
+    }
+
+    /// <summary>
+    /// Swaps the current patrol target between Point A and Point B, then flips the sprite
+    /// so the enemy faces the new direction. Called when an ally jam is detected.
+    /// </summary>
+    private void ReversePatrolTarget()
+    {
+        currentPoint = (currentPoint == EnemyPointB.transform)
+            ? EnemyPointA.transform
+            : EnemyPointB.transform;
+        Flip();
     }
 
     private float CalculateSeparationVelocityX()
@@ -77,11 +155,12 @@ public class EnemyPatrolAi : MonoBehaviour
             return 0f;
         }
 
-        Collider2D[] neighbors = Physics2D.OverlapCircleAll(transform.position, awarenessRadius);
+        int count = Physics2D.OverlapCircleNonAlloc(transform.position, awarenessRadius, _neighborBuffer);
         float separationForceX = 0f;
 
-        foreach (Collider2D neighbor in neighbors)
+        for (int i = 0; i < count; i++)
         {
+            Collider2D neighbor = _neighborBuffer[i];
             if (neighbor.gameObject == gameObject) continue;
             if (neighbor.attachedRigidbody == rb) continue;
             if (!neighbor.CompareTag(enemyTag)) continue;
@@ -105,7 +184,7 @@ public class EnemyPatrolAi : MonoBehaviour
         }
 
         int desiredNeighbors = Mathf.Max(preferredGroupSize - 1, 1);
-        Collider2D[] neighbors = Physics2D.OverlapCircleAll(transform.position, awarenessRadius);
+        int count = Physics2D.OverlapCircleNonAlloc(transform.position, awarenessRadius, _neighborBuffer);
         HashSet<int> selectedIds = new HashSet<int>();
         float groupCenterXSum = 0f;
         int usedNeighbors = 0;
@@ -115,8 +194,9 @@ public class EnemyPatrolAi : MonoBehaviour
             Collider2D bestNeighbor = null;
             float bestDistance = float.MaxValue;
 
-            foreach (Collider2D neighbor in neighbors)
+            for (int j = 0; j < count; j++)
             {
+                Collider2D neighbor = _neighborBuffer[j];
                 if (neighbor.gameObject == gameObject) continue;
                 if (neighbor.attachedRigidbody == rb) continue;
                 if (!neighbor.CompareTag(enemyTag)) continue;
@@ -157,6 +237,41 @@ public class EnemyPatrolAi : MonoBehaviour
         return Mathf.Sign(xToGroupCenter) * normalizedPull * groupCohesionStrength;
     }
 
+    /// <summary>
+    /// Alignment: nudges this enemy's X velocity toward the average X velocity of nearby allies,
+    /// so the horde moves more cohesively as one unit.
+    /// Returns zero when alignmentStrength is 0 or no neighbors are in range.
+    /// </summary>
+    private float CalculateAlignmentVelocityX()
+    {
+        if (alignmentStrength <= 0f || awarenessRadius <= 0f) return 0f;
+
+        int count = Physics2D.OverlapCircleNonAlloc(transform.position, awarenessRadius, _neighborBuffer);
+        float avgVelX = 0f;
+        int neighborCount = 0;
+
+        for (int i = 0; i < count; i++)
+        {
+            Collider2D neighbor = _neighborBuffer[i];
+            if (neighbor.gameObject == gameObject) continue;
+            if (!neighbor.CompareTag(enemyTag)) continue;
+
+            Rigidbody2D neighborRb = neighbor.attachedRigidbody;
+            if (neighborRb == null || neighborRb == rb) continue;
+
+            avgVelX += neighborRb.linearVelocity.x;
+            neighborCount++;
+        }
+
+        if (neighborCount == 0) return 0f;
+
+        avgVelX /= neighborCount;
+
+        // Apply a fraction of the difference between neighbors' average velocity and our own.
+        float diff = avgVelX - rb.linearVelocity.x;
+        return diff * Mathf.Clamp01(alignmentStrength);
+    }
+
     private void Flip()
     {
         Vector3 localScale = transform.localScale;
@@ -174,5 +289,14 @@ public class EnemyPatrolAi : MonoBehaviour
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, preferredGroupSpacing);
+
+        // Visualise the forward-block check in the direction the enemy is currently facing
+        if (forwardBlockCheckDistance > 0f && forwardBlockRadius > 0f)
+        {
+            float facingDir = transform.localScale.x >= 0f ? 1f : -1f;
+            Vector3 checkCenter = transform.position + new Vector3(facingDir * forwardBlockCheckDistance, 0f, 0f);
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(checkCenter, forwardBlockRadius);
+        }
     }
 }
