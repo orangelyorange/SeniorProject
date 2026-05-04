@@ -62,7 +62,7 @@ public class EnemyAttack : MonoBehaviour
         // If the player is missing or destroyed, do nothing
         if (player == null) return;
 
-        if (patrolAiComponent != null && patrolAiComponent.IsFleeingActive())
+        if (patrolAiComponent != null && patrolAiComponent.IsFleeing())
         {
             queueAttackAfterFlee = true;
             isPreparingAttack = false;

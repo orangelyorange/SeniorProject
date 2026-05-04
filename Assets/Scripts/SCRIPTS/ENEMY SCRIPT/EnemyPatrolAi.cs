@@ -140,7 +140,7 @@ public class EnemyPatrolAi : MonoBehaviour
     public bool BeginStepBack(Transform target, float distance, float duration)
     {
         if (target == null || distance <= 0f || duration <= 0f) return false;
-        if (isSteppingBack || IsFleeing()) return false;
+        if (isSteppingBack || IsFleeTimerActive()) return false;
 
         _stepBackDirectionX = GetDirectionAwayFrom(target.position.x);
         _stepBackSpeed = distance / duration;
@@ -149,9 +149,9 @@ public class EnemyPatrolAi : MonoBehaviour
         return true;
     }
 
-    public bool IsFleeingActive()
+    public bool IsFleeing()
     {
-        return enablePlayerFlee && IsFleeing();
+        return enablePlayerFlee && IsFleeTimerActive();
     }
 
     /// <summary>
@@ -318,7 +318,7 @@ public class EnemyPatrolAi : MonoBehaviour
     {
         if (!enablePlayerFlee || _player == null) return false;
 
-        if (!IsFleeing())
+        if (!IsFleeTimerActive())
         {
             if (Time.time - _lastFleeTime < fleeCooldown) return false;
             if (fleeTriggerRadius <= 0f || fleeDuration <= 0f) return false;
@@ -329,7 +329,7 @@ public class EnemyPatrolAi : MonoBehaviour
             StartFlee(false);
         }
 
-        if (!IsFleeing()) return false;
+        if (!IsFleeTimerActive()) return false;
 
         float directionX = GetDirectionAwayFrom(_player.position.x);
 
@@ -352,7 +352,7 @@ public class EnemyPatrolAi : MonoBehaviour
         return true;
     }
 
-    private bool IsFleeing()
+    private bool IsFleeTimerActive()
     {
         return Time.time < _fleeEndTime;
     }
