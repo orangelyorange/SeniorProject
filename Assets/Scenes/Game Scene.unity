@@ -187,7 +187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackStyle: 0
   attackPrefab: {fileID: 6571900647461822765, guid: 444396ee47e558a488c312ddeaba75fc, type: 3}
-  detectionRadius: 10
+  detectionRadius: 4.52
   attackCooldown: 2
   attackSpawnPoint: {fileID: 1367773594}
   undergroundYPosition: -6
@@ -2012,6 +2012,14 @@ GameObject:
   - component: {fileID: 2000000111}
   - component: {fileID: 2000000112}
   - component: {fileID: 2000000113}
+  - component: {fileID: 1749427724}
+  - component: {fileID: 1749427725}
+  - component: {fileID: 1749427726}
+  - component: {fileID: 1749427727}
+  - component: {fileID: 1749427728}
+  - component: {fileID: 1749427729}
+  - component: {fileID: 1749427730}
+  - component: {fileID: 1749427731}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2312,6 +2320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   extraJumpValue: 1
   extraJump: 0
+  skillCooldown: 5
 --- !u!1 &1923592979
 GameObject:
   m_ObjectHideFlags: 0
@@ -2374,163 +2383,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 803745056}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2127660807
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2127660808}
-  m_Layer: 0
-  m_Name: GroundLayer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2127660808
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2127660807}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.157, y: -0.615, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1749427722}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2000000100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 620662597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c61f22a16ddacf74c9130bb7ef3b74c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  extraJumpValue: 1
-  extraJump: 0
-  skillCooldown: 5
---- !u!114 &2000000101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 620662597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dbd594a91deb0947b7699f23983cdc2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shieldObject: {fileID: 0}
-  shieldDuration: 5
-  shieldCooldown: 8
-  unlockSceneIndex: 4
-  isSadnessSkillActive: 0
---- !u!114 &2000000102
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 620662597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3353efa48b93b1643acc35690e84d415, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentSkill: 0
---- !u!114 &2000000103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 620662597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bfc5d78324033d4d8c8c6484bcd2ab4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isRageEquipped: 0
-  isUnlocked: 0
-  dashSpeed: 10
-  dashDuration: 0.2
-  skillCooldown: 10
-  unlockSceneIndex: 3
---- !u!114 &2000000110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1749427718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c61f22a16ddacf74c9130bb7ef3b74c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  extraJumpValue: 1
-  extraJump: 0
-  skillCooldown: 5
---- !u!114 &2000000111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1749427718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dbd594a91deb0947b7699f23983cdc2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shieldObject: {fileID: 0}
-  shieldDuration: 5
-  shieldCooldown: 8
-  unlockSceneIndex: 4
-  isSadnessSkillActive: 0
---- !u!114 &2000000112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1749427718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3353efa48b93b1643acc35690e84d415, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentSkill: 0
---- !u!114 &2000000113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1749427718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bfc5d78324033d4d8c8c6484bcd2ab4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isRageEquipped: 0
-  isUnlocked: 0
-  dashSpeed: 10
-  dashDuration: 0.2
-  skillCooldown: 10
-  unlockSceneIndex: 3
 --- !u!1 &2000000001
 GameObject:
   m_ObjectHideFlags: 0
@@ -2559,17 +2411,17 @@ RectTransform:
   m_GameObject: {fileID: 2000000001}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2000000011}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0}
 --- !u!223 &2000000003
 Canvas:
   m_ObjectHideFlags: 0
@@ -2727,6 +2579,7 @@ MonoBehaviour:
   sadnessSkill: {fileID: 0}
   rageSkill: {fileID: 0}
   container: {fileID: 2000000010}
+  canvasGroup: {fileID: 0}
   iconImage: {fileID: 2000000013}
   cooldownFillImage: {fileID: 2000000023}
   cooldownText: {fileID: 0}
@@ -2826,6 +2679,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &2000000031
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000000030}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2000000032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2872,20 +2740,162 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
---- !u!4 &2000000031
+--- !u!114 &2000000100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620662597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c61f22a16ddacf74c9130bb7ef3b74c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  extraJumpValue: 1
+  extraJump: 0
+  skillCooldown: 5
+--- !u!114 &2000000101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620662597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dbd594a91deb0947b7699f23983cdc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shieldObject: {fileID: 0}
+  shieldDuration: 5
+  shieldCooldown: 8
+  unlockSceneIndex: 4
+  isSadnessSkillActive: 0
+--- !u!114 &2000000102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620662597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3353efa48b93b1643acc35690e84d415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSkill: 0
+--- !u!114 &2000000103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620662597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bfc5d78324033d4d8c8c6484bcd2ab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isRageEquipped: 0
+  isUnlocked: 0
+  dashSpeed: 10
+  dashDuration: 0.2
+  skillCooldown: 10
+  unlockSceneIndex: 3
+--- !u!114 &2000000110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749427718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c61f22a16ddacf74c9130bb7ef3b74c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  extraJumpValue: 1
+  extraJump: 0
+  skillCooldown: 5
+--- !u!114 &2000000111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749427718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dbd594a91deb0947b7699f23983cdc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shieldObject: {fileID: 0}
+  shieldDuration: 5
+  shieldCooldown: 8
+  unlockSceneIndex: 4
+  isSadnessSkillActive: 0
+--- !u!114 &2000000112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749427718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3353efa48b93b1643acc35690e84d415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSkill: 0
+--- !u!114 &2000000113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749427718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bfc5d78324033d4d8c8c6484bcd2ab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isRageEquipped: 0
+  isUnlocked: 0
+  dashSpeed: 10
+  dashDuration: 0.2
+  skillCooldown: 10
+  unlockSceneIndex: 3
+--- !u!1 &2127660807
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2127660808}
+  m_Layer: 0
+  m_Name: GroundLayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2127660808
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2000000030}
+  m_GameObject: {fileID: 2127660807}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.157, y: -0.615, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1749427722}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -2900,3 +2910,10 @@ SceneRoots:
   - {fileID: 1703706300}
   - {fileID: 2000000002}
   - {fileID: 2000000031}
+  - {fileID: 66227064}
+  - {fileID: 411896559}
+  - {fileID: 803745056}
+  - {fileID: 1238300570}
+  - {fileID: 1262460410}
+  - {fileID: 1286725080}
+  - {fileID: 1923592980}
