@@ -247,6 +247,18 @@ MonoBehaviour:
   preferredGroupSize: 3
   preferredGroupSpacing: 1.1
   groupCohesionStrength: 1.25
+  forwardBlockCheckDistance: 0.6
+  forwardBlockRadius: 0.25
+  blockRepathCooldown: 0.5
+  allyLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  alignmentStrength: 0.5
+  enablePlayerFlee: 1
+  fleeTriggerRadius: 1.5
+  fleeSpeed: 6
+  fleeDuration: 0.35
+  fleeCooldown: 0.6
 --- !u!95 &6422317224385140416
 Animator:
   serializedVersion: 7

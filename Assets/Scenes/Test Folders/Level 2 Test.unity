@@ -4120,6 +4120,9 @@ MonoBehaviour:
   attackSpawnPoint: {fileID: 0}
   undergroundYPosition: -6
   skyYPosition: 12
+  enablePreAttackStepBack: 1
+  stepBackDistance: 0.75
+  stepBackDuration: 0.25
 --- !u!95 &8912567961923521604
 Animator:
   serializedVersion: 7

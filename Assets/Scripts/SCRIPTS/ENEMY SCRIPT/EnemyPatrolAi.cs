@@ -53,11 +53,26 @@ public class EnemyPatrolAi : MonoBehaviour
     [Tooltip("How strongly this enemy steers to match the average X velocity of nearby allies (0 = off, 1 = full match each frame).")]
     public float alignmentStrength = 0.5f;
 
+    [Header("Player Flee / Retreat")]
+    public bool enablePlayerFlee = false;
+    public float fleeTriggerRadius = 1.25f;
+    public float fleeSpeed = 6f;
+    public float fleeDuration = 0.35f;
+    public float fleeCooldown = 0.6f;
+
+    private bool isSteppingBack;
+
     // Pre-allocated buffer reused every FixedUpdate — avoids per-frame heap allocations from OverlapCircleAll.
     // Unity FixedUpdate runs on the main thread sequentially so sharing this buffer between calls is safe.
     private readonly Collider2D[] _neighborBuffer = new Collider2D[32];
 
     private float _lastRepathTime = -999f;
+    private Transform _player;
+    private float _fleeEndTime = -999f;
+    private float _lastFleeTime = -999f;
+    private float _stepBackEndTime = -999f;
+    private float _stepBackDirectionX = 1f;
+    private float _stepBackSpeed = 0f;
 
     void Start()
     {
@@ -70,7 +85,7 @@ public class EnemyPatrolAi : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
-
+            _player = player.transform;
         }
     }
 
@@ -78,6 +93,16 @@ public class EnemyPatrolAi : MonoBehaviour
     {
         // Physics-driven movement belongs in FixedUpdate so velocity changes align with Rigidbody2D simulation steps.
         if (currentPoint == null || rb == null) return;
+
+        if (HandleFleeMovement())
+        {
+            return;
+        }
+
+        if (HandleStepBackMovement())
+        {
+            return;
+        }
 
         float distanceToPoint = Vector2.Distance(transform.position, currentPoint.position);
         if (distanceToPoint < 0.5f && currentPoint == EnemyPointB.transform)
@@ -110,6 +135,18 @@ public class EnemyPatrolAi : MonoBehaviour
         float targetVelocityX = (patrolDirectionX * speed) + separationVelocityX + groupVelocityX + alignmentVelocityX;
 
         rb.linearVelocity = new Vector2(targetVelocityX, rb.linearVelocity.y);
+    }
+
+    public bool BeginStepBack(Transform target, float distance, float duration)
+    {
+        if (target == null || distance <= 0f || duration <= 0f) return false;
+        if (isSteppingBack || IsFleeing()) return false;
+
+        _stepBackDirectionX = GetDirectionAwayFrom(target.position.x);
+        _stepBackSpeed = distance / duration;
+        _stepBackEndTime = Time.time + duration;
+        isSteppingBack = true;
+        return true;
     }
 
     /// <summary>
@@ -272,11 +309,84 @@ public class EnemyPatrolAi : MonoBehaviour
         return diff * Mathf.Clamp01(alignmentStrength);
     }
 
+    private bool HandleFleeMovement()
+    {
+        if (!enablePlayerFlee || _player == null) return false;
+
+        if (!IsFleeing())
+        {
+            if (Time.time - _lastFleeTime < fleeCooldown) return false;
+            if (fleeTriggerRadius <= 0f || fleeDuration <= 0f) return false;
+
+            float distanceToPlayer = Vector2.Distance(transform.position, _player.position);
+            if (distanceToPlayer > fleeTriggerRadius) return false;
+
+            StartFlee(false);
+        }
+
+        if (!IsFleeing()) return false;
+
+        float directionX = GetDirectionAwayFrom(_player.position.x);
+
+        float speedToUse = fleeSpeed > 0f ? fleeSpeed : speed;
+        rb.linearVelocity = new Vector2(directionX * speedToUse, rb.linearVelocity.y);
+        return true;
+    }
+
+    private bool HandleStepBackMovement()
+    {
+        if (!isSteppingBack) return false;
+
+        if (Time.time >= _stepBackEndTime)
+        {
+            isSteppingBack = false;
+            return false;
+        }
+
+        rb.linearVelocity = new Vector2(_stepBackDirectionX * _stepBackSpeed, rb.linearVelocity.y);
+        return true;
+    }
+
+    private bool IsFleeing()
+    {
+        return Time.time < _fleeEndTime;
+    }
+
+    private void StartFlee(bool ignoreCooldown)
+    {
+        if (!ignoreCooldown && Time.time - _lastFleeTime < fleeCooldown) return;
+
+        _lastFleeTime = Time.time;
+        _fleeEndTime = Time.time + fleeDuration;
+    }
+
     private void Flip()
     {
         Vector3 localScale = transform.localScale;
         localScale.x *= -1;
         transform.localScale = localScale;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!enablePlayerFlee) return;
+        if (_player == null) return;
+
+        if (collision.collider != null && collision.collider.CompareTag("Player"))
+        {
+            StartFlee(true);
+        }
+    }
+
+    private float GetDirectionAwayFrom(float targetX)
+    {
+        float directionX = Mathf.Sign(transform.position.x - targetX);
+        if (Mathf.Approximately(directionX, 0f))
+        {
+            directionX = transform.localScale.x >= 0f ? 1f : -1f;
+        }
+
+        return directionX;
     }
 
     private void OnDrawGizmosSelected()
@@ -297,6 +407,12 @@ public class EnemyPatrolAi : MonoBehaviour
             Vector3 checkCenter = transform.position + new Vector3(facingDir * forwardBlockCheckDistance, 0f, 0f);
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(checkCenter, forwardBlockRadius);
+        }
+
+        if (enablePlayerFlee && fleeTriggerRadius > 0f)
+        {
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawWireSphere(transform.position, fleeTriggerRadius);
         }
     }
 }
