@@ -75,8 +75,7 @@ public class EnemyAttack : MonoBehaviour
                 {
                     if (!isPreparingAttack)
                     {
-                        if (stepBackDuration > 0f && stepBackDistance > 0f &&
-                            patrolAi.BeginStepBack(player.transform, stepBackDistance, stepBackDuration))
+                        if (patrolAi.BeginStepBack(player.transform, stepBackDistance, stepBackDuration))
                         {
                             isPreparingAttack = true;
                             stepBackEndTime = Time.time + stepBackDuration;

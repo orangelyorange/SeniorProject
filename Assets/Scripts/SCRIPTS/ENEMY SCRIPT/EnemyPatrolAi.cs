@@ -142,11 +142,7 @@ public class EnemyPatrolAi : MonoBehaviour
         if (target == null || distance <= 0f || duration <= 0f) return false;
         if (isSteppingBack || IsFleeing()) return false;
 
-        float directionX = Mathf.Sign(transform.position.x - target.position.x);
-        if (Mathf.Approximately(directionX, 0f))
-        {
-            directionX = transform.localScale.x >= 0f ? 1f : -1f;
-        }
+        float directionX = GetDirectionAwayFrom(target.position.x);
 
         _stepBackDirectionX = directionX;
         _stepBackSpeed = distance / duration;
@@ -332,11 +328,7 @@ public class EnemyPatrolAi : MonoBehaviour
 
         if (!IsFleeing()) return false;
 
-        float directionX = Mathf.Sign(transform.position.x - _player.position.x);
-        if (Mathf.Approximately(directionX, 0f))
-        {
-            directionX = transform.localScale.x >= 0f ? 1f : -1f;
-        }
+        float directionX = GetDirectionAwayFrom(_player.position.x);
 
         float speedToUse = fleeSpeed > 0f ? fleeSpeed : speed;
         rb.linearVelocity = new Vector2(directionX * speedToUse, rb.linearVelocity.y);
@@ -379,13 +371,24 @@ public class EnemyPatrolAi : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!enablePlayerFlee || collision == null) return;
+        if (!enablePlayerFlee) return;
         if (_player == null) return;
 
         if (collision.collider != null && collision.collider.CompareTag("Player"))
         {
             StartFlee(true);
         }
+    }
+
+    private float GetDirectionAwayFrom(float targetX)
+    {
+        float directionX = Mathf.Sign(transform.position.x - targetX);
+        if (Mathf.Approximately(directionX, 0f))
+        {
+            directionX = transform.localScale.x >= 0f ? 1f : -1f;
+        }
+
+        return directionX;
     }
 
     private void OnDrawGizmosSelected()
