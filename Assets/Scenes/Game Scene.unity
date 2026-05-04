@@ -192,6 +192,9 @@ MonoBehaviour:
   attackSpawnPoint: {fileID: 1367773594}
   undergroundYPosition: -6
   skyYPosition: 12
+  enablePreAttackStepBack: 1
+  stepBackDistance: 0.75
+  stepBackDuration: 0.2
   allyAwarenessRadius: 2
   allySpacingRadius: 1
   allyLineOfFireBlockRadius: 0.25
@@ -251,6 +254,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   alignmentStrength: 0.5
+  enablePlayerFlee: 1
+  fleeTriggerRadius: 1.77
+  fleeSpeed: 5.25
+  fleeDuration: 0.35
+  fleeCooldown: 0.6
 --- !u!114 &66227060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1134,6 +1142,9 @@ MonoBehaviour:
   attackSpawnPoint: {fileID: 1929223722}
   undergroundYPosition: -6
   skyYPosition: 12
+  enablePreAttackStepBack: 0
+  stepBackDistance: 0.75
+  stepBackDuration: 0.2
   allyAwarenessRadius: 2
   allySpacingRadius: 1
   allyLineOfFireBlockRadius: 0.25
@@ -1193,6 +1204,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   alignmentStrength: 0.5
+  enablePlayerFlee: 1
+  fleeTriggerRadius: 1.25
+  fleeSpeed: 6
+  fleeDuration: 0.35
+  fleeCooldown: 0.6
 --- !u!114 &803745052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1503,6 +1519,9 @@ MonoBehaviour:
   attackSpawnPoint: {fileID: 63029375}
   undergroundYPosition: -6
   skyYPosition: 12
+  enablePreAttackStepBack: 0
+  stepBackDistance: 0.75
+  stepBackDuration: 0.2
   allyAwarenessRadius: 2
   allySpacingRadius: 1
   allyLineOfFireBlockRadius: 0.25
@@ -1562,6 +1581,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   alignmentStrength: 0.5
+  enablePlayerFlee: 1
+  fleeTriggerRadius: 1.25
+  fleeSpeed: 6
+  fleeDuration: 0.35
+  fleeCooldown: 0.6
 --- !u!114 &1286725076
 MonoBehaviour:
   m_ObjectHideFlags: 0
