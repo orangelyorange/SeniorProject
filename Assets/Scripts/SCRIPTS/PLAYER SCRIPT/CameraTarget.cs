@@ -15,7 +15,7 @@ public class CameraTarget : MonoBehaviour
 
     private void Awake()
     {
-        if (player == null || !player.CompareTag("Player"))
+        if (player == null)
         {
             GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
             if (playerObject != null)
