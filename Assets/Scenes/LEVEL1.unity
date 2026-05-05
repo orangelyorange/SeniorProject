@@ -74882,6 +74882,13 @@ MonoBehaviour:
   preferredGroupSize: 3
   preferredGroupSpacing: 1.1
   groupCohesionStrength: 1.25
+  forwardBlockCheckDistance: 0.6
+  forwardBlockRadius: 0.25
+  blockRepathCooldown: 0.5
+  allyLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  alignmentStrength: 0.5
 --- !u!114 &341298393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75252,6 +75259,13 @@ MonoBehaviour:
   preferredGroupSize: 3
   preferredGroupSpacing: 1.1
   groupCohesionStrength: 1.25
+  forwardBlockCheckDistance: 0.6
+  forwardBlockRadius: 0.25
+  blockRepathCooldown: 0.5
+  allyLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  alignmentStrength: 0.5
 --- !u!114 &384008590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77146,6 +77160,13 @@ MonoBehaviour:
   preferredGroupSize: 3
   preferredGroupSpacing: 1.1
   groupCohesionStrength: 1.25
+  forwardBlockCheckDistance: 0.6
+  forwardBlockRadius: 0.25
+  blockRepathCooldown: 0.5
+  allyLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  alignmentStrength: 0.5
 --- !u!114 &662356652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78679,6 +78700,13 @@ MonoBehaviour:
   preferredGroupSize: 3
   preferredGroupSpacing: 1.1
   groupCohesionStrength: 1.25
+  forwardBlockCheckDistance: 0.6
+  forwardBlockRadius: 0.25
+  blockRepathCooldown: 0.5
+  allyLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  alignmentStrength: 0.5
 --- !u!114 &837377850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95115,6 +95143,13 @@ MonoBehaviour:
   preferredGroupSize: 3
   preferredGroupSpacing: 1.1
   groupCohesionStrength: 1.25
+  forwardBlockCheckDistance: 0.6
+  forwardBlockRadius: 0.25
+  blockRepathCooldown: 0.5
+  allyLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  alignmentStrength: 0.5
 --- !u!114 &1638073495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99442,6 +99477,13 @@ MonoBehaviour:
   preferredGroupSize: 3
   preferredGroupSpacing: 1.1
   groupCohesionStrength: 1.25
+  forwardBlockCheckDistance: 0.6
+  forwardBlockRadius: 0.25
+  blockRepathCooldown: 0.5
+  allyLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  alignmentStrength: 0.5
 --- !u!114 &1892582387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105012,6 +105054,13 @@ MonoBehaviour:
   preferredGroupSize: 3
   preferredGroupSpacing: 1.1
   groupCohesionStrength: 1.25
+  forwardBlockCheckDistance: 0.6
+  forwardBlockRadius: 0.25
+  blockRepathCooldown: 0.5
+  allyLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  alignmentStrength: 0.5
 --- !u!1 &1796857047159340938
 GameObject:
   m_ObjectHideFlags: 0
@@ -109909,6 +109958,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   extraJumpValue: 1
   extraJump: 0
+  skillCooldown: 5
 --- !u!1 &6343875523271291317
 GameObject:
   m_ObjectHideFlags: 0
