@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
     private float moveInput;
     private bool isRunLoopPlaying;
     private bool isVerticalLookActive;
+    private bool wasVerticalLookActive;
+    private Vector2 verticalLookAnchor;
     private RigidbodyConstraints2D baseConstraints;
 
     void Start()
@@ -43,11 +45,17 @@ public class Player : MonoBehaviour
         if (isDashing)
         {
             isVerticalLookActive = false;
+            wasVerticalLookActive = false;
             StopRunningSfx();
             return;
         }
 
         isVerticalLookActive = IsVerticalLookActive();
+        if (isVerticalLookActive && !wasVerticalLookActive)
+        {
+            verticalLookAnchor = rb.position;
+        }
+        wasVerticalLookActive = isVerticalLookActive;
         moveInput = isVerticalLookActive ? 0f : Input.GetAxis("Horizontal");
 
         // Player jump logic
@@ -118,6 +126,8 @@ public class Player : MonoBehaviour
     {
         rb.constraints = baseConstraints | RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
         rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        rb.position = verticalLookAnchor;
     }
 
     private void ReleaseVerticalLookFreeze()
