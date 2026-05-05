@@ -3,6 +3,7 @@ using UnityEngine;
 public class CameraTarget : MonoBehaviour
 {
     [SerializeField] private Transform player;
+    [SerializeField] private bool enableHorizontalLookAhead = false;
     [SerializeField] private float horizontalLookAhead = 1.5f;
     [SerializeField] private float horizontalFollowSpeed = 6f;
     [SerializeField] private float verticalLookAmount = 3.5f;
@@ -36,10 +37,13 @@ public class CameraTarget : MonoBehaviour
         if (player != null)
         {
             transform.position = player.position;
-            float facing = Mathf.Sign(player.localScale.x);
-            if (!Mathf.Approximately(facing, 0f))
+            if (enableHorizontalLookAhead)
             {
-                lastFacing = facing;
+                float facing = Mathf.Sign(player.localScale.x);
+                if (!Mathf.Approximately(facing, 0f))
+                {
+                    lastFacing = facing;
+                }
             }
         }
     }
@@ -51,13 +55,16 @@ public class CameraTarget : MonoBehaviour
             return;
         }
 
-        float facing = player.localScale.x;
-        if (!Mathf.Approximately(facing, 0f))
+        float targetXOffset = 0f;
+        if (enableHorizontalLookAhead)
         {
-            lastFacing = Mathf.Sign(facing);
+            float facing = player.localScale.x;
+            if (!Mathf.Approximately(facing, 0f))
+            {
+                lastFacing = Mathf.Sign(facing);
+            }
+            targetXOffset = horizontalLookAhead * lastFacing;
         }
-
-        float targetXOffset = horizontalLookAhead * lastFacing;
         float targetYOffset = 0f;
 
         bool lookUp = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
@@ -69,7 +76,9 @@ public class CameraTarget : MonoBehaviour
 
         float horizontalT = 1f - Mathf.Exp(-horizontalFollowSpeed * Time.deltaTime);
         float verticalT = 1f - Mathf.Exp(-verticalFollowSpeed * Time.deltaTime);
-        currentXOffset = Mathf.Lerp(currentXOffset, targetXOffset, horizontalT);
+        currentXOffset = enableHorizontalLookAhead
+            ? Mathf.Lerp(currentXOffset, targetXOffset, horizontalT)
+            : 0f;
         currentYOffset = Mathf.Lerp(currentYOffset, targetYOffset, verticalT);
 
         Vector3 targetPosition = player.position + new Vector3(currentXOffset, currentYOffset, 0f);

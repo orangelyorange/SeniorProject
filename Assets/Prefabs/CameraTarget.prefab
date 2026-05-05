@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  enableHorizontalLookAhead: 0
   horizontalLookAhead: 1.5
   horizontalFollowSpeed: 6
   verticalLookAmount: 3.5
