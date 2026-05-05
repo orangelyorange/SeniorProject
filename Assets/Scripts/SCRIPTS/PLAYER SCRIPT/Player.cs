@@ -150,14 +150,10 @@ public class Player : MonoBehaviour
         rb.constraints = baseConstraints | RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
-        if (verticalLookGroundCollider != null)
-        {
-            rb.position = verticalLookGroundCollider.transform.TransformPoint(verticalLookGroundLocalOffset);
-        }
-        else
-        {
-            rb.position = verticalLookAnchor;
-        }
+        Transform groundTransform = verticalLookGroundCollider != null ? verticalLookGroundCollider.transform : null;
+        rb.position = groundTransform != null
+            ? (Vector2)groundTransform.TransformPoint(verticalLookGroundLocalOffset)
+            : verticalLookAnchor;
     }
 
     private void ReleaseVerticalLookFreeze()
