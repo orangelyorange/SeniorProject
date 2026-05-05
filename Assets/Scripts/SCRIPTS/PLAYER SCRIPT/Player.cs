@@ -25,10 +25,13 @@ public class Player : MonoBehaviour
     public bool isDashing = false; //for rage skill
     private float moveInput;
     private bool isRunLoopPlaying;
+    private bool isVerticalLookActive;
+    private RigidbodyConstraints2D baseConstraints;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        baseConstraints = rb.constraints;
         animator = GetComponent<Animator>();
         RestoreCheckpointPosition();
         PlayPendingRespawnSfx();
@@ -39,14 +42,16 @@ public class Player : MonoBehaviour
         //ignores normal inputs so player can't move or jump while dashing
         if (isDashing)
         {
+            isVerticalLookActive = false;
             StopRunningSfx();
             return;
         }
-        
-        moveInput = Input.GetAxis("Horizontal");
+
+        isVerticalLookActive = IsVerticalLookActive();
+        moveInput = isVerticalLookActive ? 0f : Input.GetAxis("Horizontal");
 
         // Player jump logic
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!isVerticalLookActive && Input.GetKeyDown(KeyCode.Space))
         {
             if (isGrounded)
             {
@@ -82,13 +87,46 @@ public class Player : MonoBehaviour
         if (isGrounded)
             isSkillUsed = false;
 
-        if (isDashing) return;
+        if (isDashing)
+        {
+            ReleaseVerticalLookFreeze();
+            return;
+        }
+
+        if (isVerticalLookActive)
+        {
+            ApplyVerticalLookFreeze();
+            return;
+        }
+        ReleaseVerticalLookFreeze();
         
         // Movement
         rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
 
         // Better falling
         rb.gravityScale = rb.linearVelocity.y < 0 ? 3f : 1f;
+    }
+
+    private bool IsVerticalLookActive()
+    {
+        bool lookUp = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
+        bool lookDown = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
+        return lookUp ^ lookDown;
+    }
+
+    private void ApplyVerticalLookFreeze()
+    {
+        rb.constraints = baseConstraints | RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+        rb.linearVelocity = Vector2.zero;
+        rb.gravityScale = 0f;
+    }
+
+    private void ReleaseVerticalLookFreeze()
+    {
+        if (rb.constraints != baseConstraints)
+        {
+            rb.constraints = baseConstraints;
+        }
     }
 
     public void Jump()
