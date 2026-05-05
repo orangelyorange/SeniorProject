@@ -67,8 +67,10 @@ public class CameraTarget : MonoBehaviour
             targetYOffset = lookUp ? verticalLookAmount : -verticalLookAmount;
         }
 
-        currentXOffset = Mathf.Lerp(currentXOffset, targetXOffset, horizontalFollowSpeed * Time.deltaTime);
-        currentYOffset = Mathf.Lerp(currentYOffset, targetYOffset, verticalFollowSpeed * Time.deltaTime);
+        float horizontalT = 1f - Mathf.Exp(-horizontalFollowSpeed * Time.deltaTime);
+        float verticalT = 1f - Mathf.Exp(-verticalFollowSpeed * Time.deltaTime);
+        currentXOffset = Mathf.Lerp(currentXOffset, targetXOffset, horizontalT);
+        currentYOffset = Mathf.Lerp(currentYOffset, targetYOffset, verticalT);
 
         Vector3 targetPosition = player.position + new Vector3(currentXOffset, currentYOffset, 0f);
         if (cameraBounds != null)
