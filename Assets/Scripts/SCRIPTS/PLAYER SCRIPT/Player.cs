@@ -63,10 +63,11 @@ public class Player : MonoBehaviour
                     groundCheckRadius,
                     groundLayer
                 );
-                if (groundCollider != null)
+                Transform groundTransform = groundCollider?.transform;
+                if (groundTransform != null)
                 {
                     verticalLookGroundCollider = groundCollider;
-                    verticalLookGroundLocalOffset = groundCollider.transform.InverseTransformPoint(rb.position);
+                    verticalLookGroundLocalOffset = groundTransform.InverseTransformPoint(rb.position);
                 }
             }
             if (verticalLookGroundCollider == null)
@@ -150,7 +151,7 @@ public class Player : MonoBehaviour
         rb.constraints = baseConstraints | RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
-        Transform groundTransform = verticalLookGroundCollider != null ? verticalLookGroundCollider.transform : null;
+        Transform groundTransform = verticalLookGroundCollider?.transform;
         rb.position = groundTransform != null
             ? (Vector2)groundTransform.TransformPoint(verticalLookGroundLocalOffset)
             : verticalLookAnchor;
