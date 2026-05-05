@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
     private bool isVerticalLookActive;
     private bool wasVerticalLookActive;
     private Vector2 verticalLookAnchor;
+    private Collider2D verticalLookGroundCollider;
+    private Vector3 verticalLookGroundLocalOffset;
     private RigidbodyConstraints2D baseConstraints;
 
     void Start()
@@ -53,7 +55,28 @@ public class Player : MonoBehaviour
         isVerticalLookActive = IsVerticalLookActive();
         if (isVerticalLookActive && !wasVerticalLookActive)
         {
-            verticalLookAnchor = rb.position;
+            verticalLookGroundCollider = null;
+            if (groundCheck != null)
+            {
+                Collider2D groundCollider = Physics2D.OverlapCircle(
+                    groundCheck.position,
+                    groundCheckRadius,
+                    groundLayer
+                );
+                if (groundCollider != null)
+                {
+                    verticalLookGroundCollider = groundCollider;
+                    verticalLookGroundLocalOffset = groundCollider.transform.InverseTransformPoint(rb.position);
+                }
+            }
+            if (verticalLookGroundCollider == null)
+            {
+                verticalLookAnchor = rb.position;
+            }
+        }
+        else if (!isVerticalLookActive && wasVerticalLookActive)
+        {
+            verticalLookGroundCollider = null;
         }
         wasVerticalLookActive = isVerticalLookActive;
         moveInput = isVerticalLookActive ? 0f : Input.GetAxis("Horizontal");
@@ -127,7 +150,14 @@ public class Player : MonoBehaviour
         rb.constraints = baseConstraints | RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
-        rb.position = verticalLookAnchor;
+        if (verticalLookGroundCollider != null)
+        {
+            rb.position = verticalLookGroundCollider.transform.TransformPoint(verticalLookGroundLocalOffset);
+        }
+        else
+        {
+            rb.position = verticalLookAnchor;
+        }
     }
 
     private void ReleaseVerticalLookFreeze()
