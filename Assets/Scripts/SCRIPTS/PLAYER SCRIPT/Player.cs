@@ -111,7 +111,7 @@ public class Player : MonoBehaviour
     {
         bool lookUp = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
         bool lookDown = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
-        return lookUp != lookDown;
+        return (lookUp || lookDown) && lookUp != lookDown;
     }
 
     private void ApplyVerticalLookFreeze()

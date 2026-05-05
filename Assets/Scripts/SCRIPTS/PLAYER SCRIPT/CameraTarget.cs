@@ -69,7 +69,7 @@ public class CameraTarget : MonoBehaviour
 
         bool lookUp = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
         bool lookDown = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
-        if (lookUp ^ lookDown)
+        if ((lookUp || lookDown) && lookUp != lookDown)
         {
             targetYOffset = lookUp ? verticalLookAmount : -verticalLookAmount;
         }
