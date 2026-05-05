@@ -111,14 +111,13 @@ public class Player : MonoBehaviour
     {
         bool lookUp = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
         bool lookDown = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
-        return lookUp ^ lookDown;
+        return lookUp != lookDown;
     }
 
     private void ApplyVerticalLookFreeze()
     {
         rb.constraints = baseConstraints | RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
         rb.linearVelocity = Vector2.zero;
-        rb.gravityScale = 0f;
     }
 
     private void ReleaseVerticalLookFreeze()
