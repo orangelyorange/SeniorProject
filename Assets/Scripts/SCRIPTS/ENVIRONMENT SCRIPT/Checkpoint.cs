@@ -1,73 +1,64 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
+    [Header("Visuals")]
+    [SerializeField] private Sprite inactiveSprite;
+    [SerializeField] private Sprite activeSprite;
+
     [SerializeField] private string playerTag = "Player";
-    [SerializeField] private bool activateOnce = true;
 
-    private bool isActivated;
+    private SpriteRenderer sr;
 
-    private const string CheckpointSceneKey = "CheckpointScene";
-    private const string CheckpointXKey = "CheckpointX";
-    private const string CheckpointYKey = "CheckpointY";
-    private const string CheckpointZKey = "CheckpointZ";
+    private static Checkpoint activeCheckpoint;
+
+    private void Awake()
+    {
+        sr = GetComponent<SpriteRenderer>();
+        SetVisual(false);
+    }
+
+    private void Start()
+    {
+        // restore only inside this scene session
+        if (activeCheckpoint == this)
+        {
+            SetVisual(true);
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag(playerTag))
-        {
-            return;
-        }
+        if (!other.CompareTag(playerTag)) return;
 
-        if (activateOnce && isActivated)
-        {
-            return;
-        }
-
-        SaveCheckpointPosition(transform.position);
-
-        if (AudioManager.Instance != null)
-        {
-            AudioManager.Instance.PlaySfx(AudioManager.Instance.checkpointActivate);
-        }
-
-        isActivated = true;
+        Activate();
     }
 
-    private static void SaveCheckpointPosition(Vector3 position)
+    private void Activate()
     {
-        PlayerPrefs.SetString(CheckpointSceneKey, SceneManager.GetActiveScene().name);
-        PlayerPrefs.SetFloat(CheckpointXKey, position.x);
-        PlayerPrefs.SetFloat(CheckpointYKey, position.y);
-        PlayerPrefs.SetFloat(CheckpointZKey, position.z);
-        PlayerPrefs.Save();
+        // turn off previous checkpoint
+        if (activeCheckpoint != null)
+        {
+            activeCheckpoint.SetVisual(false);
+        }
+
+        activeCheckpoint = this;
+        SetVisual(true);
     }
 
-    public static bool TryGetCheckpointForCurrentScene(out Vector3 checkpointPosition)
+    private void SetVisual(bool state)
     {
-        checkpointPosition = Vector3.zero;
+        if (sr == null) return;
 
-        string currentScene = SceneManager.GetActiveScene().name;
-        if (!PlayerPrefs.HasKey(CheckpointSceneKey))
-        {
-            return false;
-        }
+        sr.sprite = state ? activeSprite : inactiveSprite;
+    }
 
-        if (PlayerPrefs.GetString(CheckpointSceneKey) != currentScene)
-        {
-            return false;
-        }
+    // called by Player when respawning
+    public static Vector3 GetSpawnPoint()
+    {
+        if (activeCheckpoint != null)
+            return activeCheckpoint.transform.position;
 
-        if (!PlayerPrefs.HasKey(CheckpointXKey) || !PlayerPrefs.HasKey(CheckpointYKey))
-        {
-            return false;
-        }
-
-        float checkpointX = PlayerPrefs.GetFloat(CheckpointXKey);
-        float checkpointY = PlayerPrefs.GetFloat(CheckpointYKey);
-        float checkpointZ = PlayerPrefs.GetFloat(CheckpointZKey, 0f);
-        checkpointPosition = new Vector3(checkpointX, checkpointY, checkpointZ);
-        return true;
+        return Vector3.zero;
     }
 }
