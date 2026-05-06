@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour
 {
@@ -14,53 +14,48 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
 
-    [Header("Skill States")]
     public bool isGrounded;
     public bool isMidAir;
-    public bool isSkillActive; // set by EmotionSkill
+    public bool isSkillActive;
     public bool isSkillUsed;
+    public bool isInvulnerable = false;
+    public bool isDashing = false;
 
-    public bool isInvulnerable = false; //for the sadness shield
-    
-    public bool isDashing = false; //for rage skill
     private float moveInput;
     private bool isRunLoopPlaying;
+
+    private bool hasAppliedSpawn = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        RestoreCheckpointPosition();
+
+        ApplyCheckpointOnce();
         PlayPendingRespawnSfx();
     }
 
     void Update()
     {
-        //ignores normal inputs so player can't move or jump while dashing
         if (isDashing)
         {
             StopRunningSfx();
             return;
         }
-        
+
         moveInput = Input.GetAxis("Horizontal");
 
-        // Player jump logic
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!isDashing && Input.GetKeyDown(KeyCode.Space))
         {
             if (isGrounded)
-            {
                 Jump();
-            }
         }
 
-        // Flip sprite when pressed A or D
         if (moveInput > MoveThreshold)
             transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
         else if (moveInput < -MoveThreshold)
             transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
 
-        // Animation parameters
         animator.SetBool("isRunning", moveInput != 0);
         animator.SetBool("isJumping", !isGrounded);
 
@@ -68,8 +63,7 @@ public class Player : MonoBehaviour
     }
 
     void FixedUpdate()
-    { 
-        // Ground check
+    {
         isGrounded = Physics2D.OverlapCircle(
             groundCheck.position,
             groundCheckRadius,
@@ -77,39 +71,38 @@ public class Player : MonoBehaviour
         );
 
         isMidAir = !isGrounded;
-        
-        //resets double jump skill when touching the ground
+
         if (isGrounded)
             isSkillUsed = false;
 
-        if (isDashing) return;
-        
-        // Movement
+        if (isDashing)
+            return;
+
         rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
 
-        // Better falling
         rb.gravityScale = rb.linearVelocity.y < 0 ? 3f : 1f;
     }
 
     public void Jump()
     {
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+
         if (AudioManager.Instance != null)
-        {
             AudioManager.Instance.PlaySfx(AudioManager.Instance.playerJump);
-        }
     }
 
     private void HandleRunningSfx()
     {
-        bool shouldPlayRunSfx = Mathf.Abs(moveInput) > MoveThreshold && isGrounded && !isDashing;
+        bool shouldPlayRunSfx =
+            Mathf.Abs(moveInput) > MoveThreshold &&
+            isGrounded &&
+            !isDashing;
 
         if (shouldPlayRunSfx && !isRunLoopPlaying)
         {
             if (AudioManager.Instance != null)
-            {
                 AudioManager.Instance.PlayLoopingSfx(AudioManager.Instance.playerRun);
-            }
+
             isRunLoopPlaying = true;
         }
         else if (!shouldPlayRunSfx && isRunLoopPlaying)
@@ -120,15 +113,11 @@ public class Player : MonoBehaviour
 
     private void StopRunningSfx()
     {
-        if (!isRunLoopPlaying)
-        {
-            return;
-        }
+        if (!isRunLoopPlaying) return;
 
         if (AudioManager.Instance != null)
-        {
             AudioManager.Instance.StopLoopingSfx(AudioManager.Instance.playerRun);
-        }
+
         isRunLoopPlaying = false;
     }
 
@@ -137,31 +126,37 @@ public class Player : MonoBehaviour
         StopRunningSfx();
     }
 
-    private void RestoreCheckpointPosition()
+    // ✅ FIXED: SAFE SPAWN (NO BAD ZERO SPAWN, NO DOUBLE APPLY)
+    private void ApplyCheckpointOnce()
     {
-        if (!Checkpoint.TryGetCheckpointForCurrentScene(out Vector3 checkpointPosition))
+        if (hasAppliedSpawn) return;
+
+        Vector3 spawn = Checkpoint.GetSpawnPoint();
+
+        // 🔥 safety check (prevents spawning at weird origin)
+        if (spawn == Vector3.zero)
         {
+            hasAppliedSpawn = true;
             return;
         }
 
-        transform.position = checkpointPosition;
+        transform.position = spawn;
+
         if (rb != null)
         {
-            rb.position = checkpointPosition;
+            rb.position = spawn;
             rb.linearVelocity = Vector2.zero;
         }
+
+        hasAppliedSpawn = true;
     }
 
     private void PlayPendingRespawnSfx()
     {
         if (!HealthSystem.ConsumeRespawnSfxRequest())
-        {
             return;
-        }
 
         if (AudioManager.Instance != null)
-        {
             AudioManager.Instance.PlaySfx(AudioManager.Instance.playerRespawn);
-        }
     }
 }
