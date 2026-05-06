@@ -37,6 +37,13 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        // ⭐ FALL DEATH CHECK (THIS WAS MISSING)
+        if (transform.position.y < -15f)
+        {
+            Respawn();
+            return;
+        }
+
         if (isDashing)
         {
             StopRunningSfx();
@@ -79,7 +86,6 @@ public class Player : MonoBehaviour
             return;
 
         rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
-
         rb.gravityScale = rb.linearVelocity.y < 0 ? 3f : 1f;
     }
 
@@ -89,6 +95,25 @@ public class Player : MonoBehaviour
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlaySfx(AudioManager.Instance.playerJump);
+    }
+
+    // ⭐⭐⭐ RUNTIME RESPAWN FUNCTION ⭐⭐⭐
+    public void Respawn()
+    {
+        Vector3 spawn = Checkpoint.GetSpawnPoint();
+
+        // If no checkpoint yet, just respawn where player started
+        if (spawn == Vector3.zero)
+            return;
+
+        transform.position = spawn;
+        rb.position = spawn;
+        rb.linearVelocity = Vector2.zero;
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.playerRespawn);
+
+        Debug.Log("Respawned at checkpoint: " + spawn);
     }
 
     private void HandleRunningSfx()
@@ -126,14 +151,13 @@ public class Player : MonoBehaviour
         StopRunningSfx();
     }
 
-    // ✅ FIXED: SAFE SPAWN (NO BAD ZERO SPAWN, NO DOUBLE APPLY)
+    // APPLY CHECKPOINT ON SCENE LOAD
     private void ApplyCheckpointOnce()
     {
         if (hasAppliedSpawn) return;
 
         Vector3 spawn = Checkpoint.GetSpawnPoint();
 
-        // 🔥 safety check (prevents spawning at weird origin)
         if (spawn == Vector3.zero)
         {
             hasAppliedSpawn = true;
