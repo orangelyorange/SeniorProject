@@ -65,6 +65,7 @@ public class Level2LoadOptimizer : MonoBehaviour
         }
         catch (UnityException)
         {
+            Debug.LogWarning($"Level2LoadOptimizer: Tag '{tag}' not found. Skipping delayed activation.");
             return;
         }
 

@@ -320,7 +320,10 @@ public class EnemyPatrolAi : MonoBehaviour
     private bool HandleFleeMovement()
     {
         if (!enablePlayerFlee) return false;
-        RefreshPlayerReference();
+        if (_player == null)
+        {
+            RefreshPlayerReference();
+        }
         if (_player == null) return false;
 
         if (!IsFleeTimerActive())
@@ -380,7 +383,10 @@ public class EnemyPatrolAi : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!enablePlayerFlee) return;
-        RefreshPlayerReference();
+        if (_player == null)
+        {
+            RefreshPlayerReference();
+        }
         if (_player == null) return;
 
         if (collision.collider != null && collision.collider.CompareTag("Player"))
