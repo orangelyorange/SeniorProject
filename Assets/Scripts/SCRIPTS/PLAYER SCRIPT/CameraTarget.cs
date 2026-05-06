@@ -27,9 +27,7 @@ public class CameraTarget : MonoBehaviour
 
         if (player == null)
         {
-            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-            if (playerObject != null)
-                player = playerObject.transform;
+            player = PlayerLocator.GetPlayerTransform();
         }
 
         if (cameraBounds == null)
@@ -51,7 +49,11 @@ public class CameraTarget : MonoBehaviour
 
     void LateUpdate()
     {
-        if (player == null) return;
+        if (player == null)
+        {
+            player = PlayerLocator.GetPlayerTransform();
+            if (player == null) return;
+        }
 
         // ---------- HORIZONTAL LOOK AHEAD ----------
         float targetXOffset = 0f;

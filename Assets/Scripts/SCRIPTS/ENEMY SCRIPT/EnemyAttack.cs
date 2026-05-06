@@ -47,10 +47,17 @@ public class EnemyAttack : MonoBehaviour
     private float stepBackEndTime;
     private bool queueAttackAfterFlee;
 
+    private void RefreshPlayerReference()
+    {
+        if (player == null)
+        {
+            player = PlayerLocator.GetPlayerGameObject();
+        }
+    }
+
     void Start()
     {
-        // Find the player once at the start
-        player = GameObject.FindGameObjectWithTag("Player");
+        RefreshPlayerReference();
         patrolAiComponent = GetComponent<EnemyPatrolAi>();
         
         // Start the timer at the cooldown max so the enemy attacks immediately when the player enters range
@@ -60,7 +67,11 @@ public class EnemyAttack : MonoBehaviour
     void Update()
     {
         // If the player is missing or destroyed, do nothing
-        if (player == null) return;
+        if (player == null)
+        {
+            RefreshPlayerReference();
+            if (player == null) return;
+        }
 
         if (patrolAiComponent != null && patrolAiComponent.IsFleeing())
         {

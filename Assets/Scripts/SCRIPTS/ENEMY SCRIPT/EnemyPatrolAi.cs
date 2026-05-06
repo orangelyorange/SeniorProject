@@ -74,6 +74,14 @@ public class EnemyPatrolAi : MonoBehaviour
     private float _stepBackDirectionX = 1f;
     private float _stepBackSpeed = 0f;
 
+    private void RefreshPlayerReference()
+    {
+        if (_player == null)
+        {
+            _player = PlayerLocator.GetPlayerTransform();
+        }
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -81,12 +89,7 @@ public class EnemyPatrolAi : MonoBehaviour
         currentPoint = EnemyPointB.transform;
         animator.SetBool("isRunning", true);
 
-        //Finds the player at the start
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-        {
-            _player = player.transform;
-        }
+        RefreshPlayerReference();
     }
 
     void FixedUpdate()
@@ -316,7 +319,9 @@ public class EnemyPatrolAi : MonoBehaviour
 
     private bool HandleFleeMovement()
     {
-        if (!enablePlayerFlee || _player == null) return false;
+        if (!enablePlayerFlee) return false;
+        RefreshPlayerReference();
+        if (_player == null) return false;
 
         if (!IsFleeTimerActive())
         {
@@ -375,6 +380,7 @@ public class EnemyPatrolAi : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!enablePlayerFlee) return;
+        RefreshPlayerReference();
         if (_player == null) return;
 
         if (collision.collider != null && collision.collider.CompareTag("Player"))
