@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
         animator.SetBool("isRunning", moveInput != 0);
         animator.SetBool("isJumping", !isGrounded);
 
-        HandleRunningSfx();
+      
     }
 
     void FixedUpdate()
@@ -102,38 +102,26 @@ public class Player : MonoBehaviour
     {
         Vector3 spawn = Checkpoint.GetSpawnPoint();
 
-        // If no checkpoint yet, just respawn where player started
         if (spawn == Vector3.zero)
-            return;
+            spawn = transform.position;
 
         transform.position = spawn;
         rb.position = spawn;
         rb.linearVelocity = Vector2.zero;
 
-        if (AudioManager.Instance != null)
-            AudioManager.Instance.PlaySfx(AudioManager.Instance.playerRespawn);
+        isDashing = false;
+        isSkillUsed = false;
+        isInvulnerable = false;
+
+        // ⭐ IMPORTANT: reset animation state immediately
+        if (animator != null)
+        {
+            animator.SetBool("isDead", false);
+            animator.Rebind();
+            animator.Update(0f);
+        }
 
         Debug.Log("Respawned at checkpoint: " + spawn);
-    }
-
-    private void HandleRunningSfx()
-    {
-        bool shouldPlayRunSfx =
-            Mathf.Abs(moveInput) > MoveThreshold &&
-            isGrounded &&
-            !isDashing;
-
-        if (shouldPlayRunSfx && !isRunLoopPlaying)
-        {
-            if (AudioManager.Instance != null)
-                AudioManager.Instance.PlayLoopingSfx(AudioManager.Instance.playerRun);
-
-            isRunLoopPlaying = true;
-        }
-        else if (!shouldPlayRunSfx && isRunLoopPlaying)
-        {
-            StopRunningSfx();
-        }
     }
 
     private void StopRunningSfx()

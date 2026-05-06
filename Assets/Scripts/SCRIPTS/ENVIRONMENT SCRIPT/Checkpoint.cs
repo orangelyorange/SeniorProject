@@ -11,16 +11,24 @@ public class Checkpoint : MonoBehaviour
     private SpriteRenderer sr;
 
     private static Checkpoint activeCheckpoint;
+    private static bool hasInitialized = false;
 
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
-        SetVisual(false);
     }
 
     private void Start()
     {
-        // restore only inside this scene session
+        SetVisual(false);
+
+        // ⭐ ensure ONLY ONE checkpoint stays active visually on scene start
+        if (!hasInitialized)
+        {
+            activeCheckpoint = null;
+            hasInitialized = true;
+        }
+
         if (activeCheckpoint == this)
         {
             SetVisual(true);
@@ -36,8 +44,7 @@ public class Checkpoint : MonoBehaviour
 
     private void Activate()
     {
-        // turn off previous checkpoint
-        if (activeCheckpoint != null)
+        if (activeCheckpoint != null && activeCheckpoint != this)
         {
             activeCheckpoint.SetVisual(false);
         }
@@ -53,7 +60,7 @@ public class Checkpoint : MonoBehaviour
         sr.sprite = state ? activeSprite : inactiveSprite;
     }
 
-    // called by Player when respawning
+    // ⭐ GUARANTEED SPAWN ACCESS
     public static Vector3 GetSpawnPoint()
     {
         if (activeCheckpoint != null)

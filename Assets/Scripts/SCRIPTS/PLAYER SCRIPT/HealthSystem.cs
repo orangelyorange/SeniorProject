@@ -1,111 +1,157 @@
-using System.Collections;
-using UnityEngine.SceneManagement;
+﻿using System.Collections;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class HealthSystem : MonoBehaviour
 {
+    [Header("UI")]
+    [SerializeField] private Slider healthBar;
+
     private const string PendingRespawnSfxKey = "PendingRespawnSfx";
 
-    public int PlayerHealth; //tracks player's health
-    public int PlayerMaxHealth = 4; // full health
-    private SpriteRenderer spriteRenderer;
+    public int PlayerHealth;
+    public int PlayerMaxHealth = 4;
 
-	private Animator animator;
-	private bool isDead = false; //prevents multiple death triggers
+    private SpriteRenderer spriteRenderer;
+    private Animator animator;
+
+    private bool isDead = false;
 
     private void Start()
     {
-        PlayerHealth = PlayerMaxHealth; //sets current health to full
+        PlayerHealth = PlayerMaxHealth;
+
         spriteRenderer = GetComponent<SpriteRenderer>();
-		animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
+
+        UpdateHealthBar(); // ⭐ initialize UI
     }
 
-    public void TakeDamage(int damage) // tracker of damage player takes
+    // ---------------- DAMAGE ----------------
+    public void TakeDamage(int damage)
     {
-		if (isDead) return; // Prevents taking damage if already dead
+        if (isDead) return;
 
-         PlayerHealth -= damage;
-         if (AudioManager.Instance != null)
-         {
-             AudioManager.Instance.PlaySfx(AudioManager.Instance.playerTakeDamage);
-         }
-         StartCoroutine(BlinkRed());
-        
-            //if Player's HP reaches zero, the game object is destroyed
-         if (PlayerHealth <= 0)
-         {
-             isDead = true;
-             StartCoroutine(Die());
-         }
-    }
+        PlayerHealth -= damage;
 
-    public void TakeHealing(int healing) //tracker for healing
-    {
-        if (PlayerHealth >= PlayerMaxHealth)
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.playerTakeDamage);
+
+        StartCoroutine(BlinkRed());
+
+        if (PlayerHealth <= 0)
         {
-            PlayerHealth =  PlayerMaxHealth;
-            Debug.Log("Player max health is " + PlayerMaxHealth);
+            PlayerHealth = 0;
+            UpdateHealthBar();
+            StartCoroutine(Die());
             return;
         }
-        
+
+        UpdateHealthBar();
+    }
+
+    // ---------------- HEAL ----------------
+    public void TakeHealing(int healing)
+    {
+        if (PlayerHealth <= 0) return;
+
         PlayerHealth += healing;
+
+        if (PlayerHealth > PlayerMaxHealth)
+            PlayerHealth = PlayerMaxHealth;
+
         if (AudioManager.Instance != null)
-        {
             AudioManager.Instance.PlaySfx(AudioManager.Instance.playerHeal);
-        }
+
         StartCoroutine(BlinkGreen());
 
-        if (PlayerHealth >= PlayerMaxHealth)
-        {
-            PlayerHealth = PlayerMaxHealth;
-        }
+        UpdateHealthBar();
     }
-    
 
+    // ---------------- DEATH ----------------
     public IEnumerator Die()
     {
-        animator.SetBool("isDead", true); // Trigger death animation
+        if (isDead) yield break;
+
+        isDead = true;
+
+        animator.SetBool("isDead", true);
+
         if (AudioManager.Instance != null)
-        {
             AudioManager.Instance.PlaySfx(AudioManager.Instance.playerDeath);
-        }
 
-        GetComponent<Player>().enabled = false; // Disable player movement
-        GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero; // Stop player movement
+        Player player = GetComponent<Player>();
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
 
-        yield return new WaitForSeconds(0.5f); // Wait for the death animation to finish
+        player.enabled = false;
+        rb.linearVelocity = Vector2.zero;
 
-        PlayerPrefs.SetInt(PendingRespawnSfxKey, 1);
-        PlayerPrefs.Save();
+        yield return new WaitForSeconds(0.5f);
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene to restart the game
+        // ⭐ RESPAWN
+        player.Respawn();
+
+        yield return new WaitForEndOfFrame();
+
+        player.enabled = true;
+
+        // reset animator fully
+        animator.Rebind();
+        animator.Update(0f);
+        animator.SetBool("isDead", false);
+
+        isDead = false;
+
+        // ⭐ FULL HEALTH RESET ON RESPAWN
+        ResetHealth();
     }
 
+    // ---------------- RESPAWN RESET ----------------
+    public void ResetHealth()
+    {
+        PlayerHealth = PlayerMaxHealth;
+        isDead = false;
+
+        if (animator != null)
+            animator.SetBool("isDead", false);
+
+        if (spriteRenderer != null)
+            spriteRenderer.color = Color.white;
+
+        UpdateHealthBar();
+    }
+
+    // ---------------- UI ----------------
+    private void UpdateHealthBar()
+    {
+        if (healthBar == null) return;
+
+        healthBar.value = (float)PlayerHealth / PlayerMaxHealth;
+    }
+
+    // ---------------- VISUAL FEEDBACK ----------------
+    public IEnumerator BlinkRed()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        spriteRenderer.color = Color.white;
+    }
+
+    public IEnumerator BlinkGreen()
+    {
+        spriteRenderer.color = Color.green;
+        yield return new WaitForSeconds(0.2f);
+        spriteRenderer.color = Color.white;
+    }
+
+    // ---------------- SFX FLAG ----------------
     public static bool ConsumeRespawnSfxRequest()
     {
         if (PlayerPrefs.GetInt(PendingRespawnSfxKey, 0) == 0)
-        {
             return false;
-        }
 
         PlayerPrefs.SetInt(PendingRespawnSfxKey, 0);
         PlayerPrefs.Save();
         return true;
     }
-    
-    public IEnumerator BlinkRed() //player blinks red when taking damage
-    {
-        spriteRenderer.color = Color.red;
-        yield return new WaitForSeconds(0.5f);
-        spriteRenderer.color = Color.white;
-    }
-
-    public IEnumerator BlinkGreen() //player blinks green when taking damage
-    {
-        spriteRenderer.color = Color.green;
-        yield return new WaitForSeconds(0.5f);
-        spriteRenderer.color = Color.white;
-    }
 }
-    
