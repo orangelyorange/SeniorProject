@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Run before most scripts so enemy objects can be deactivated before Start executes.
 [DefaultExecutionOrder(-1000)]
 public class Level2LoadOptimizer : MonoBehaviour
 {

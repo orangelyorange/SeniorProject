@@ -3,11 +3,16 @@ using UnityEngine;
 public static class PlayerLocator
 {
     private static Transform cachedPlayer;
-    private static float nextLookupTime;
+    private static float nextLookupTime = float.NegativeInfinity;
     private const float LookupCooldownSeconds = 0.25f;
 
     public static Transform GetPlayerTransform()
     {
+        if (!ReferenceEquals(cachedPlayer, null) && cachedPlayer == null)
+        {
+            cachedPlayer = null;
+        }
+
         if (cachedPlayer == null)
         {
             if (Time.unscaledTime < nextLookupTime)
