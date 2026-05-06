@@ -2,12 +2,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using TMPro;
 
 
 public class MenuController : MonoBehaviour 
 {
     [Header("Volume Setting")]
-    [SerializeField] private Text volumeTextValue = null;
+    [SerializeField] private TMP_Text volumeTextValue = null;
     [SerializeField] private Text volumeSlider = null;
     [SerializeField] private float defaultVolume = 0.5f;
 
@@ -64,6 +65,7 @@ public class MenuController : MonoBehaviour
         if  (MenuType == "Audio")
         {
             AudioListener.volume = defaultVolume;
+
             volumeSlider.text = defaultVolume.ToString("0.0");
             volumeTextValue.text = defaultVolume.ToString("0.0");
             VolumeApply();
