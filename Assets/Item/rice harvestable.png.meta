@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: df5cc97c79f4d634cb35e99410907329
+guid: e4af913511561d242a62d2fda7dd61f2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4009355068965086491
-    second: Untitled_Artwork-2_0
+      213: -6991686333323354496
+    second: rice harvestable_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -48,7 +48,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Untitled_Artwork-2_0
+      name: rice harvestable_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1473
-        width: 5000
-        height: 7527
+        x: 152
+        y: 0
+        width: 3695
+        height: 3393
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b156318513714a730800000000000000
-      internalID: 4009355068965086491
+      spriteID: 08ede49c25a88fe90800000000000000
+      internalID: -6991686333323354496
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: f32fd96f3233f6d468ac98ba8e7eb220
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Untitled_Artwork-2_0: 4009355068965086491
+      rice harvestable_0: -6991686333323354496
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
