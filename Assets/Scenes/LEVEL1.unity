@@ -945,7 +945,7 @@ GameObject:
   - component: {fileID: 130039105}
   m_Layer: 0
   m_Name: FloatingPlatform_4_1
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1079,7 +1079,7 @@ GameObject:
   - component: {fileID: 147412331}
   m_Layer: 0
   m_Name: FloatingPlatform_1_1
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79108,7 +79108,7 @@ GameObject:
   - component: {fileID: 693559299}
   m_Layer: 0
   m_Name: FloatingPlatform_3_1
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -90876,7 +90876,7 @@ GameObject:
   - component: {fileID: 1073008153}
   m_Layer: 0
   m_Name: FloatingPlatform_2_2
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91411,7 +91411,7 @@ GameObject:
   - component: {fileID: 1096526994}
   m_Layer: 0
   m_Name: FloatingPlatform_1_0
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91632,7 +91632,7 @@ GameObject:
   - component: {fileID: 1101877231}
   m_Layer: 0
   m_Name: FloatingPlatform_4_0
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92357,7 +92357,7 @@ GameObject:
   - component: {fileID: 1203749934}
   m_Layer: 0
   m_Name: FloatingPlatform_2_0
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92726,7 +92726,7 @@ GameObject:
   - component: {fileID: 1222709703}
   m_Layer: 0
   m_Name: FloatingPlatform_4_0
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92996,7 +92996,7 @@ GameObject:
   - component: {fileID: 1239679485}
   m_Layer: 0
   m_Name: FloatingPlatform_2_1
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93130,7 +93130,7 @@ GameObject:
   - component: {fileID: 1262368795}
   m_Layer: 0
   m_Name: FloatingPlatform_4_0
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98930,7 +98930,7 @@ GameObject:
   - component: {fileID: 1655997916}
   m_Layer: 0
   m_Name: FloatingPlatform_4_2
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99805,7 +99805,7 @@ GameObject:
   - component: {fileID: 1754521264}
   m_Layer: 0
   m_Name: FloatingPlatform_3_0
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100756,7 +100756,7 @@ GameObject:
   - component: {fileID: 1808206471}
   m_Layer: 0
   m_Name: FloatingPlatform_1_0
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113520,7 +113520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c61f22a16ddacf74c9130bb7ef3b74c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  extraJumpValue: 3
+  extraJumpValue: 1
   extraJump: 1
   skillCooldown: 5
 --- !u!1 &6343875523271291317
@@ -115567,7 +115567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 6
-  jumpForce: 7
+  jumpForce: 7.5
   groundCheck: {fileID: 3780818645761440143}
   groundCheckRadius: 0.2
   groundLayer:
@@ -115613,8 +115613,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.12972683, y: 0.048214674}
-  m_Size: {x: 0.570176, y: 1.1433854}
+  m_Offset: {x: 0.12972683, y: 0.036527395}
+  m_Size: {x: 0.570176, y: 1.16676}
   m_Direction: 0
 --- !u!1 &8482394193388611529
 GameObject:
