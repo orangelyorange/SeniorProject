@@ -80,7 +80,7 @@ public class JournalItemPickup : MonoBehaviour
         }
 
         string fallbackId = string.IsNullOrWhiteSpace(fallbackPageId)
-            ? $"{sceneName}:{gameObject.name}:{pageTitle}"
+            ? $"{sceneName}_{SanitizeIdSegment(gameObject.name)}_{SanitizeIdSegment(pageTitle)}"
             : fallbackPageId;
 
         return new JournalCollectedPage
@@ -92,5 +92,25 @@ public class JournalItemPickup : MonoBehaviour
             levelName = string.IsNullOrWhiteSpace(fallbackLevelName) ? sceneName : fallbackLevelName,
             displayOrder = fallbackDisplayOrder
         };
+    }
+
+    private static string SanitizeIdSegment(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return "unknown";
+        }
+
+        char[] chars = value.ToCharArray();
+        for (int index = 0; index < chars.Length; index++)
+        {
+            char current = chars[index];
+            if (!char.IsLetterOrDigit(current) && current != '-' && current != '_')
+            {
+                chars[index] = '_';
+            }
+        }
+
+        return new string(chars);
     }
 }

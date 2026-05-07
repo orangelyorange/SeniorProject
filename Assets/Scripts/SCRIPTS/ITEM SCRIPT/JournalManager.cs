@@ -207,9 +207,11 @@ namespace SCRIPTS.ITEM_SCRIPT
             }
 
             List<JournalCollectedPage> pages = JournalProgressManager.GetOrCreate().GetCollectedPages(activeTab);
+            pages.RemoveAll(page => page == null);
             if (pages.Count == 0)
             {
                 ShowEmptyPageMessage();
+                SelectPage(null);
                 return;
             }
 
@@ -223,7 +225,7 @@ namespace SCRIPTS.ITEM_SCRIPT
                 }
             }
 
-            SelectPage(pages[0]);
+            SelectPage(pages.Count > 0 ? pages[0] : null);
         }
 
         private void SelectPage(JournalCollectedPage page)
