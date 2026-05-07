@@ -479,10 +479,7 @@ GameObject:
   - component: {fileID: 51920676}
   - component: {fileID: 51920675}
   - component: {fileID: 51920678}
-<<<<<<< Updated upstream
   - component: {fileID: 51920679}
-=======
->>>>>>> Stashed changes
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -608,7 +605,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
-<<<<<<< Updated upstream
 --- !u!114 &51920679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -641,8 +637,6 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
-=======
->>>>>>> Stashed changes
 --- !u!1 &74813805
 GameObject:
   m_ObjectHideFlags: 0
