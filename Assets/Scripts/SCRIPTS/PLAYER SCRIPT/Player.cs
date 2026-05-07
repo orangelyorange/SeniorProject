@@ -25,11 +25,13 @@ public class Player : MonoBehaviour
     private bool isRunLoopPlaying;
 
     private bool hasAppliedSpawn = false;
+    private Vector3 baseScale;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        baseScale = transform.localScale;
 
         ApplyCheckpointOnce();
         PlayPendingRespawnSfx();
@@ -59,9 +61,17 @@ public class Player : MonoBehaviour
         }
 
         if (moveInput > MoveThreshold)
-            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+        {
+            Vector3 scale = baseScale;
+            scale.x = Mathf.Abs(scale.x);
+            transform.localScale = scale;
+        }
         else if (moveInput < -MoveThreshold)
-            transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+        {
+            Vector3 scale = baseScale;
+            scale.x = -Mathf.Abs(scale.x);
+            transform.localScale = scale;
+        }
 
         animator.SetBool("isRunning", moveInput != 0);
         animator.SetBool("isJumping", !isGrounded);
