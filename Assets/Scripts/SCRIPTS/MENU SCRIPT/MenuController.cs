@@ -9,7 +9,7 @@ public class MenuController : MonoBehaviour
 {
     [Header("Volume Setting")]
     [SerializeField] private TMP_Text volumeTextValue = null;
-    [SerializeField] private Text volumeSlider = null;
+    [SerializeField] private Slider volumeSlider = null;
     [SerializeField] private float defaultVolume = 0.5f;
 
     [Header("Confirmation")]
@@ -54,12 +54,14 @@ public class MenuController : MonoBehaviour
         volumeTextValue.text = volume.ToString("0.0");
     }
 
+    //apply volume settings and save them to player prefs
     public void VolumeApply()
     {
         PlayerPrefs.SetFloat("masterVolume", AudioListener.volume);
         StartCoroutine(ConfirmationBox());
     }
 
+    //reset button for audio settings
     public void ResetButton(string MenuType)
     {
         if  (MenuType == "Audio")
@@ -72,6 +74,7 @@ public class MenuController : MonoBehaviour
         }   
     }
 
+    //confirmation box for saving settings
     public IEnumerator ConfirmationBox() 
     {
         confirmationPrompt.SetActive(true);
