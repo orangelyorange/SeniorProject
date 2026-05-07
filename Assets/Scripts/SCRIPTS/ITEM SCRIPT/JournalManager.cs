@@ -18,6 +18,8 @@ namespace SCRIPTS.ITEM_SCRIPT
         [SerializeField] private TextMeshProUGUI pageBodyText;
         [SerializeField] private GameObject settingsPanel;
         [SerializeField] private GameObject inventoryPanel;
+        [SerializeField] private string pageTitleObjectName = "Lore";
+        [SerializeField] private string pageBodyObjectName = "Prayer";
 
         [Header("Tab UI")]
         [SerializeField] private GameObject bookmarkTemplate;
@@ -307,12 +309,12 @@ namespace SCRIPTS.ITEM_SCRIPT
 
             if (pageTitleText == null)
             {
-                pageTitleText = FindTextInPanel("Lore");
+                pageTitleText = FindTextInPanel(pageTitleObjectName);
             }
 
             if (pageBodyText == null)
             {
-                pageBodyText = FindTextInPanel("Prayer");
+                pageBodyText = FindTextInPanel(pageBodyObjectName);
             }
 
             if (bookmarkTemplate == null && journalUIPanel != null)

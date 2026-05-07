@@ -31,7 +31,12 @@
         public void SaveGame(List<QuestItem> playerInventory, Vector2 playerPosition, string levelName, List<JournalCollectedPage> journalPages)
         {
             //construct a SaveData object with the current game state
-            journalPages ??= JournalProgressManager.GetOrCreate().GetCollectedPages();
+            if (journalPages == null)
+            {
+                journalPages = JournalProgressManager.Instance != null
+                    ? JournalProgressManager.Instance.GetCollectedPages()
+                    : new List<JournalCollectedPage>();
+            }
             PlayerData playerData = new PlayerData(playerInventory, playerPosition, levelName, journalPages);
             
             string json = JsonUtility.ToJson(playerData);

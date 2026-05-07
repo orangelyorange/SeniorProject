@@ -19,6 +19,7 @@ public class JournalItemPickup : MonoBehaviour
     public JournalTab fallbackAct = JournalTab.Act1;
     public string fallbackLevelName;
     public int fallbackDisplayOrder;
+    public string fallbackPageId;
     
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -78,9 +79,13 @@ public class JournalItemPickup : MonoBehaviour
             return pageData.ToCollectedPage(sceneName);
         }
 
+        string fallbackId = string.IsNullOrWhiteSpace(fallbackPageId)
+            ? $"{sceneName}:{gameObject.name}:{pageTitle}"
+            : fallbackPageId;
+
         return new JournalCollectedPage
         {
-            pageId = $"{sceneName}:{pageTitle}",
+            pageId = fallbackId,
             title = pageTitle,
             body = pageContent,
             act = fallbackAct,
