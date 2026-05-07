@@ -30506,15 +30506,10 @@ MonoBehaviour:
   scrollViewPanel: {fileID: 0}
   pageTitleText: {fileID: 0}
   pageBodyText: {fileID: 0}
-  settingsPanel: {fileID: 0}
-  inventoryPanel: {fileID: 0}
   pageTitleObjectName: Lore
   pageBodyObjectName: Prayer
   bookmarkTemplate: {fileID: 0}
   act1BookmarkSprite: {fileID: 0}
-  act2BookmarkSprite: {fileID: 0}
-  settingsBookmarkSprite: {fileID: 0}
-  inventoryBookmarkSprite: {fileID: 0}
   bookmarkSpacing: 10
   PopUpPanel: {fileID: 972473497}
   popUpTitle: {fileID: 1908671719}
@@ -31659,8 +31654,8 @@ MonoBehaviour:
   collectibleItemName: Journal Item
   amount: 1
   pageData: {fileID: 0}
-  pageTitle: Prayer
-  pageContent: We seek blessings for the harvest, Mighty Gugurang
+  pageTitle: 
+  pageContent: 
   fallbackAct: 0
   fallbackLevelName: 
   fallbackDisplayOrder: 0
