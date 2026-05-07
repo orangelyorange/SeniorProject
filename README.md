@@ -26,6 +26,7 @@ This repository uses a Cinemachine virtual camera (`PlayerCamera`) with a `Camer
 ## Tuning
 Adjust on the `CameraTarget` component:
 - `horizontalLookAhead` (default ~1.5)
+- `followPlayerY` (turn off to keep camera Y fixed and avoid diagonal drift on uneven terrain)
 - `verticalLookAmount` (default ~3.5)
 - `horizontalFollowSpeed` / `verticalFollowSpeed` for responsiveness
 
