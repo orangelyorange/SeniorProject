@@ -4,4 +4,5 @@ public enum JournalTab
     Act2,
     Settings,
     Inventory
+
 }

@@ -16,17 +16,17 @@ namespace SCRIPTS.ITEM_SCRIPT
         [SerializeField] private GameObject scrollViewPanel;
         [SerializeField] private TextMeshProUGUI pageTitleText;
         [SerializeField] private TextMeshProUGUI pageBodyText;
-        [SerializeField] private GameObject settingsPanel;
-        [SerializeField] private GameObject inventoryPanel;
+       // [SerializeField] private GameObject settingsPanel;
+       // [SerializeField] private GameObject inventoryPanel;
         [SerializeField] private string pageTitleObjectName = "Lore";
         [SerializeField] private string pageBodyObjectName = "Prayer";
 
         [Header("Tab UI")]
         [SerializeField] private GameObject bookmarkTemplate;
         [SerializeField] private Sprite act1BookmarkSprite;
-        [SerializeField] private Sprite act2BookmarkSprite;
-        [SerializeField] private Sprite settingsBookmarkSprite;
-        [SerializeField] private Sprite inventoryBookmarkSprite;
+       //[SerializeField] private Sprite act2BookmarkSprite;
+      //  [SerializeField] private Sprite settingsBookmarkSprite;
+       // [SerializeField] private Sprite inventoryBookmarkSprite;
         [SerializeField] private float bookmarkSpacing = 10f;
 
         [Header("Pop-up Journal UI")]
@@ -174,16 +174,16 @@ namespace SCRIPTS.ITEM_SCRIPT
 
             if (IsActTab(tab))
             {
-                SetPanelActive(settingsPanel, false);
-                SetPanelActive(inventoryPanel, false);
+              //  SetPanelActive(settingsPanel, false);
+              //  SetPanelActive(inventoryPanel, false);
                 SetPanelActive(scrollViewPanel, true);
                 RefreshJournalEntries();
             }
             else
             {
                 SetPanelActive(scrollViewPanel, false);
-                SetPanelActive(settingsPanel, tab == JournalTab.Settings);
-                SetPanelActive(inventoryPanel, tab == JournalTab.Inventory);
+         //      SetPanelActive(settingsPanel, tab == JournalTab.Settings);
+           //    SetPanelActive(inventoryPanel, tab == JournalTab.Inventory);
                 ShowPlaceholder(tab);
             }
         }
@@ -268,12 +268,12 @@ namespace SCRIPTS.ITEM_SCRIPT
             switch (tab)
             {
                 case JournalTab.Settings:
-                    pageTitleText.text = "Settings";
-                    pageBodyText.text = "Settings content appears here.";
+         //           pageTitleText.text = "Settings";
+          //          pageBodyText.text = "Settings content appears here.";
                     break;
                 case JournalTab.Inventory:
-                    pageTitleText.text = "Inventory";
-                    pageBodyText.text = "Inventory content appears here.";
+         //           pageTitleText.text = "Inventory";
+         //           pageBodyText.text = "Inventory content appears here.";
                     break;
             }
         }
@@ -349,9 +349,9 @@ namespace SCRIPTS.ITEM_SCRIPT
             List<(JournalTab tab, string label, Sprite sprite)> tabDefinitions = new List<(JournalTab, string, Sprite)>
             {
                 (JournalTab.Act1, "Act 1", act1BookmarkSprite),
-                (JournalTab.Act2, "Act 2", act2BookmarkSprite),
-                (JournalTab.Settings, "Settings", settingsBookmarkSprite),
-                (JournalTab.Inventory, "Inventory", inventoryBookmarkSprite)
+           //     (JournalTab.Act2, "Act 2", act2BookmarkSprite),
+           //    (JournalTab.Settings, "Settings", settingsBookmarkSprite),
+            //    (JournalTab.Inventory, "Inventory", inventoryBookmarkSprite)
             };
 
             float spacing = templateRect.rect.height;
