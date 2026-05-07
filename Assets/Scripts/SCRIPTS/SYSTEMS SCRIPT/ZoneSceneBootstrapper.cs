@@ -12,14 +12,14 @@ public static class ZoneSceneBootstrapper
         if (!IsZoneScene(activeScene))
             return;
 
-        if (Time.timeScale == 0f)
-            Time.timeScale = 1f;
-
         if (SceneManager.GetSceneByName(MainSceneName).isLoaded)
             return;
 
-        if (SceneStreamingManager.Instance != null && GameObject.FindGameObjectWithTag("Player") != null)
+        if (SceneStreamingManager.Instance != null && PlayerLocator.GetPlayerGameObject() != null)
             return;
+
+        if (Time.timeScale == 0f)
+            Time.timeScale = 1f;
 
         SceneManager.LoadSceneAsync(MainSceneName, LoadSceneMode.Additive);
     }
