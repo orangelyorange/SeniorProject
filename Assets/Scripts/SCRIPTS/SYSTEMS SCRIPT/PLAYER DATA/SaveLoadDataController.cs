@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +14,17 @@ public class SaveLoadDataController : MonoBehaviour
       {
          //grabs the name of the level player is currently in
          string currentSceneName = SceneManager.GetActiveScene().name;
+
+         if (SaveLoadManager.Instance != null)
+         {
+            Vector2 playerPosition = playerMovement.transform.position;
+            List<JournalCollectedPage> journalPages = JournalProgressManager.GetOrCreate().GetCollectedPages();
+            SaveLoadManager.Instance.SaveGame(playerInventory.inventory, playerPosition, currentSceneName, journalPages);
+         }
+         else
+         {
+            Debug.LogError("SaveLoadManager instance not found.");
+         }
       }
       else
       {
