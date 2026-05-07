@@ -963,7 +963,7 @@ MonoBehaviour:
   horizontalFollowSpeed: 6
   verticalLookAmount: 3.5
   verticalFollowSpeed: 3
-  cameraBounds: {fileID: 0}
+  cameraBounds: {fileID: 658113107}
 --- !u!4 &216944805
 Transform:
   m_ObjectHideFlags: 0
