@@ -79,8 +79,10 @@ public class JournalItemPickup : MonoBehaviour
             return pageData.ToCollectedPage(sceneName);
         }
 
+        string sanitizedObjectName = TrimSegment(SanitizeIdSegment(gameObject.name), 24);
+        string sanitizedTitle = TrimSegment(SanitizeIdSegment(pageTitle), 24);
         string fallbackId = string.IsNullOrWhiteSpace(fallbackPageId)
-            ? $"{sceneName}_{SanitizeIdSegment(gameObject.name)}_{SanitizeIdSegment(pageTitle)}"
+            ? $"{sceneName}_{sanitizedObjectName}_{sanitizedTitle}"
             : fallbackPageId;
 
         return new JournalCollectedPage
@@ -112,5 +114,15 @@ public class JournalItemPickup : MonoBehaviour
         }
 
         return new string(chars);
+    }
+
+    private static string TrimSegment(string value, int maxLength)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return "unknown";
+        }
+
+        return value.Length <= maxLength ? value : value.Substring(0, maxLength);
     }
 }

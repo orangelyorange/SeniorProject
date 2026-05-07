@@ -82,13 +82,27 @@ public class JournalProgressManager : MonoBehaviour
 
     public void SetCollectedPages(List<JournalCollectedPage> pages)
     {
-        collectedPages = pages != null
-            ? pages
-                .Where(page => page != null && !string.IsNullOrWhiteSpace(page.pageId))
-                .GroupBy(page => page.pageId)
-                .Select(group => group.First())
-                .ToList()
-            : new List<JournalCollectedPage>();
+        collectedPages = new List<JournalCollectedPage>();
+
+        if (pages != null)
+        {
+            HashSet<string> seenIds = new HashSet<string>();
+            foreach (JournalCollectedPage page in pages)
+            {
+                if (page == null || string.IsNullOrWhiteSpace(page.pageId))
+                {
+                    continue;
+                }
+
+                if (!seenIds.Add(page.pageId))
+                {
+                    Debug.LogWarning($"JournalProgressManager: Duplicate pageId '{page.pageId}' detected during load.");
+                    continue;
+                }
+
+                collectedPages.Add(page);
+            }
+        }
 
         JournalUpdated?.Invoke();
     }

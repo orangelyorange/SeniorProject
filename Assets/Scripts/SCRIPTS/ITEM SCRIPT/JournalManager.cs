@@ -27,6 +27,7 @@ namespace SCRIPTS.ITEM_SCRIPT
         [SerializeField] private Sprite act2BookmarkSprite;
         [SerializeField] private Sprite settingsBookmarkSprite;
         [SerializeField] private Sprite inventoryBookmarkSprite;
+        [SerializeField] private float bookmarkSpacing = 10f;
 
         [Header("Pop-up Journal UI")]
         public GameObject PopUpPanel;
@@ -35,6 +36,7 @@ namespace SCRIPTS.ITEM_SCRIPT
 
         private JournalTab activeTab = JournalTab.Act1;
         private bool tabsInitialized;
+        private string selectedPageId;
 
        private void Awake()
        {
@@ -225,11 +227,13 @@ namespace SCRIPTS.ITEM_SCRIPT
                 }
             }
 
-            SelectPage(pages.Count > 0 ? pages[0] : null);
+            JournalCollectedPage selectedPage = GetSelectedPage(pages);
+            SelectPage(selectedPage ?? pages[0]);
         }
 
         private void SelectPage(JournalCollectedPage page)
         {
+            selectedPageId = page?.pageId;
             if (pageTitleText != null)
             {
                 pageTitleText.text = page?.title ?? string.Empty;
@@ -361,7 +365,7 @@ namespace SCRIPTS.ITEM_SCRIPT
                 spacing = 60f;
             }
 
-            float offsetY = spacing + 10f;
+            float offsetY = spacing + bookmarkSpacing;
             Vector2 basePosition = templateRect.anchoredPosition;
             Transform parent = templateRect.parent;
 
@@ -451,6 +455,24 @@ namespace SCRIPTS.ITEM_SCRIPT
                 if (text.gameObject.name == objectName)
                 {
                     return text;
+                }
+            }
+
+            return null;
+        }
+
+        private JournalCollectedPage GetSelectedPage(List<JournalCollectedPage> pages)
+        {
+            if (string.IsNullOrWhiteSpace(selectedPageId))
+            {
+                return null;
+            }
+
+            foreach (JournalCollectedPage page in pages)
+            {
+                if (page != null && page.pageId == selectedPageId)
+                {
+                    return page;
                 }
             }
 
