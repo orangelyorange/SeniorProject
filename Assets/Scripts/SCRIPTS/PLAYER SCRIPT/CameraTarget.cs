@@ -12,6 +12,7 @@ public class CameraTarget : MonoBehaviour
     [SerializeField] private float horizontalFollowSpeed = 6f;
 
     [Header("Vertical Look")]
+    [SerializeField] private bool followPlayerY = true;
     [SerializeField] private float verticalLookAmount = 3.5f;
     [SerializeField] private float verticalFollowSpeed = 3f;
 
@@ -21,6 +22,8 @@ public class CameraTarget : MonoBehaviour
 
     private float currentXOffset;
     private float currentYOffset;
+    private float lockedBaseY;
+    private bool hasLockedBaseY;
     private float lastFacing = 1f;
     private Camera cam;
 
@@ -38,10 +41,17 @@ public class CameraTarget : MonoBehaviour
         if (player != null)
         {
             transform.position = player.position;
+            lockedBaseY = player.position.y;
+            hasLockedBaseY = true;
 
             float facing = Mathf.Sign(player.localScale.x);
             if (!Mathf.Approximately(facing, 0f))
                 lastFacing = facing;
+        }
+        else
+        {
+            lockedBaseY = transform.position.y;
+            hasLockedBaseY = true;
         }
     }
 
@@ -55,6 +65,12 @@ public class CameraTarget : MonoBehaviour
 
         if (cameraBounds == null)
             ResolveCameraBoundsReference();
+
+        if (!hasLockedBaseY)
+        {
+            lockedBaseY = player.position.y;
+            hasLockedBaseY = true;
+        }
 
         // ---------- HORIZONTAL LOOK AHEAD ----------
         float targetXOffset = 0f;
@@ -87,7 +103,8 @@ public class CameraTarget : MonoBehaviour
 
         currentYOffset = Mathf.Lerp(currentYOffset, targetYOffset, verticalT);
 
-        Vector3 targetPosition = player.position + new Vector3(currentXOffset, currentYOffset, 0f);
+        float baseY = followPlayerY ? player.position.y : lockedBaseY;
+        Vector3 targetPosition = new Vector3(player.position.x + currentXOffset, baseY + currentYOffset, player.position.z);
 
         // ---------- CAMERA BOUNDS FIX ----------
         if (enableTargetBoundsClamp && cameraBounds != null && cam != null)

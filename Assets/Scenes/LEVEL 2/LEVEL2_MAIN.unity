@@ -961,6 +961,7 @@ MonoBehaviour:
   enableHorizontalLookAhead: 0
   horizontalLookAhead: 1.5
   horizontalFollowSpeed: 6
+  followPlayerY: 0
   verticalLookAmount: 3.5
   verticalFollowSpeed: 3
   enableTargetBoundsClamp: 0
