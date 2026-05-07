@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         baseScale = transform.localScale;
+        baseScale.x = Mathf.Abs(baseScale.x);
 
         ApplyCheckpointOnce();
         PlayPendingRespawnSfx();
@@ -63,13 +64,12 @@ public class Player : MonoBehaviour
         if (moveInput > MoveThreshold)
         {
             Vector3 scale = baseScale;
-            scale.x = Mathf.Abs(scale.x);
             transform.localScale = scale;
         }
         else if (moveInput < -MoveThreshold)
         {
             Vector3 scale = baseScale;
-            scale.x = -Mathf.Abs(scale.x);
+            scale.x = -baseScale.x;
             transform.localScale = scale;
         }
 
