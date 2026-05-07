@@ -2,13 +2,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using TMPro;
 
 
 public class MenuController : MonoBehaviour 
 {
     [Header("Volume Setting")]
-    [SerializeField] private Text volumeTextValue = null;
+    [SerializeField] private TMP_Text volumeTextValue = null;
     [SerializeField] private Text volumeSlider = null;
+    [SerializeField] private float defaultVolume = 0.5f;
 
     [Header("Confirmation")]
     [SerializeField] private GameObject confirmationPrompt = null;
@@ -45,6 +47,7 @@ public class MenuController : MonoBehaviour
         Application.Quit();
     }
 
+    //volume control
     public void SetVolume(float volume)
     {
         AudioListener.volume = volume;
@@ -57,6 +60,17 @@ public class MenuController : MonoBehaviour
         StartCoroutine(ConfirmationBox());
     }
 
+    public void ResetButton(string MenuType)
+    {
+        if  (MenuType == "Audio")
+        {
+            AudioListener.volume = defaultVolume;
+
+            volumeSlider.text = defaultVolume.ToString("0.0");
+            volumeTextValue.text = defaultVolume.ToString("0.0");
+            VolumeApply();
+        }   
+    }
 
     public IEnumerator ConfirmationBox() 
     {
