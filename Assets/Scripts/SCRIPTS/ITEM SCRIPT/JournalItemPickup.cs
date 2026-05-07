@@ -1,5 +1,6 @@
 using SCRIPTS.ITEM_SCRIPT;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class JournalItemPickup : MonoBehaviour
 {
@@ -8,10 +9,17 @@ public class JournalItemPickup : MonoBehaviour
     public int amount = 1;
 
     [Header("Lore Data")]
+    public JournalPageData pageData;
     public string pageTitle = "Level 1";
-    
-    [TextArea(3,10)] // Gives a larger text box in the inspector
+
+    [TextArea(3, 10)] // Gives a larger text box in the inspector
     public string pageContent = "Lore content";
+
+    [Header("Lore Organization (Fallback)")]
+    public JournalTab fallbackAct = JournalTab.Act1;
+    public string fallbackLevelName;
+    public int fallbackDisplayOrder;
+    public string fallbackPageId;
     
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -40,7 +48,7 @@ public class JournalItemPickup : MonoBehaviour
             // 4. Handle Journal UI (Safe check for Singleton)
             if (JournalManager.Instance != null)
             {
-                JournalManager.Instance.AddNewLore(pageTitle, pageContent);
+                JournalManager.Instance.AddNewLore(CreateCollectedPage());
             }
             else
             {
@@ -60,5 +68,61 @@ public class JournalItemPickup : MonoBehaviour
             // 6. Destroy the item after everything is processed
             Destroy(gameObject);
         }
+    }
+
+    private JournalCollectedPage CreateCollectedPage()
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+
+        if (pageData != null)
+        {
+            return pageData.ToCollectedPage(sceneName);
+        }
+
+        string sanitizedObjectName = TrimSegment(SanitizeIdSegment(gameObject.name), 24);
+        string sanitizedTitle = TrimSegment(SanitizeIdSegment(pageTitle), 24);
+        string fallbackId = string.IsNullOrWhiteSpace(fallbackPageId)
+            ? $"{sceneName}_{sanitizedObjectName}_{sanitizedTitle}"
+            : fallbackPageId;
+
+        return new JournalCollectedPage
+        {
+            pageId = fallbackId,
+            title = pageTitle,
+            body = pageContent,
+            act = fallbackAct,
+            levelName = string.IsNullOrWhiteSpace(fallbackLevelName) ? sceneName : fallbackLevelName,
+            displayOrder = fallbackDisplayOrder
+        };
+    }
+
+    private static string SanitizeIdSegment(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return "unknown";
+        }
+
+        char[] chars = value.ToCharArray();
+        for (int index = 0; index < chars.Length; index++)
+        {
+            char current = chars[index];
+            if (!char.IsLetterOrDigit(current) && current != '-' && current != '_')
+            {
+                chars[index] = '_';
+            }
+        }
+
+        return new string(chars);
+    }
+
+    private static string TrimSegment(string value, int maxLength)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return "unknown";
+        }
+
+        return value.Length <= maxLength ? value : value.Substring(0, maxLength);
     }
 }

@@ -7,9 +7,10 @@ public class PlayerData
     public float[] playerPosition;
     public List<QuestItem> questInventory; //List to store quest items, can be expanded to include more item types in the future
     public string levelName; //stores the scene name for the current level, useful for loading the correct scene when loading player data
+    public List<JournalCollectedPage> collectedJournalPages;
     
     //constructor to initialize player data
-    public PlayerData(List<QuestItem> currentInventory,Vector2 playerCurrentPosition, string currentLevelName)
+    public PlayerData(List<QuestItem> currentInventory, Vector2 playerCurrentPosition, string currentLevelName, List<JournalCollectedPage> journalPages = null)
     {
         
         //creates a new list to store the player's quest inventory
@@ -22,5 +23,9 @@ public class PlayerData
         playerPosition[1] = playerCurrentPosition.y;
         
         levelName = currentLevelName; //stores the current level name
+
+        collectedJournalPages = journalPages != null
+            ? new List<JournalCollectedPage>(journalPages)
+            : new List<JournalCollectedPage>();
     }
 }

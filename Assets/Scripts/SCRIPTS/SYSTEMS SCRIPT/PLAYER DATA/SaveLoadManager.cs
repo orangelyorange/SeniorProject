@@ -28,10 +28,16 @@
         }
         
         //call this so save the game
-        public void SaveGame(List<QuestItem> playerInventory, Vector2 playerPosition, string levelName)
+        public void SaveGame(List<QuestItem> playerInventory, Vector2 playerPosition, string levelName, List<JournalCollectedPage> journalPages)
         {
             //construct a SaveData object with the current game state
-            PlayerData playerData = new PlayerData(playerInventory, playerPosition, levelName);
+            if (journalPages == null)
+            {
+                journalPages = JournalProgressManager.Instance != null
+                    ? JournalProgressManager.Instance.GetCollectedPages()
+                    : new List<JournalCollectedPage>();
+            }
+            PlayerData playerData = new PlayerData(playerInventory, playerPosition, levelName, journalPages);
             
             string json = JsonUtility.ToJson(playerData);
             File.WriteAllText(saveFilePath, json);
@@ -80,7 +86,9 @@
                     if (rb != null) rb.linearVelocity = Vector2.zero;
                     
                     player.transform.position = loadedPosition;
-                    
+
+                    JournalProgressManager.GetOrCreate().SetCollectedPages(pendingLoadData.collectedJournalPages);
+
                     Debug.Log($"Data applied to player in scene: {scene.name}");
                     
                     //clears data so it does not automatically apply again if we load another scene
