@@ -943,7 +943,7 @@ GameObject:
   - component: {fileID: 130039104}
   - component: {fileID: 130039103}
   - component: {fileID: 130039105}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FloatingPlatform_4_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1077,7 +1077,7 @@ GameObject:
   - component: {fileID: 147412328}
   - component: {fileID: 147412330}
   - component: {fileID: 147412331}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FloatingPlatform_1_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1821,8 +1821,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectibleItemName: Journal Item
   amount: 1
+  pageData: {fileID: 0}
   pageTitle: Level 1
   pageContent: Lore content
+  fallbackAct: 0
+  fallbackLevelName: 
+  fallbackDisplayOrder: 0
+  fallbackPageId: 
 --- !u!61 &259501032
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -79106,7 +79111,7 @@ GameObject:
   - component: {fileID: 693559296}
   - component: {fileID: 693559298}
   - component: {fileID: 693559299}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FloatingPlatform_3_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90874,7 +90879,7 @@ GameObject:
   - component: {fileID: 1073008150}
   - component: {fileID: 1073008152}
   - component: {fileID: 1073008153}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FloatingPlatform_2_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91409,7 +91414,7 @@ GameObject:
   - component: {fileID: 1096526993}
   - component: {fileID: 1096526992}
   - component: {fileID: 1096526994}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FloatingPlatform_1_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91630,7 +91635,7 @@ GameObject:
   - component: {fileID: 1101877230}
   - component: {fileID: 1101877229}
   - component: {fileID: 1101877231}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FloatingPlatform_4_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92355,7 +92360,7 @@ GameObject:
   - component: {fileID: 1203749933}
   - component: {fileID: 1203749932}
   - component: {fileID: 1203749934}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FloatingPlatform_2_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92724,7 +92729,7 @@ GameObject:
   - component: {fileID: 1222709700}
   - component: {fileID: 1222709702}
   - component: {fileID: 1222709703}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FloatingPlatform_4_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92994,7 +92999,7 @@ GameObject:
   - component: {fileID: 1239679482}
   - component: {fileID: 1239679484}
   - component: {fileID: 1239679485}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FloatingPlatform_2_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93128,7 +93133,7 @@ GameObject:
   - component: {fileID: 1262368794}
   - component: {fileID: 1262368793}
   - component: {fileID: 1262368795}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FloatingPlatform_4_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93320,8 +93325,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectibleItemName: Journal Item
   amount: 1
+  pageData: {fileID: 0}
   pageTitle: Level 1
   pageContent: Lore content
+  fallbackAct: 0
+  fallbackLevelName: 
+  fallbackDisplayOrder: 0
+  fallbackPageId: 
 --- !u!61 &1278667656
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -93605,8 +93615,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectibleItemName: Journal Item
   amount: 1
+  pageData: {fileID: 0}
   pageTitle: Level 1
   pageContent: Lore content
+  fallbackAct: 0
+  fallbackLevelName: 
+  fallbackDisplayOrder: 0
+  fallbackPageId: 
 --- !u!61 &1340106634
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -94788,8 +94803,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectibleItemName: Journal Item
   amount: 1
+  pageData: {fileID: 0}
   pageTitle: Level 1
   pageContent: Lore content
+  fallbackAct: 0
+  fallbackLevelName: 
+  fallbackDisplayOrder: 0
+  fallbackPageId: 
 --- !u!61 &1524157566
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -98928,7 +98948,7 @@ GameObject:
   - component: {fileID: 1655997913}
   - component: {fileID: 1655997915}
   - component: {fileID: 1655997916}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FloatingPlatform_4_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99803,7 +99823,7 @@ GameObject:
   - component: {fileID: 1754521261}
   - component: {fileID: 1754521263}
   - component: {fileID: 1754521264}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FloatingPlatform_3_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100754,7 +100774,7 @@ GameObject:
   - component: {fileID: 1808206470}
   - component: {fileID: 1808206469}
   - component: {fileID: 1808206471}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FloatingPlatform_1_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114479,6 +114499,19 @@ MonoBehaviour:
   journalUIPanel: {fileID: 3737614699735735772}
   scrollViewContent: {fileID: 1728519074803189693}
   journalEntryPrefab: {fileID: 1196802311766197153, guid: e76ec750412c871469ab780ca1449808, type: 3}
+  scrollViewPanel: {fileID: 0}
+  pageTitleText: {fileID: 0}
+  pageBodyText: {fileID: 0}
+  settingsPanel: {fileID: 0}
+  inventoryPanel: {fileID: 0}
+  pageTitleObjectName: Lore
+  pageBodyObjectName: Prayer
+  bookmarkTemplate: {fileID: 0}
+  act1BookmarkSprite: {fileID: 0}
+  act2BookmarkSprite: {fileID: 0}
+  settingsBookmarkSprite: {fileID: 0}
+  inventoryBookmarkSprite: {fileID: 0}
+  bookmarkSpacing: 10
   PopUpPanel: {fileID: 972473497}
   popUpTitle: {fileID: 1908671719}
   popUpContent: {fileID: 834182631}
