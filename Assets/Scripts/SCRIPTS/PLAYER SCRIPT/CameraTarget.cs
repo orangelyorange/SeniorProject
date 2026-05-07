@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class CameraTarget : MonoBehaviour
 {
+    private static readonly string[] CameraBoundsObjectNames = { "CameraBounds", "CameraBoundaries" };
+
     [SerializeField] private Transform player;
 
     [Header("Horizontal Look Ahead")]
@@ -14,6 +16,7 @@ public class CameraTarget : MonoBehaviour
     [SerializeField] private float verticalFollowSpeed = 3f;
 
     [Header("Bounds")]
+    [SerializeField] private bool enableTargetBoundsClamp = true;
     [SerializeField] private Collider2D cameraBounds;
 
     private float currentXOffset;
@@ -30,12 +33,7 @@ public class CameraTarget : MonoBehaviour
             player = PlayerLocator.GetPlayerTransform();
         }
 
-        if (cameraBounds == null)
-        {
-            GameObject boundsObject = GameObject.Find("CameraBounds");
-            if (boundsObject != null)
-                cameraBounds = boundsObject.GetComponent<Collider2D>();
-        }
+        ResolveCameraBoundsReference();
 
         if (player != null)
         {
@@ -54,6 +52,9 @@ public class CameraTarget : MonoBehaviour
             player = PlayerLocator.GetPlayerTransform();
             if (player == null) return;
         }
+
+        if (cameraBounds == null)
+            ResolveCameraBoundsReference();
 
         // ---------- HORIZONTAL LOOK AHEAD ----------
         float targetXOffset = 0f;
@@ -89,7 +90,7 @@ public class CameraTarget : MonoBehaviour
         Vector3 targetPosition = player.position + new Vector3(currentXOffset, currentYOffset, 0f);
 
         // ---------- CAMERA BOUNDS FIX ----------
-        if (cameraBounds != null && cam != null)
+        if (enableTargetBoundsClamp && cameraBounds != null && cam != null)
         {
             Bounds bounds = cameraBounds.bounds;
 
@@ -111,5 +112,22 @@ public class CameraTarget : MonoBehaviour
         targetPosition.z = transform.position.z;
 
         transform.position = targetPosition;
+    }
+
+    private void ResolveCameraBoundsReference()
+    {
+        if (cameraBounds != null)
+            return;
+
+        for (int i = 0; i < CameraBoundsObjectNames.Length; i++)
+        {
+            GameObject boundsObject = GameObject.Find(CameraBoundsObjectNames[i]);
+            if (boundsObject == null)
+                continue;
+
+            cameraBounds = boundsObject.GetComponent<Collider2D>();
+            if (cameraBounds != null)
+                return;
+        }
     }
 }
