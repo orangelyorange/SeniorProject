@@ -106,10 +106,10 @@ TextureImporter:
       name: frame_06_0
       rect:
         serializedVersion: 2
-        x: 270
-        y: 215
-        width: 1599
-        height: 1743
+        x: 0
+        y: 0
+        width: 2160
+        height: 2160
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,33 +124,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: frame_06_1
-      rect:
-        serializedVersion: 2
-        x: 862
-        y: 89
-        width: 485
-        height: 610
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c8c527c305c6a7100800000000000000
-      internalID: 106516633063939212
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 3a6692784463c0545ab143a0b0427827
     internalID: 0
     vertices: []
     indices: 
