@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,6 +27,6 @@ public static class ZoneSceneBootstrapper
 
     private static bool IsZoneScene(Scene scene)
     {
-        return scene.IsValid() && scene.name.StartsWith("ZONE_");
+        return scene.IsValid() && scene.name.StartsWith("ZONE_", StringComparison.Ordinal);
     }
 }
