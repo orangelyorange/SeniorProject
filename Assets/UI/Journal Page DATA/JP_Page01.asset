@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47cd3d5289f04890a7dea43cbe88b009, type: 3}
+  m_Name: JP_Page01
+  m_EditorClassIdentifier: 
+  id: JP_01
+  pageTitle: "\u201CRice Mice\u201D"
+  pageBody: "Small bodies move through the rice like restless spirits.\r\nThe farmer
+    calls them pests, but I feel something older in them\u2014\r\nhunger given breath,
+    refusing to be ignored."
+  act: 0
+  levelName: Journal UI
+  displayOrder: 0
