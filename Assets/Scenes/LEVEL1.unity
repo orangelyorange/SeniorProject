@@ -113289,9 +113289,9 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 4c9d365f2ad86ef4dbff398dc68fb6a0, type: 3}
+  m_Resource: {fileID: 8300000, guid: 450958e2f29dc5d469dd98528dab00d9, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.12
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -117142,7 +117142,7 @@ MonoBehaviour:
   moveSpeed: 6
   jumpForce: 7.5
   groundCheck: {fileID: 3780818645761440143}
-  groundCheckRadius: 0.2
+  groundCheckRadius: 0.25
   groundLayer:
     serializedVersion: 2
     m_Bits: 64

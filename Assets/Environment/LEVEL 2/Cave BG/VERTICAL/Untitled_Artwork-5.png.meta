@@ -111,37 +111,15 @@ TextureImporter:
         width: 6000
         height: 8000
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: f0ccd531f828acff0800000000000000
+      spriteID: 8a0360db3e420e347aa05b6598c086fa
       internalID: -15056097725527025
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Untitled_Artwork-5_1
-      rect:
-        serializedVersion: 2
-        x: 3337
-        y: 0
-        width: 2663
-        height: 8000
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d76aa93e7b5281400800000000000000
-      internalID: 295027247320573565
       vertices: []
       indices: 
       edges: []
