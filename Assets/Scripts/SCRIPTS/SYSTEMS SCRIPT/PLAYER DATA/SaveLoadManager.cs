@@ -82,10 +82,7 @@
                     
                     player.transform.position = loadedPosition;
 
-                    if (pendingLoadData.collectedJournalPages != null)
-                    {
-                        JournalProgressManager.GetOrCreate().SetCollectedPages(pendingLoadData.collectedJournalPages);
-                    }
+                    JournalProgressManager.GetOrCreate().SetCollectedPages(pendingLoadData.collectedJournalPages);
 
                     Debug.Log($"Data applied to player in scene: {scene.name}");
                     
