@@ -8250,7 +8250,7 @@ MonoBehaviour:
     Enabled: 1
     Time: 0.091
     Smoothing: 2.3
-    IgnoreY: 0
+    IgnoreY: 1
 --- !u!114 &1673385166
 MonoBehaviour:
   m_ObjectHideFlags: 0
