@@ -21,8 +21,14 @@ EditorBuildSettings:
     path: Assets/Scenes/LEVEL1.unity
     guid: 17fe24ed0cbed7547ae507c5cc8c1c47
   - enabled: 1
+    path: Assets/Scenes/Cutscenes/Cutscene_01.unity
+    guid: 683bd9eb8e2c00442bf815d2ab16d1e0
+  - enabled: 1
     path: Assets/Scenes/LEVEL 2/LEVEL_2_FINAL.unity
     guid: a388df1f4e9ffe44fa19fa56f51ac132
+  - enabled: 1
+    path: Assets/Scenes/Cutscenes/Cutscene_02.unity
+    guid: a44a361ec10301b49bc69a8a174cc5a7
   - enabled: 1
     path: Assets/Scenes/Cutscenes/Thank You.unity
     guid: 5d16a6d8e3a361240b1c2d87883e61f2
