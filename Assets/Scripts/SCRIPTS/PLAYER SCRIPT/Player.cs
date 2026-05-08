@@ -2,7 +2,7 @@
 
 public class Player : MonoBehaviour
 {
-    private const float MoveThreshold = 0.01f;
+    private const float MoveThreshold = 0.08f;
 
     [Header("Player Movement")]
     public float moveSpeed = 5f;
@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
             transform.localScale = scale;
         }
 
-        animator.SetBool("isRunning", moveInput != 0);
+        animator.SetBool("isRunning", Mathf.Abs(moveInput) > MoveThreshold);
         animator.SetBool("isJumping", !isGrounded);
 
       

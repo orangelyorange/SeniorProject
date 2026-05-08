@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Cutscenes/ADNU DACA.unity
+    guid: e5ae2f7e8add16b45bc2e11400c11a3f
+  - enabled: 1
     path: Assets/Scenes/Cutscenes/Intro.unity
     guid: 5d4d650269d240442ab959225732ea6b
   - enabled: 1
