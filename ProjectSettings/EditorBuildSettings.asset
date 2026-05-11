@@ -5,15 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/SceneLoader.unity
+    guid: c35c1ed9d538d2e43aa5edfe3724f85e
   - enabled: 1
     path: Assets/Scenes/Cutscenes/ADNU DACA.unity
     guid: e5ae2f7e8add16b45bc2e11400c11a3f
   - enabled: 1
-    path: Assets/Scenes/Cutscenes/Intro.unity
-    guid: 5d4d650269d240442ab959225732ea6b
-  - enabled: 1
     path: Assets/Scenes/Main Menu.unity
     guid: be9c333dbcdc210429b45ae55d84608a
+  - enabled: 1
+    path: Assets/Scenes/Cutscenes/Prologue_Cutscene.unity
+    guid: 5d4d650269d240442ab959225732ea6b
   - enabled: 1
     path: Assets/Scenes/Level0.unity
     guid: d2e0f793dcd863e449db46a0cdc6b32e

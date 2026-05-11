@@ -7111,74 +7111,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 507374816}
   m_CullTransparentMesh: 1
---- !u!1 &522651791
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 522651793}
-  - component: {fileID: 522651792}
-  m_Layer: 0
-  m_Name: Video_AteneoGames
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!328 &522651792
-VideoPlayer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 522651791}
-  m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 63810225aa10d634f88fc36dc41458d5, type: 3}
-  m_TargetCameraAlpha: 1
-  m_TargetCamera3DLayout: 0
-  m_TargetCamera: {fileID: 1501107450}
-  m_TargetTexture: {fileID: 0}
-  m_TimeReference: 0
-  m_TargetMaterialRenderer: {fileID: 0}
-  m_TargetMaterialProperty: <noninit>
-  m_RenderMode: 1
-  m_AspectRatio: 2
-  m_DataSource: 0
-  m_TimeUpdateMode: 2
-  m_PlaybackSpeed: 1
-  m_AudioOutputMode: 2
-  m_TargetAudioSources:
-  - {fileID: 0}
-  m_DirectAudioVolumes:
-  - 1
-  m_Url: 
-  m_EnabledAudioTracks: 01
-  m_DirectAudioMutes: 00
-  m_ControlledAudioTrackCount: 1
-  m_PlayOnAwake: 1
-  m_SkipOnDrop: 1
-  m_Looping: 0
-  m_WaitForFirstFrame: 1
-  m_FrameReadyEventEnabled: 0
-  m_VideoShaders: []
---- !u!4 &522651793
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 522651791}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1045.604, y: 400.34012, z: 5.9792547}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &528691972
 GameObject:
   m_ObjectHideFlags: 0
@@ -14309,8 +14241,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad58433a4378d94d96ac62b395517ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  videoPlayer: {fileID: 522651792}
-  videoScreen: {fileID: 522651791}
+  videoPlayer: {fileID: 0}
+  videoScreen: {fileID: 0}
   mainMenuUI: {fileID: 0}
 --- !u!1 &1178636464
 GameObject:
@@ -29607,7 +29539,6 @@ SceneRoots:
   - {fileID: 6787166712347915771}
   - {fileID: 687047820}
   - {fileID: 575941922}
-  - {fileID: 522651793}
   - {fileID: 3008132219398883535}
   - {fileID: 3929348644504030053}
   - {fileID: 930601292}
