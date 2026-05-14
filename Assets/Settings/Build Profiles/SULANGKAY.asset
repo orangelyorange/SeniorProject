@@ -23,8 +23,6 @@ MonoBehaviour:
   - m_enabled: 1
     m_path: Assets/Scenes/Cutscenes/ADNU DACA.unity
   - m_enabled: 1
-    m_path: Assets/Scenes/Cutscenes/Intro.unity
-  - m_enabled: 1
     m_path: Assets/Scenes/Main Menu.unity
   - m_enabled: 1
     m_path: Assets/Scenes/LEVEL1.unity
